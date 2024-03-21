@@ -35,7 +35,7 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
-			$this->template->viewslog('authorization/v-login2clear', $data);
+			$this->template->viewslog('authorization/v-login2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
