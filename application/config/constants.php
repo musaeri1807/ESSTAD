@@ -93,16 +93,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 } else {
     // Online
     define('HOSTNAME', 'localhost');
-    define('USERNAME', 'u1733358_vpsbsp');
-    define('PASSWORD', 'w%{%bJog*Yg9');
-    define('DATABASE', 'u1733358_vpsbsp');
+    define('USERNAME', 'muse4184_hcisls');
+    define('PASSWORD', 'v&bvHo^+WE?x');
+    define('DATABASE', 'muse4184_hcis');
 }
-
-
-
-//email
-define('SERVERMAIL', 'mail.musaeri.my.id');
-define('EMAIL', 'info@musaeri.my.id');
-define('PASSMAIL', '&9#wXB.?%#($');
-define('FROM', 'APP HCISLS');
-//email

@@ -74,7 +74,7 @@ function mailforgot($email, $token)
     
         <div class="container">
             <div class="header">
-                <img class="logo" src="' . base_url() . 'assets/images/signin.png" alt="Logo ESSTAD">
+                <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo ESSTAD">
             </div>
             <div class="content">
                 <h4>Kepada YTH</h4>
