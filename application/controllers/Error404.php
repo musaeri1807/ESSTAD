@@ -7,6 +7,6 @@ class Error404 extends CI_Controller
 
 	public function index()
 	{
-		$this->load->view('errors\v-error404');
+		$this->load->view('errors\404');
 	}
 }
