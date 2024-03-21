@@ -23,9 +23,9 @@ class Authorization extends CI_Controller
 	public function index()
 	{
 
-		if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
-			redirect('Welcome');
-		}
+		// if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
+		// 	redirect('Welcome');
+		// }
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
@@ -155,8 +155,8 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$data = array(
-				'Title' => 'AdminLTE',
-				'CardTitle' => 'Login to Your Account',
+				'Title' => 'Forgot Account',
+				'CardTitle' => 'Forgot to Your Account',
 				'widget' => $this->recaptcha->getWidget()
 			);
 
@@ -192,8 +192,9 @@ class Authorization extends CI_Controller
 								->token($token) //Token identify Action
 								->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
 								->log(); //Add Database Entry
+							//Email
+							$this->_sendEmail($user['name_users'], $user['email'], $token, 'Reset Password');
 
-							$this->_sendEmail($user['email'], $token, 'Reset Password'); //Email
 							$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Please check your email to reset password!</p></span>');
 							redirect('authorization/forgot');
 						} else {
@@ -265,7 +266,7 @@ class Authorization extends CI_Controller
 			redirect('authorization');
 		}
 	}
-	private function _sendEmail($email, $token, $subject)
+	private function _sendEmail($name, $email, $token, $subject)
 	{
 
 		//load Database
@@ -274,8 +275,8 @@ class Authorization extends CI_Controller
 			// $bodyEmail = ;
 			$bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
 		} else if ($subject == 'Reset Password') {
-			// $bodyEmail = 'Click this link to reset your password : <a href="' . base_url() . 'authorization/reset?email=' . $email . '&token=' . urlencode($token) . '">Reset Password</a>';
-			$bodyEmail = mailforgot($email, $token);
+			$link = base_url() . 'authorization/reset?email=' . $email . '&token=' . urlencode($token);
+			$bodyEmail = mailforgot($name, $link, $subject);
 		} else {
 			$bodyEmail = 'Stay logged in on trusted devices';
 		}
