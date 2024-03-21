@@ -23,20 +23,19 @@ class Authorization extends CI_Controller
 	public function index()
 	{
 
-		// if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
-		// 	redirect('Welcome');
-		// }
+		if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
+			redirect('Welcome');
+		}
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$data = array(
-				'Title' => 'AdminLTE',
+				'Title' => 'Login EssTAD',
 				'CardTitle' => 'Login to Your Account',
 				'widget' => $this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
-
-			$this->template->viewslog('authorization\v-loginv2', $data);
+			$this->template->viewslog('authorization/v-login2clear', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -161,7 +160,7 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 
-			$this->template->viewslog('authorization\v-forgot2', $data);
+			$this->template->viewslog('authorization/v-forgot2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -249,7 +248,7 @@ class Authorization extends CI_Controller
 				'Title' 			=> 'NiceAdmin',
 				'CardTitle'			=> 'Change Password Account'
 			);
-			$this->template->viewslog('authorization\v-change2', $data);
+			$this->template->viewslog('authorization/v-change2', $data);
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
 			$email = $this->session->userdata('reset_email');
