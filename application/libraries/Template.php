@@ -1,8 +1,8 @@
 <?php
+
 class Template
 {
 	protected $_ci;
-
 	function __construct()
 	{
 		$this->_ci = &get_instance(); //Untuk Memanggil function load, dll dari CI. ex: $this->load, $this->model, dll
@@ -33,6 +33,19 @@ class Template
 			$data['_js'] 					= $this->_ci->load->view('_layout/_js', $data, TRUE);
 
 			echo $data['_template'] 		= $this->_ci->load->view('_layout/_template', $data, TRUE);
+		}
+	}
+	function viewslog($tempfront = NULL, $data = NULL)
+	{
+		if ($tempfront != NULL) {
+			// head
+			$data['_head'] 					= $this->_ci->load->view('authorization/_frontend/_head', $data, TRUE);
+			//Content
+			$data['_content'] 				= $this->_ci->load->view($tempfront, $data, TRUE);
+			//JS
+			$data['_jquery'] 				= $this->_ci->load->view('authorization/_frontend/_jquery', $data, TRUE);
+
+			echo $data['_tempfront'] 		= $this->_ci->load->view('authorization/_frontend/_tempfront', $data, TRUE);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/sidh9418/public_html/musaeri.my.id
+    - export DEPLOYPATH=/home/muse4184/public_html/musaeri.my.id
     - /bin/cp -R application $DEPLOYPATH
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R system $DEPLOYPATH
