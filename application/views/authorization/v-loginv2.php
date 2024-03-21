@@ -1,5 +1,4 @@
 <div class="card-body">
-
   <?php if ($this->session->flashdata('message') == null) {
     echo '<span class="text-primary  pt-1 fw-bold"><p class="login-box-msg">Sign in to start your session</p></span>';
   } else {
