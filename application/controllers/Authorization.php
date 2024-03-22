@@ -29,12 +29,14 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
+			$sett_data = $this->db->get('settings')->row_array();
 			$data = array(
 				'Title' => 'Login EssTAD',
 				'CardTitle' => 'Login to Your Account',
 				'widget' => $this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
+			$data = array_merge($data, $sett_data);
 			$this->template->viewslog('authorization/v-login2', $data);
 		} else {
 			// validasinya success
@@ -131,11 +133,15 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[12]');
 		// $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 		if ($this->form_validation->run() == false) {
-			$data['Title'] 			= 'NiceAdmin';
-			$data['CardTitle'] 		= 'Create an Account';
-			$this->load->view('authorization\header', $data);
-			$this->load->view('authorization\v-signup', $data);
-			$this->load->view('authorization\footer');
+			$sett_data = $this->db->get('settings')->row_array();
+			$data = array(
+				'Title' => 'Forgot Account',
+				'CardTitle' => 'Create an Account',
+				'widget' => $this->recaptcha->getWidget()
+			);
+			$data = array_merge($data, $sett_data);
+			$this->template->viewslog('authorization/v-register2', $data);
+
 		} else {
 			// validasinya success
 			echo $name = $this->input->post('name');
@@ -154,12 +160,13 @@ class Authorization extends CI_Controller
 	{
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		if ($this->form_validation->run() == false) {
+			$sett_data = $this->db->get('settings')->row_array();
 			$data = array(
 				'Title' => 'Forgot Account',
 				'CardTitle' => 'Forgot to Your Account',
 				'widget' => $this->recaptcha->getWidget()
 			);
-
+			$data = array_merge($data, $sett_data);
 			$this->template->viewslog('authorization/v-forgot2', $data);
 		} else {
 			// validasinya success
@@ -270,7 +277,7 @@ class Authorization extends CI_Controller
 	{
 
 		//load Database
-		$set = $this->db->get('setting')->row_array();
+		$set = $this->db->get('settings')->row_array();
 		if ($subject == 'Account Verification') {
 			// $bodyEmail = ;
 			$bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
