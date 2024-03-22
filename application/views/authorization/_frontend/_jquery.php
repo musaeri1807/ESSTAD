@@ -7,6 +7,12 @@
 <!-- AdminLTE App -->
 <script src="<?= base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#phone').inputmask('(999) 999-9999');
+    });
+</script>
 <script>
     function password_show_hide() {
         var x = document.getElementById("password");
@@ -26,8 +32,8 @@
 
     function password_show_hidee() {
         var y = document.getElementById("password2");
-        var show= document.getElementById("show_eyee");
-        var hide= document.getElementById("hide_eyee");
+        var show = document.getElementById("show_eyee");
+        var hide = document.getElementById("hide_eyee");
         hide.classList.remove("d-none");
         if (y.type === "password") {
             y.type = "text";

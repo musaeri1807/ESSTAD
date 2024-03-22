@@ -29,14 +29,13 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
-			$sett_data = $this->db->get('settings')->row_array();
+			$sett = $this->db->get('settings')->row_array();
 			$data = array(
-				'Title' => 'Login EssTAD',
-				'CardTitle' => 'Login to Your Account',
+				'Title' => ' Login',
 				'widget' => $this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
-			$data = array_merge($data, $sett_data);
+			$data = array_merge($data, $sett);
 			$this->template->viewslog('authorization/v-login2', $data);
 		} else {
 			// validasinya success
@@ -58,7 +57,6 @@ class Authorization extends CI_Controller
 
 	private function _signin()
 	{
-
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$user = $this->M_mysqldata->userValid($username);
@@ -128,28 +126,67 @@ class Authorization extends CI_Controller
 	{
 
 		$this->form_validation->set_rules('name', 'Name', 'trim|required');
-		// $this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]');
-		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[12]');
-		// $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[12]|numeric');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+		$this->form_validation->set_rules('terms', 'Terms', 'trim|required');
 		if ($this->form_validation->run() == false) {
-			$sett_data = $this->db->get('settings')->row_array();
-			$data = array(
-				'Title' => 'Forgot Account',
-				'CardTitle' => 'Create an Account',
+			$sett = $this->db->get('settings')->row_array();
+			$ting = array(
+				'Title' => ' Register',
 				'widget' => $this->recaptcha->getWidget()
 			);
-			$data = array_merge($data, $sett_data);
-
+			$data = array_merge($sett, $ting);
 			$this->template->viewslog('authorization/v-register2', $data);
 		} else {
 			// validasinya success
 			echo $name = $this->input->post('name');
 			echo '<br>';
 			echo $email = $this->input->post('email');
-			// $this->_sendEmail($email, 'Account Verification'); //Email
-			$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account!</p></span>');
-			// redirect('authorization/signup');
+			echo '<br>';
+			echo $password = $this->input->post('password');
+			echo '<br>';
+			echo $terms = $this->input->post('phone');
+			echo '<br>';
+			echo $terms = $this->input->post('terms');
+
+			if ($terms == 'agree') {
+				$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+				$users = array(
+
+					'name_users' => $name,
+					'email' => $email,
+					'password' => $password
+				);
+				$this->db->insert('users', $users);
+				// siapkan token
+				// $token = base64_encode(random_bytes(32));
+				// $user_token = [
+				// 	'id_users' => $user['id_users'],
+				// 	'token' => $token,
+				// 	'date_created' => date('Y-m-d H:i:s')
+				// ];
+
+				// $this->db->insert('token_users', $user_token);
+
+				// $this->logger
+				// 	->user($user['id_users']) //Set UserID, who created this  Action
+				// 	->type('Reset Password') //Entry type like, Post, Page, Entry, signin
+				// 	->id(3) //Entry ID 1 Login  2 Logout 3 Reset
+				// 	->token($token) //Token identify Action
+				// 	->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
+				// 	->log(); //Add Database Entry
+				// //Email
+				// $this->_sendEmail($user['name_users'], $user['email'], $token, 'Reset Password');
+
+				$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account!</p></span>');
+				redirect('authorization');
+			} else {
+
+				// $this->_sendEmail($email, 'Account Verification'); //Email
+				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account!</p></span>');
+				redirect('authorization');
+			}
 		}
 	}
 	public function verify()
@@ -160,13 +197,12 @@ class Authorization extends CI_Controller
 	{
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		if ($this->form_validation->run() == false) {
-			$sett_data = $this->db->get('settings')->row_array();
-			$data = array(
-				'Title' => 'Forgot Account',
-				'CardTitle' => 'Forgot to Your Account',
+			$sett = $this->db->get('settings')->row_array();
+			$ting = array(
+				'Title' => ' Forgot',
 				'widget' => $this->recaptcha->getWidget()
 			);
-			$data = array_merge($data, $sett_data);
+			$data = array_merge($sett, $ting);
 			$this->template->viewslog('authorization/v-forgot2', $data);
 		} else {
 			// validasinya success

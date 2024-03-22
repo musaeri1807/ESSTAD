@@ -1,8 +1,9 @@
 <div class="card-body">
-  <?php if ($this->session->flashdata('message') == null) {
-    echo ' <span class="text-primary"> <p class="login-box-msg">Register a new membership</p></span>';
-  } else {
+  <?php if (!empty(form_error('terms'))) {
+    $this->session->set_flashdata('message', '<span class="text-danger"><p class="login-box-msg">Checkbox is unchecked.!</p></span>');
     echo  $this->session->flashdata('message');
+  } else {
+    echo '<span class="text-primary"> <p class="login-box-msg">Register a new membership</p></span>';
   }
   ?>
   <form action="<?= base_url('authorization/signup'); ?>" method="post">
@@ -10,19 +11,28 @@
       <div class="input-group-append">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
       </div>
-      <input type="text" name="name" class="form-control" placeholder="Full name" required>
+      <input type="text" name="name" class="form-control" placeholder="Full name" value="<?= set_value('name'); ?>" required>
     </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+      </div>
+      <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" value="081210003701" required>
+    </div>
+    <span class="text-danger small"><?= form_error('phone'); ?></span>
     <div class="input-group mb-3">
       <div class="input-group-append">
         <span class="input-group-text"> <i class="fas fa-envelope"></i></span>
       </div>
-      <input type="email" name="email" class="form-control" placeholder="Email" required>
+      <input type="email" name="email" class="form-control" placeholder="Email" value="info@mail.com" required>
     </div>
+    <span class="text-danger small"><?= form_error('email'); ?></span>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-lock"></i></span>
       </div>
-      <input type="password" name="password1" class="form-control" id="password" placeholder="Password" required>
+      <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="P@ssw0rd" required>
       <!-- show password -->
       <div class="input-group-append">
         <span class="input-group-text" onclick="password_show_hide();">
@@ -32,11 +42,13 @@
       </div>
       <!-- show password -->
     </div>
-    <div class="input-group mb-3">
+    <span class="text-danger small"><?= form_error('password'); ?></span>
+
+    <!-- <div class="input-group mb-3">
       <div class="input-group-append">
-        <?= $widget; ?>
+        <?php echo $widget; ?>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-8">
         <div class="icheck-primary">
@@ -54,5 +66,5 @@
     </div>
   </form>
 
-  <a href="<?= base_url('authorization/signup'); ?>" class="text-center">I already have a membership</a>
+  <a href="<?= base_url('authorization'); ?>" class="text-center">I already have a membership</a>
 </div>

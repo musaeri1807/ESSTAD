@@ -1,8 +1,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Login Reset Password Register">
-    <title><?= $sitetitle ?></title>
+    <meta name="description" content="Login,Register, Reset,Change Password ">
+    <title><?= $sitetitle . $Title; ?></title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->

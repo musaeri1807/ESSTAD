@@ -1,6 +1,6 @@
 <div class="card-body">
   <?php if ($this->session->flashdata('message') == null) {
-    echo '<span class="text-primary  pt-1 fw-bold"><p class="login-box-msg">Sign in to start your session</p></span>';
+    echo '<span class="text-primary"><p class="login-box-msg">Sign in to start your session</p></span>';
   } else {
     echo  $this->session->flashdata('message');
   }
@@ -63,8 +63,6 @@
     </div>
   </form>
 
-  <p class="mb-1">Don't have account..? <a href="<?= base_url('Authorization/signup'); ?>">Create an account</a><br><a href="<?= base_url('Authorization/forgot'); ?>">I forgot my password</a>
-
-
+  <p class="mt-3">Don't have account..? <a href="<?= base_url('authorization/signup'); ?>">Create an account</a><br><a href="<?= base_url('authorization/forgot'); ?>">I forgot my password</a>
 </div>
 <!-- /.card-body -->

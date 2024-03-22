@@ -27,8 +27,8 @@
       <!-- /.col -->
     </div>
   </form>
-  <p class="mt-3 mb-1">
-    Already have an account? <a href="<?= base_url('Authorization'); ?>">Login</a>
+  <p class="mt-3">
+    Already have an account? <a href="<?= base_url('authorization'); ?>">Login</a>
   </p>
 </div>
 <!-- /.login-card-body -->

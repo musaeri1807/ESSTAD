@@ -1,17 +1,14 @@
 <div class="card-body">
-
   <?php if (!empty(form_error('password1'))) {
     $this->session->set_flashdata('message', '<span class="text-warning"><p class="login-box-msg">The Password field does not match the Repeat Password field.!</p></span>');
     echo  $this->session->flashdata('message');
   } else {
     echo '<span class="text-primary "><p class="login-box-msg">Change password new your to account</p></span>';
   }
-
   ?>
 
   <p class="login-box-msg"><?= $this->session->userdata('reset_email'); ?></p>
-  <!-- <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p> -->
-  <form action="<?= base_url('Authorization/changepassword'); ?>" method="post">
+  <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -52,7 +49,7 @@
   </form>
   <br>
   <span class="text-danger ">
-    <p class="small">Minimum password length of 7 characters</p>
+    <p class="login-box-msg small">Minimum password length of 7 characters.</p>
   </span>
 
 </div>
