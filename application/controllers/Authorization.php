@@ -140,8 +140,8 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 			$data = array_merge($data, $sett_data);
-			$this->template->viewslog('authorization/v-register2', $data);
 
+			$this->template->viewslog('authorization/v-register2', $data);
 		} else {
 			// validasinya success
 			echo $name = $this->input->post('name');

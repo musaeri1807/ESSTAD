@@ -5,7 +5,6 @@
     echo  $this->session->flashdata('message');
   }
   ?>
-
   <form action="<?= base_url('authorization'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
@@ -40,7 +39,7 @@
 
     <div class="input-group mb-3">
       <div class="input-group-append">
-        <?php echo $widget; ?>
+        <?= $widget; ?>
       </div>
     </div>
 

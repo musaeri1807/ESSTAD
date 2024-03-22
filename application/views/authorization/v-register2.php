@@ -1,6 +1,10 @@
 <div class="card-body">
-  <p class="login-box-msg">Register a new membership</p>
-
+  <?php if ($this->session->flashdata('message') == null) {
+    echo ' <span class="text-primary"> <p class="login-box-msg">Register a new membership</p></span>';
+  } else {
+    echo  $this->session->flashdata('message');
+  }
+  ?>
   <form action="<?= base_url('authorization/signup'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-append">
@@ -30,7 +34,7 @@
     </div>
     <div class="input-group mb-3">
       <div class="input-group-append">
-        <?php echo $widget; ?>
+        <?= $widget; ?>
       </div>
     </div>
     <div class="row">
