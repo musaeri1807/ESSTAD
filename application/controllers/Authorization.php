@@ -49,7 +49,7 @@ class Authorization extends CI_Controller
 					redirect('Authorization');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Recaptcha Wrong!</p></span>');
+				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
 				redirect('Authorization');
 			}
 		}
@@ -127,7 +127,7 @@ class Authorization extends CI_Controller
 
 		$this->form_validation->set_rules('name', 'Name', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]');
-		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[12]|numeric');
+		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[12]|numeric|is_unique[users.phone]');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 		$this->form_validation->set_rules('terms', 'Terms', 'trim|required');
 		if ($this->form_validation->run() == false) {
@@ -140,58 +140,91 @@ class Authorization extends CI_Controller
 			$this->template->viewslog('authorization/v-register2', $data);
 		} else {
 			// validasinya success
-			echo $name = $this->input->post('name');
-			echo '<br>';
-			echo $email = $this->input->post('email');
-			echo '<br>';
-			echo $password = $this->input->post('password');
-			echo '<br>';
-			echo $terms = $this->input->post('phone');
-			echo '<br>';
-			echo $terms = $this->input->post('terms');
+			$recaptcha = $this->input->post('g-recaptcha-response');
+			if (!empty($recaptcha)) {
+				$response = $this->recaptcha->verifyResponse($recaptcha);
+				if (isset($response['success']) and $response['success'] === true) {
+					$name 		= $this->input->post('name');
+					$email 		= $this->input->post('email');
+					$password 	= $this->input->post('password');
+					$phone 		= $this->input->post('phone');
+					$terms 		= $this->input->post('terms');
+					if ($terms == 'agree') {
 
-			if ($terms == 'agree') {
-				$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-				$users = array(
+						$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+						$token = base64_encode(random_bytes(32));
 
-					'name_users' => $name,
-					'email' => $email,
-					'password' => $password
-				);
-				$this->db->insert('users', $users);
-				// siapkan token
-				// $token = base64_encode(random_bytes(32));
-				// $user_token = [
-				// 	'id_users' => $user['id_users'],
-				// 	'token' => $token,
-				// 	'date_created' => date('Y-m-d H:i:s')
-				// ];
+						$users = array(
+							'name_users' 	=> $name,
+							'email' 		=> $email,
+							'phone' 		=> $phone,
+							'password' 		=> $password,
+							'id_role'		=> 6
+						);
+						$this->db->insert('users', $users);
+						$user = $this->db->insert_id();
 
-				// $this->db->insert('token_users', $user_token);
+						// siapkan token
+						$user_token = [
+							'id_users' => $user,
+							'token' => $token,
+							'date_created' => date('Y-m-d H:i:s')
+						];
+						$this->db->insert('token_users', $user_token);
+						$this->logger
+							->user($user) //Set UserID, who created this  Action
+							->type('Register') //Entry type like, Post, Page, Entry, signin
+							->id(3) //Entry ID 1 Login  2 Logout 3 Reset
+							->token($token) //Token identify Action
+							->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
+							->log(); //Add Database Entry
 
-				// $this->logger
-				// 	->user($user['id_users']) //Set UserID, who created this  Action
-				// 	->type('Reset Password') //Entry type like, Post, Page, Entry, signin
-				// 	->id(3) //Entry ID 1 Login  2 Logout 3 Reset
-				// 	->token($token) //Token identify Action
-				// 	->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
-				// 	->log(); //Add Database Entry
-				// //Email
-				// $this->_sendEmail($user['name_users'], $user['email'], $token, 'Reset Password');
+						//Email
+						$this->_sendEmail($name, $email, $token, 'Account Verification');
 
-				$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account!</p></span>');
-				redirect('authorization');
+						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account! in Email</p></span>');
+						redirect('authorization');
+					} else {
+						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Wrong ! Your account has not been created yet.!</p></span>');
+						redirect('authorization');
+					}
+				} else {
+					$this->session->set_flashdata('message', 'false');
+					// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha.!</p></span>');
+					redirect('authorization/signup');
+				}
 			} else {
-
-				// $this->_sendEmail($email, 'Account Verification'); //Email
-				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account!</p></span>');
-				redirect('authorization');
+				$this->session->set_flashdata('message', 'recaptcha');
+				// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Recaptcha Wrong!</p></span>');
+				redirect('authorization/signup');
 			}
 		}
 	}
 	public function verify()
 	{
-		echo "Verifikasi to email";
+		$email = $this->input->get('email');
+		$token = $this->input->get('token');
+		$user = $this->db->get_where('users', ['email' => $email])->row_array();
+		if ($user) {
+			$user_token = $this->db->get_where('token_users', ['token' => $token])->row_array();
+			if ($user_token) {
+				// $this->session->set_userdata('email', $email);
+
+				$this->db->set('is_active', 1);
+				$this->db->where('email', $email);
+				$this->db->update('users');
+
+				// $this->session->unset_userdata('email');
+				$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
+				redirect('authorization');
+			} else {
+				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong token!</p></span>');
+				redirect('authorization');
+			}
+		} else {
+			$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong email!</p></span>');
+			redirect('authorization');
+		}
 	}
 	public function forgot()
 	{
@@ -250,11 +283,11 @@ class Authorization extends CI_Controller
 					}
 				} else {
 					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
-					redirect('Authorization/forgot');
+					redirect('authorization/forgot');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Recaptcha Wrong!</p></span>');
-				redirect('Authorization/forgot');
+				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
+				redirect('authorization/forgot');
 			}
 		}
 	}
@@ -283,15 +316,17 @@ class Authorization extends CI_Controller
 			redirect('authorization');
 		}
 
-		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[3]|matches[password2]');
-		$this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[3]|matches[password1]');
+		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
+		$this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
 
 		if ($this->form_validation->run() == false) {
 
-			$data = array(
-				'Title' 			=> 'NiceAdmin',
-				'CardTitle'			=> 'Change Password Account'
+			$sett = $this->db->get('settings')->row_array();
+			$ting = array(
+				'Title' => ' Register',
+				'widget' => $this->recaptcha->getWidget()
 			);
+			$data = array_merge($sett, $ting);
 			$this->template->viewslog('authorization/v-change2', $data);
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
@@ -315,8 +350,9 @@ class Authorization extends CI_Controller
 		//load Database
 		$set = $this->db->get('settings')->row_array();
 		if ($subject == 'Account Verification') {
-			// $bodyEmail = ;
-			$bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
+			$link = base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
+			$bodyEmail = mailforgot($name, $link, $subject);
+			// $bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
 		} else if ($subject == 'Reset Password') {
 			$link = base_url() . 'authorization/reset?email=' . $email . '&token=' . urlencode($token);
 			$bodyEmail = mailforgot($name, $link, $subject);

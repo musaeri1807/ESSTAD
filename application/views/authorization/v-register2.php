@@ -1,7 +1,11 @@
 <div class="card-body">
   <?php if (!empty(form_error('terms'))) {
     $this->session->set_flashdata('message', '<span class="text-danger"><p class="login-box-msg">Checkbox is unchecked.!</p></span>');
-    echo  $this->session->flashdata('message');
+    echo $this->session->flashdata('message');
+  } elseif ($this->session->flashdata('message') == 'recaptcha') {
+    echo  '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>';
+  } elseif ($this->session->flashdata('message') == 'false') {
+    echo  '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha.!</p></span>';
   } else {
     echo '<span class="text-primary"> <p class="login-box-msg">Register a new membership</p></span>';
   }
@@ -25,7 +29,7 @@
       <div class="input-group-append">
         <span class="input-group-text"> <i class="fas fa-envelope"></i></span>
       </div>
-      <input type="email" name="email" class="form-control" placeholder="Email" value="info@mail.com" required>
+      <input type="email" name="email" class="form-control" placeholder="Email" value="infomail17089@gmail.com" required>
     </div>
     <span class="text-danger small"><?= form_error('email'); ?></span>
     <div class="input-group mb-3">
@@ -43,12 +47,11 @@
       <!-- show password -->
     </div>
     <span class="text-danger small"><?= form_error('password'); ?></span>
-
-    <!-- <div class="input-group mb-3">
+    <div class="input-group mb-3">
       <div class="input-group-append">
         <?php echo $widget; ?>
       </div>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col-8">
         <div class="icheck-primary">
