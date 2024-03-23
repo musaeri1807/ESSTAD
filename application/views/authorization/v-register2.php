@@ -22,21 +22,21 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-phone"></i></span>
       </div>
-      <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" value="081210003701" required>
+      <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" value="<?= set_value('phone'); ?>" required>
     </div>
     <span class="text-danger small"><?= form_error('phone'); ?></span>
     <div class="input-group mb-3">
       <div class="input-group-append">
         <span class="input-group-text"> <i class="fas fa-envelope"></i></span>
       </div>
-      <input type="email" name="email" class="form-control" placeholder="Email" value="infomail17089@gmail.com" required>
+      <input type="email" name="email" class="form-control" placeholder="Email" value="<?= set_value('email'); ?>" required>
     </div>
     <span class="text-danger small"><?= form_error('email'); ?></span>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-lock"></i></span>
       </div>
-      <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="P@ssw0rd" required>
+      <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="<?= set_value('password'); ?>" required>
       <!-- show password -->
       <div class="input-group-append">
         <span class="input-group-text" onclick="password_show_hide();">

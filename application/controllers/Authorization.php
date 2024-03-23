@@ -182,7 +182,7 @@ class Authorization extends CI_Controller
 						//Email
 						$this->_sendEmail($name, $email, $token, 'Account Verification');
 
-						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation! your account has been created. Please activate your account! in Email</p></span>');
+						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation.! Please check your email to activated.!</p></span>');
 						redirect('authorization');
 					} else {
 						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Wrong ! Your account has not been created yet.!</p></span>');
