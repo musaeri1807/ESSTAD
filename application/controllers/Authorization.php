@@ -96,7 +96,7 @@ class Authorization extends CI_Controller
 					$this->session->set_userdata($session);
 					//Email
 
-					//$this->_sendEmail($user['email'], $token, 'Login');
+					$this->_sendEmail($user['name_users'], $user['email'], $token, 'Login');
 
 					if (!empty($this->input->post('rememberMe'))) {
 						setcookie('loginUsername', $username, time() + (1 * 365 * 24 * 60 * 60));
@@ -355,13 +355,13 @@ class Authorization extends CI_Controller
 		$set = $this->db->get('settings')->row_array();
 		if ($subject == 'Account Verification') {
 			$link = base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
-			$bodyEmail = mailforgot($name, $link, $subject);
+			$bodyEmail = auth_mail($name, $link, $subject);
 			// $bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
 		} else if ($subject == 'Reset Password') {
 			$link = base_url() . 'authorization/reset?email=' . $email . '&token=' . urlencode($token);
-			$bodyEmail = mailforgot($name, $link, $subject);
+			$bodyEmail = auth_mail($name, $link, $subject);
 		} else {
-			$bodyEmail = 'Stay logged in on trusted devices';
+			$bodyEmail = info_mail($name, $subject);
 		}
 
 		// PHPMailer object
@@ -409,9 +409,6 @@ class Authorization extends CI_Controller
 
 	function terms()
 	{
-		// $data = array(
-		// 	'terms' => 'terms'
-		// );
 
 		$this->load->view('authorization/v_terms');
 	}
