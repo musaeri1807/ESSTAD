@@ -23,9 +23,9 @@ class Authorization extends CI_Controller
 	public function index()
 	{
 
-		// if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
-		// 	redirect('Welcome');
-		// }
+		if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
+			redirect('Welcome');
+		}
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
@@ -209,14 +209,18 @@ class Authorization extends CI_Controller
 			$user_token = $this->db->get_where('token_users', ['token' => $token])->row_array();
 			if ($user_token) {
 				// $this->session->set_userdata('email', $email);
-
-				$this->db->set('is_active', 1);
-				$this->db->where('email', $email);
-				$this->db->update('users');
-
-				// $this->session->unset_userdata('email');
-				$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
-				redirect('authorization');
+				if ($user['is_active'] == 0) {
+					# code...
+					$this->db->set('is_active', 1);
+					$this->db->where('email', $email);
+					$this->db->update('users');
+					// $this->session->unset_userdata('email');
+					$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
+					redirect('authorization');
+				} else {
+					$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Active.!</p></span>');
+					redirect('authorization');
+				}
 			} else {
 				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong token!</p></span>');
 				redirect('authorization');
@@ -399,48 +403,16 @@ class Authorization extends CI_Controller
 			->log(); //Add Database Entry	
 		$this->session->unset_userdata('email');
 		$this->session->set_flashdata('message', '<span class="text-info"><p class="login-box-msg">Account have been logout!</p></span>');
-		redirect('Authorization');
+		redirect('authorization');
 		$this->session->sess_destroy();
 	}
 
-	function validateRecaptcha()
+	function terms()
 	{
-		$captcha_response = trim($this->input->post('g-recaptcha-response'));
-		if ($captcha_response != '') {
-			$keySecret = '6LfJec4ZAAAAACG1-fmobe88erF72OdXbAFN71jj';
+		// $data = array(
+		// 	'terms' => 'terms'
+		// );
 
-			$check = array(
-				'secret'		=>	$keySecret,
-				'response'		=>	$this->input->post('g-recaptcha-response')
-			);
-
-			$startProcess = curl_init();
-			curl_setopt($startProcess, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-			curl_setopt($startProcess, CURLOPT_POST, true);
-			curl_setopt($startProcess, CURLOPT_POSTFIELDS, http_build_query($check));
-			curl_setopt($startProcess, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($startProcess, CURLOPT_RETURNTRANSFER, true);
-			$receiveData = curl_exec($startProcess);
-			$finalResponse = json_decode($receiveData, true);
-			if ($finalResponse['success']) {
-				// $storeData = array(
-				// 	'first_name'	=>	$this->input->post('first_name'),
-				// 	'last_name'		=>	$this->input->post('last_name'),
-				// 	'age'			=>	$this->input->post('age'),
-				// 	'gender'		=>	$this->input->post('gender')
-				// );
-
-				// $this->captcha_model->insert($storeData);
-				$this->session->set_flashdata('message', 'Data Stored Successfully');
-				redirect('captcha');
-			} else {
-				$this->session->set_flashdata('message', 'Validation Fail Try Again');
-				redirect('captcha');
-			}
-		} else {
-			$this->session->set_flashdata('message', 'Validation Fail Try Again');
-
-			redirect('captcha');
-		}
+		$this->load->view('authorization/v_terms');
 	}
 }
