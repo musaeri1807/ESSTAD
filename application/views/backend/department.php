@@ -1,127 +1,80 @@
-<?php $this->load->view('backend/header'); ?>
-<?php $this->load->view('backend/sidebar'); ?> 
-         <div class="page-wrapper">
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-themecolor"><i class="fa fa-cubes" style="color:#1976d2"></i> Department</h3>
+    <!-- Main content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h4 class="card-title">Department Name</h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="<?= base_url('Organization/Save_dep'); ?>" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="text" name="department" class="form-control" placeholder="Department Name" required>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary swalDefaultSuccess">Save</button>
+                            <button type="submit" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-md-7 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Department</li>
-                    </ol>
+                <!-- /.card -->
+
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+                <!-- table -->
+                <!-- /.card-header -->
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">Action</th>
+                                    <th>Department List</th>
+                                    <th style="width: 30px">#</th>
+                                </tr>
+                            </thead>
+                            <?php $no = 1; ?>
+                            <tbody>
+                                <?php foreach ($department as $dep) { ?>
+
+                                    <tr>
+                                        <td class="text-right py-0 align-middle">
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="<?php echo base_url(); ?>organization/dep_edit/<?= $dep->id; ?>" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                <a href="<?= base_url('Organization/Delete_dep') . '/' . $dep->id ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><?= $dep->dep_name; ?></td>
+                                        <td><?= $no++; ?></td>
+                                        <!-- <td><?= sprintf("%03d", $dep->id); ?></td> -->
+
+                                    </tr>
+                                <?php } ?>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th style="width: 10px">Action</th>
+                                    <th>Department List</th>
+                                    <th style="width: 30px">#</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="message"></div> 
-            <div class="container-fluid">         
-                <div class="row">
-                    <div class="col-lg-5">
-                        <?php if (isset($editdepartment)) { ?>
-                        <div class="card card-outline-info">
-                            <div class="card-header">
-                                <h4 class="m-b-0 text-white">Edit Department</h4>
-                            </div>
-                            
-                            <?php echo validation_errors(); ?>
-                            <?php echo $this->upload->display_errors(); ?>
-                            <?php echo $this->session->flashdata('feedback'); ?>
-                            
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
 
-                            <div class="card-body">
-                                    <form method="post" action="<?php echo base_url();?>organization/Update_dep" enctype="multipart/form-data">
-                                        <div class="form-body">
-                                            <div class="row ">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Department Name</label>
-                                                        <input type="text" name="department" id="firstName" value="<?php  echo $editdepartment->dep_name;?>" class="form-control" placeholder="">
-                                                        <input type="hidden" name="id" value="<?php  echo $editdepartment->id;?>">
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
-                                            <!--/row-->
-                                        </div>
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                                            <button type="button" class="btn btn-danger">Cancel</button>
-                                        </div>
-                                    </form>
-                            </div>
-                        </div>
-                        <?php } else { ?>                        
-
-                        <div class="card card-outline-info">
-                            <div class="card-header">
-                                <h4 class="m-b-0 text-white">Add Department</h4>
-                            </div>
-                            
-                            <?php echo validation_errors(); ?>
-                            <?php echo $this->upload->display_errors(); ?>
-                            <?php echo $this->session->flashdata('feedback'); ?>
-                            
-
-                            <div class="card-body">
-                                    <form method="post" action="Save_dep" enctype="multipart/form-data">
-                                        <div class="form-body">
-                                            <div class="row ">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Department Name</label>
-                                                        <input type="text" name="department" id="firstName" value="" class="form-control" placeholder="" minlength="3" required>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
-                                            <!--/row-->
-                                        </div>
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                                            <button type="button" class="btn btn-danger">Cancel</button>
-                                        </div>
-                                    </form>
-                            </div>
-                        </div>
-                        <?php }?>
-                    </div>
-
-                    <div class="col-7">
-                        <div class="card card-outline-info">
-                            <div class="card-header">
-                                <h4 class="m-b-0 text-white"> Department List</h4>
-                            </div>
-                            <?php echo $this->session->flashdata('delsuccess'); ?>
-                            <div class="card-body">
-                                <div class="table-responsive ">
-                                    <table id="" class="display  table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Department Name</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                <th>Department Name</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </tfoot> -->
-                                        
-                                        <tbody>
-                                            <?php foreach ($department as $value) { ?>
-                                            <tr>
-                                                <td><?php echo $value->dep_name;?></td>
-                                                <td class="jsgrid-align-center ">
-                                                    <a href="<?php echo base_url();?>organization/dep_edit/<?php echo $value->id;?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fa fa-pencil-square-o"></i></a>
-                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="<?php echo base_url();?>organization/Delete_dep/<?php echo $value->id;?>" title="Delete" class="btn btn-sm btn-danger waves-effect waves-light"><i class="fa fa-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            <?php }?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    <?php $this->load->view('backend/footer'); ?>
+    <!-- /.content -->

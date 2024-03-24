@@ -1,10 +1,10 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-info elevation-4">
       <!-- Brand Logo -->
-      <a href="<?= base_url('homepage'); ?>" class="brand-link">
+      <!-- <a href="<?= base_url('homepage'); ?>" class="brand-link">
         <img src="<?= base_url(); ?>/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">PT CSI Indonesia</span>
-      </a>
+      </a> -->
 
       <!-- Sidebar -->
       <div class="sidebar">
@@ -14,7 +14,7 @@
             <img src="<?= base_url(); ?>/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block"><?= $this->session->userdata('email'); ?></a>
           </div>
         </div>
 
@@ -24,7 +24,7 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-            <li class="nav-item ">
+            <!-- <li class="nav-item ">
               <a href="<?= base_url('homepage') ?>" class="nav-link <?= ($this->uri->segment('1') == 'homepage') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
@@ -32,7 +32,7 @@
                   <span class="right badge badge-danger">New</span>
                 </p>
               </a>
-            </li>
+            </li> -->
 
             <!-- <li class="nav-item">
               <a href="#" class="nav-link">
@@ -70,8 +70,31 @@
               </ul>
             </li> -->
 
-            <li class="nav-header">EXAMPLES</li>
-            <li class="nav-item <?= ($this->uri->segment('1') == 'employees') ? 'menu-open' : '' ?>">
+            <li class="nav-header"><?= $this->uri->segment('1'); ?>/<?= $this->uri->segment('1'); ?></li>
+            <li class="nav-item <?= ($this->uri->segment('1') == 'Organization') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= ($this->uri->segment('1') == 'Organization') ? 'active' : '' ?>">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Organization
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<?= base_url('Organization/Department')  ?>" class="nav-link <?= ($this->uri->segment('2') == 'Department') ? 'active' : '' ?>">
+                    <i class="nav-icon far fa-circle text-danger"></i>
+                    <p class="text">Department</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<?= base_url('Organization/Designation')  ?>" class="nav-link <?= ($this->uri->segment('2') == 'Designation') ? 'active' : '' ?> ">
+                    <i class="nav-icon far fa-circle text-danger"></i>
+                    <p class="text">Designation</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- <li class="nav-item <?= ($this->uri->segment('1') == 'employees') ? 'menu-open' : '' ?>">
               <a href="#" class="nav-link <?= ($this->uri->segment('1') == 'employees') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
@@ -99,8 +122,8 @@
                   </a>
                 </li>
               </ul>
-            </li>
-            <li class="nav-item <?= ($this->uri->segment('1') == 'attendance') ? 'menu-open' : '' ?>">
+            </li> -->
+            <!-- <li class="nav-item <?= ($this->uri->segment('1') == 'attendance') ? 'menu-open' : '' ?>">
               <a href="#" class="nav-link <?= ($this->uri->segment('1') == 'attendance') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
@@ -128,7 +151,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -24,7 +24,7 @@ class Authorization extends CI_Controller
 	{
 
 		if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
-			redirect('Welcome');
+			redirect('Organization');
 		}
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');

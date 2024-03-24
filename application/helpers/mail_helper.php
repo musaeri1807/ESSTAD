@@ -77,11 +77,10 @@ function auth_mail($name, $link, $subject)
                 <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo ESSTAD">
             </div>
             <div class="content" style="color: #000000;">
-                <h4>Kepada YTH</h4>
-                <h3>' . $name . '</h3>
+            <h4>Hallo, ' . $name . '</h4>  
                 <div class="message">
                     
-                    <p>Berikut kami sampaikan bahwa <b><i>' . $subject . '</i></b> yang Anda lakukan telah berhasil, Silakan Klik tombol dibawah ini :</p>
+                    <p>Berikut kami sampaikan bahwa <b><i>' . $subject . '</i></b> yang anda lakukan telah berhasil, Silakan Klik tombol dibawah ini :</p>
     
                 </div>
                 <div class="text-align:center" style="text-align: center;">
@@ -186,10 +185,9 @@ function info_mail($name, $subject)
                 <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo ESSTAD">
             </div>
             <div class="content" style="color: #000000;">
-                <h4>Kepada YTH</h4>
-                <h3>' . $name . '</h3>
+            <h4>Hallo, ' . $name . '</h4>  
                 <div class="message">                    
-                    <p>Berikut kami sampaikan bahwa <b><i>' . $subject . '</i></b> yang Anda lakukan telah berhasil</p>    
+                    <p>Berikut kami sampaikan bahwa <b><i>' . $subject . '</i></b> yang anda lakukan telah berhasil</p>    
                 </div>          
                 
                 <div>
