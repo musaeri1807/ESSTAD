@@ -119,3 +119,44 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 		'save_queries' => TRUE
 	);
 }
+
+// Konfigurasi untuk koneksi database tambahan (misalnya, untuk server lain) repikasi
+$db['remote'] = array(
+	'dsn'	=> '',
+	'hostname' => HOSTNAME_Replication,
+	'username' => USERNAME_Replication,
+	'password' => PASSWORD_Replication,
+	'database' => DATABASE_Replication,
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT == 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+
+
+ // ... konfigurasi lainnya ...
+//  'failover' => array(
+// 	array(
+// 		'hostname' => 'backup_host_1',
+// 		'username' => 'backup_username_1',
+// 		'password' => 'backup_password_1',
+// 		'database' => 'backup_database_1'
+// 	),
+// 	array(
+// 		'hostname' => 'backup_host_2',
+// 		'username' => 'backup_username_2',
+// 		'password' => 'backup_password_2',
+// 		'database' => 'backup_database_2'
+// 	)
+// )

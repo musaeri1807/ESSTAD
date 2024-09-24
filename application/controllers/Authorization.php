@@ -13,7 +13,7 @@ class Authorization extends CI_Controller
 		$this->load->library('session');
 		$this->load->library('logger');
 		$this->load->library('recaptcha');
-		$this->load->model('M_mysqldata');
+		$this->load->model('Users_model');
 		$this->load->helper('url');
 		require APPPATH . 'third_party/PHPMailer/Exception.php';
 		require APPPATH . 'third_party/PHPMailer/PHPMailer.php';
@@ -22,9 +22,8 @@ class Authorization extends CI_Controller
 
 	public function index()
 	{
-
 		if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
-			redirect('Organization');
+			redirect('Homepage');
 		}
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -36,7 +35,7 @@ class Authorization extends CI_Controller
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
 			$data = array_merge($data, $sett);
-			$this->template->viewslog('authorization/v-login2', $data);
+			$this->template->viewsAuth('authorization/v-login2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -59,7 +58,7 @@ class Authorization extends CI_Controller
 	{
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-		$user = $this->M_mysqldata->userValid($username);
+		$user = $this->Users_model->userValid($username);
 		// jika usernya ada
 		if ($user) {
 			// jika usernya aktif
@@ -67,8 +66,11 @@ class Authorization extends CI_Controller
 				// cek password
 				if (password_verify($password, $user['password'])) {
 					$session = [
-						'email' => $user['email'],
-						'id_users' => $user['id_users']
+						'email' 		=> $user['email'],
+						'id_users'		=> $user['id_users'],
+						'role'			=> $user['id_role'],
+						'login_state'	=> TRUE,
+						'lastlogin'		=> time()
 					];
 					// siapkan token
 					$token = base64_encode(random_bytes(32));
@@ -84,14 +86,6 @@ class Authorization extends CI_Controller
 					} else {
 						$this->db->insert('token_users', $user_token);
 					}
-
-					$this->logger
-						->user($user['id_users']) //Set UserID, who created this  Action
-						->type('Login') //Entry type like, Post, Page, Entry, signin
-						->id(1) //Entry ID 1 Login  2 Logout 3 Reset
-						->token($token) //Token identify Action
-						->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
-						->log(); //Add Database Entry			
 
 					$this->session->set_userdata($session);
 					//Email
@@ -110,6 +104,9 @@ class Authorization extends CI_Controller
 					$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
 					redirect('Authorization');
 				} else {
+					// // Jika login gagal
+					// log_message('warning', 'Failed login attempt for user ' . $username . ' from IP ' . $this->input->ip_address());
+
 					$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Wrong password!</p></span>');
 					redirect('Authorization');
 				}
@@ -137,7 +134,7 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewslog('authorization/v-register2', $data);
+			$this->template->viewsAuth('authorization/v-register2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -171,13 +168,6 @@ class Authorization extends CI_Controller
 							'date_created' => date('Y-m-d H:i:s')
 						];
 						$this->db->insert('token_users', $user_token);
-						$this->logger
-							->user($user) //Set UserID, who created this  Action
-							->type('Register') //Entry type like, Post, Page, Entry, signin
-							->id(3) //Entry ID 1 Login  2 Logout 3 Reset
-							->token($token) //Token identify Action
-							->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
-							->log(); //Add Database Entry
 
 						//Email
 						$this->_sendEmail($name, $email, $token, 'Account Verification');
@@ -240,7 +230,7 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewslog('authorization/v-forgot2', $data);
+			$this->template->viewsAuth('authorization/v-forgot2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -248,7 +238,7 @@ class Authorization extends CI_Controller
 				$response = $this->recaptcha->verifyResponse($recaptcha);
 				if (isset($response['success']) and $response['success'] === true) {
 					$username 	= $this->input->post('username');
-					$user 		= $this->M_mysqldata->userValid($username);
+					$user 		= $this->Users_model->userValid($username);
 
 					if ($user) {
 						if ($user['is_active'] == 1) {
@@ -265,13 +255,7 @@ class Authorization extends CI_Controller
 							} else {
 								$this->db->insert('token_users', $user_token);
 							}
-							$this->logger
-								->user($user['id_users']) //Set UserID, who created this  Action
-								->type('Reset Password') //Entry type like, Post, Page, Entry, signin
-								->id(3) //Entry ID 1 Login  2 Logout 3 Reset
-								->token($token) //Token identify Action
-								->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
-								->log(); //Add Database Entry
+
 							//Email
 							$this->_sendEmail($user['name_users'], $user['email'], $token, 'Reset Password');
 
@@ -331,7 +315,7 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewslog('authorization/v-change2', $data);
+			$this->template->viewsAuth('authorization/v-change2', $data);
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
 			$email = $this->session->userdata('reset_email');
@@ -356,12 +340,15 @@ class Authorization extends CI_Controller
 		if ($subject == 'Account Verification') {
 			$link = base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
 			$bodyEmail = auth_mail($name, $link, $subject);
+			$idlog = '3';
 			// $bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
 		} else if ($subject == 'Reset Password') {
 			$link = base_url() . 'authorization/reset?email=' . $email . '&token=' . urlencode($token);
 			$bodyEmail = auth_mail($name, $link, $subject);
+			$idlog = '2';
 		} else {
 			$bodyEmail = info_mail($name, $subject);
+			$idlog = '1';
 		}
 
 		// PHPMailer object
@@ -377,7 +364,7 @@ class Authorization extends CI_Controller
 		$mail->Port       = $set['smtp_port'];
 		// ***---SMTP configuration---***
 		$mail->setFrom($set['smtp_username'], $set['name_application']); // user email
-		$mail->addReplyTo('', 'noreply'); //user email
+		$mail->addReplyTo('', 'no-reply'); //user email
 		$mail->addAddress($email); //email tujuan pengiriman email
 
 		$mail->Subject = $subject; //subject email
@@ -389,22 +376,29 @@ class Authorization extends CI_Controller
 		if (!$mail->send()) {
 			echo 'Mailer Error: ' . $mail->ErrorInfo;
 		} else {
+			$this->logger
+				->user($email) //Set UserID, who created this  Action
+				->type($subject) //Entry type like, Post, Page, Entry, signin
+				->id($idlog) //Entry ID 1 Login  2 Logout 3 Reset
+				->token($token) //Token identify Action
+				->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
+				->log(); //Add Database Entry	
 			$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Access send Email Succes!</p></span>');
 		}
 	}
 	public function logout()
 	{
 		$this->logger
-			->user($this->session->userdata('id_users')) //Set UserID, who created this  Action
+			->user($this->session->userdata('email')) //Set UserID, who created this  Action
 			->type('Logout') //Entry type like, Post, Page, Entry, signin
-			->id(2) //Entry ID 1 login  2 logout 3 Reset
+			->id(4) //Entry ID 1 login  2 logout 3 Reset
 			->token(md5(date('h:i:s'))) //Token identify Action
 			->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
 			->log(); //Add Database Entry	
 		$this->session->unset_userdata('email');
 		$this->session->set_flashdata('message', '<span class="text-info"><p class="login-box-msg">Account have been logout!</p></span>');
-		redirect('authorization');
 		$this->session->sess_destroy();
+		redirect('authorization');
 	}
 
 	function terms()

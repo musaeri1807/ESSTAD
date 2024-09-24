@@ -130,8 +130,8 @@
     <h1>Situs kami mendapatkan sedikit pemeliharaan.</h1>
     <div>
       <p> Kami mohon maaf atas ketidaknyamanan ini, Anda masih bisa menghubungi kami di
-        <a href="mailto:info@bspid.id">info@musaeri.my.id</a>. atau Chat melalui
-        <a href="https://api.whatsapp.com/send?phone=6281210003701">WhatsApp</a>
+        <a href="mailto:<?php echo $infomail; ?>"><?php echo $infomail; ?></a>. atau Chat melalui
+        <a href="https://api.whatsapp.com/send?phone=<?php echo $nomor; ?>">WhatsApp</a>
       </p>
       <p>&mdash; Kami akan segera kembali!!!</p>
     </div>

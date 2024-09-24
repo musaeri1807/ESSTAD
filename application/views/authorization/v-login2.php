@@ -63,6 +63,7 @@
     </div>
   </form>
 
-  <p class="mt-3">Don't have account..? <a href="<?= base_url('authorization/signup'); ?>">Create an account</a><br><a href="<?= base_url('authorization/forgot'); ?>">I forgot my password</a>
+  <p class="mt-3">Don't have account..? <a href="<?= base_url('authorization/signup'); ?>">Create an account</a><br><a href="<?= base_url('authorization/forgot'); ?>">I forgot my password</a></p>
+  
 </div>
 <!-- /.card-body -->

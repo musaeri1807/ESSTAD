@@ -228,7 +228,13 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+
+// $config['log_threshold'] = 2;
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $config['log_threshold'] = 1; // Tingkat detail tinggi untuk pengembangan   
+} else {
+    $config['log_threshold'] = 2; // Tingkat detail sedang untuk produksi    
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -239,7 +245,13 @@ $config['log_threshold'] = 0;
 | application/logs/ directory. Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = '';
+
+// $config['log_path'] = '';
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $config['log_path'] = APPPATH . 'logs/dev/'; // Simpan log di folder dev
+} else {
+    $config['log_path'] = APPPATH . 'logs/prod/'; // Simpan log di folder prod
+}
 
 /*
 |--------------------------------------------------------------------------

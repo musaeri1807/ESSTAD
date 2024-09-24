@@ -185,13 +185,14 @@ function info_mail($name, $subject)
                 <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo ESSTAD">
             </div>
             <div class="content" style="color: #000000;">
-            <h4>Hallo, ' . $name . '</h4>  
-                <div class="message">                    
-                    <p>Berikut kami sampaikan bahwa <b><i>' . $subject . '</i></b> yang anda lakukan telah berhasil</p>    
-                </div>          
+                <h4>Hallo, ' . $name . '</h4> 
+                <div class="message">
+                    
+                    <p> Baru saja anda melakukan <b><i>' . $subject . '</i></b> Selalu jaga kerahasiaan username dan password anda.</p>
+    
+                </div>               
                 
-                <div>
-                    <p>Selalu jaga kerahasiaan username dan password anda.</p>
+                <div>                    
                     <p>Demikian, Terimakasih.</p>
                 </div>
             </div>

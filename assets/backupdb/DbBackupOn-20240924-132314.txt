@@ -1,0 +1,339 @@
+#
+# TABLE STRUCTURE FOR: access_role
+#
+
+DROP TABLE IF EXISTS `access_role`;
+
+CREATE TABLE `access_role` (
+  `access_role` int(11) NOT NULL AUTO_INCREMENT,
+  `id_menu` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL,
+  PRIMARY KEY (`access_role`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=263 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (212, 9, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (213, 10, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (214, 11, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (215, 1, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (218, 23, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (220, 27, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (221, 22, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (222, 57, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (223, 62, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (227, 24, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (228, 64, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (235, 71, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (236, 74, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (237, 73, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (238, 72, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (239, 75, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (240, 76, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (242, 1, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (243, 9, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (244, 10, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (245, 65, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (246, 77, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (247, 66, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (248, 67, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (249, 69, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (250, 70, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (251, 68, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (252, 71, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (253, 74, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (254, 73, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (255, 72, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (256, 75, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (257, 76, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (258, 22, 3);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (259, 78, 1);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (260, 71, 4);
+INSERT INTO `access_role` (`access_role`, `id_menu`, `id_role`) VALUES (261, 79, 1);
+
+
+#
+# TABLE STRUCTURE FOR: backup
+#
+
+DROP TABLE IF EXISTS `backup`;
+
+CREATE TABLE `backup` (
+  `id_backup` int(11) NOT NULL AUTO_INCREMENT,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `files` varchar(128) NOT NULL,
+  PRIMARY KEY (`id_backup`)
+) ENGINE=InnoDB AUTO_INCREMENT=509 DEFAULT CHARSET=utf8mb4;
+
+#
+# TABLE STRUCTURE FOR: department
+#
+
+DROP TABLE IF EXISTS `department`;
+
+CREATE TABLE `department` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dep_name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+
+INSERT INTO `department` (`id`, `dep_name`) VALUES (3, 'Finance, HR, & Admininstrationw');
+INSERT INTO `department` (`id`, `dep_name`) VALUES (4, 'Research12');
+INSERT INTO `department` (`id`, `dep_name`) VALUES (5, 'Information Technology');
+INSERT INTO `department` (`id`, `dep_name`) VALUES (6, 'Support');
+INSERT INTO `department` (`id`, `dep_name`) VALUES (7, 'Network Engineering');
+INSERT INTO `department` (`id`, `dep_name`) VALUES (10, 'Project Management');
+
+
+#
+# TABLE STRUCTURE FOR: designation
+#
+
+DROP TABLE IF EXISTS `designation`;
+
+CREATE TABLE `designation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `des_name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+
+INSERT INTO `designation` (`id`, `des_name`) VALUES (2, 'Vice Chairman');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (3, 'Chief Executive Officer (CEO)');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (4, 'Chief Finance & Admin Officer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (5, 'Sr. Finance & Admin Officer - I');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (6, 'Jr. Finance & Admin Officer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (7, 'Senior Research Associate-1');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (8, 'Research Associate-1');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (9, 'Junior Research Associate');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (10, 'Research Assistant');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (11, 'Sr. Office Assistant');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (12, 'Office Assistant');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (13, 'IT Analyst');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (14, 'Cook');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (15, 'Software Engineer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (16, 'System Analyst');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (17, 'Programmer Analyst');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (18, 'Sr Software Engineer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (19, 'Technical Specialist');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (20, 'Trainee Engineer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (21, 'Intern');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (22, 'Head of Department');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (23, 'Business Analyst');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (24, 'Web Developer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (25, 'Big Data Engineer');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (26, 'Project Manager');
+INSERT INTO `designation` (`id`, `des_name`) VALUES (27, 'Trainee');
+
+
+#
+# TABLE STRUCTURE FOR: keys
+#
+
+DROP TABLE IF EXISTS `keys`;
+
+CREATE TABLE `keys` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `key` varchar(40) NOT NULL,
+  `level` int(2) NOT NULL,
+  `ignore_limits` tinyint(1) NOT NULL DEFAULT 0,
+  `is_private_key` tinyint(1) NOT NULL DEFAULT 0,
+  `ip_addresses` text DEFAULT NULL,
+  `date_created` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: logger
+#
+
+DROP TABLE IF EXISTS `logger`;
+
+CREATE TABLE `logger` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_on` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` varchar(50) NOT NULL DEFAULT '',
+  `type` varchar(255) NOT NULL,
+  `type_id` bigint(20) NOT NULL COMMENT '1 Signin 2 Signup 3 Post 4 ',
+  `token` varchar(255) NOT NULL,
+  `comment` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('9', '2024-09-22 19:00:22', 'musaeri@eai.coid', 'Account Verification', '3', '0N8OeKx4i650jUx9Gie3Oy6RaAfWhGVHP4xm052q2P8=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('10', '2024-09-22 19:03:13', 'musaeri@eai.co.id', 'Login', '1', 'e5j0l+YqauIc8DDL1pAsINEMsNcFwl1KG8yeQYfmM5I=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('11', '2024-09-22 20:20:07', 'musaeri@eai.co.id', 'Logout', '4', 'fa1284da1fd656acf5ca48a5d9c35d52', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('12', '2024-09-22 20:20:13', 'musaeri@eai.co.id', 'Login', '1', 'n1o3/nCXYurvOIZWaHJs9orxMwNL2xtM+ibQfAp5Zfs=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('13', '2024-09-22 20:20:31', 'musaeri@eai.co.id', 'Logout', '4', 'bd6d76fbde2a4c39d2b7e82343405d10', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('14', '2024-09-22 20:21:04', 'infomail17089@gmail.com', 'Login', '1', 'k7g2uEpt8F5DYKXy/YUZmwTSDcrio2IlHjXpXGII1go=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('15', '2024-09-22 20:52:08', 'erick.java03@gmail.com', 'Logout', '4', '52b5f623d63891634730a2c6d0523151', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('16', '2024-09-22 21:04:50', 'infomail17089@gmail.com', 'Login', '1', 'foAHZdj1Ins5AnW5jRuzFfy2Xep/Y89tsehL/qBKw9w=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('17', '2024-09-22 21:21:53', 'infomail17089@gmail.com', 'Logout', '4', '8fe28cfb5d0ebf2071ba82f388df60f1', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('18', '2024-09-23 04:15:09', 'infomail17089@gmail.com', 'Login', '1', 'bG30FjoGjOUswlpcsiddJokNUwVKfzdiV/+UxBqa1uU=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('19', '2024-09-23 10:55:05', 'infomail17089@gmail.com', 'Login', '1', '0JlvHw6ekAHaLgiK68nvEE4RF914LXctWDg2v9nSEWc=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('20', '2024-09-23 11:52:06', 'infomail17089@gmail.com', 'Logout', '4', '840e7ecb3a7bbce965acbaddd82c384a', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('21', '2024-09-23 12:23:23', 'infomail17089@gmail.com', 'Logout', '4', '55bb1cf543f4f9fc2b790db50327281e', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('22', '2024-09-23 12:28:18', 'infomail17089@gmail.com', 'Logout', '4', '1f1a1e7caaa8d586f4739e55a4a81a0a', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('23', '2024-09-23 12:28:24', 'infomail17089@gmail.com', 'Login', '1', 'KVWAvhKejFpL9agVX5/EXy3PBJby+Yuo7J72kfadk4Q=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('24', '2024-09-23 16:03:40', 'infomail17089@gmail.com', 'Login', '1', 'ouN8lY0nvyNjOjITnz09I5CrU2G7GwyesbKCiBHs4+0=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('25', '2024-09-23 21:45:56', 'infomail17089@gmail.com', 'Login', '1', 'wp84YDgcRv+VEErqnsGncKilWL48D8CGhW9bpwpvrlE=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('26', '2024-09-23 21:53:11', 'infomail17089@gmail.com', 'Logout', '4', 'cb48d5aa96ac4d3dd6e4e6dc34b2b9c5', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('27', '2024-09-24 10:25:30', 'infomail17089@gmail.com', 'Login', '1', 'RfZPZohdz0HOG5sITeI1DE7B2sT+3iIjlgeeGQqG/c0=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+
+
+#
+# TABLE STRUCTURE FOR: maintenance
+#
+
+DROP TABLE IF EXISTS `maintenance`;
+
+CREATE TABLE `maintenance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` varchar(100) NOT NULL,
+  `value` enum('TRUE','FALSE') NOT NULL,
+  `info_mail` varchar(50) NOT NULL,
+  `info_nomor` varchar(13) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `maintenance` (`id`, `key`, `value`, `info_mail`, `info_nomor`) VALUES (1, 'maintenance_mode', 'FALSE', 'info@bisnis.com', '6281210003711');
+
+
+#
+# TABLE STRUCTURE FOR: menu
+#
+
+DROP TABLE IF EXISTS `menu`;
+
+CREATE TABLE `menu` (
+  `id_menu` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_menu` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `ada_submenu` int(11) NOT NULL,
+  `submenu` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `urutan` int(11) NOT NULL,
+  PRIMARY KEY (`id_menu`)
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (1, 'Dashboard', 'fa fa-tachometer-alt', 0, 0, 'dashboard', 1);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (9, 'Pengolahan User', 'fas fa-user-friends', 1, 0, 'user', 2);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (10, 'Data User', 'fas fa-user-shield', 0, 9, 'user', 1);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (11, 'Akses Menu User', 'fas fa-shield-alt', 0, 9, 'user/akses', 2);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (22, 'Profil Saya', 'fa fa-user', 0, 0, 'profil', 7);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (23, 'Utilitas', 'fas fa-cog', 1, 0, 'utilitas', 6);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (24, 'Backup Database', 'fas fa-database', 0, 23, 'utilitas/backup', 1);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (27, 'Pengaturan', 'fas fa-cogs', 0, 0, 'pengaturan', 8);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (62, 'Menu Management', 'fa fa-bars', 0, 23, 'menu', 3);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (64, 'CRUD Generator', 'fas fa-edit', 0, 23, 'crud_generator', 2);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (65, 'Master', 'fas fa-box', 1, 0, 'master', 3);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (66, 'Data Jurusan', '', 0, 65, 'jurusan', 2);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (67, 'Data Kelas', '', 0, 65, 'kelas', 3);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (68, 'Data Pembayaran', '', 0, 65, 'pembayaran', 6);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (69, 'Data Siswa', '', 0, 65, 'siswa', 4);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (70, 'Data Kategori', '', 0, 65, 'kategori', 5);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (71, 'Transaksi', 'fas fa-credit-card', 1, 0, 'transaksi', 4);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (72, 'Data Transaksi', '', 0, 71, 'transaksi', 3);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (73, 'Transaksi Baru', '', 0, 71, 'transaksi/create', 2);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (74, 'Metode Pembayaran', '', 0, 71, 'metode_pembayaran', 1);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (75, 'Laporan', 'fas fa-book', 1, 0, 'laporan', 5);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (76, 'Laporan Transaksi', '', 0, 75, 'laporan', 1);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (77, 'Data Tahun Ajaran', '', 0, 65, 'tahun_ajaran', 1);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (78, 'Projec', '', 0, 71, 'projec', 4);
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `icon`, `ada_submenu`, `submenu`, `url`, `urutan`) VALUES (79, 'Projec List', '', 0, 71, 'projec_list', 5);
+
+
+#
+# TABLE STRUCTURE FOR: role
+#
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id_role` int(11) NOT NULL AUTO_INCREMENT,
+  `name_role` varchar(30) NOT NULL,
+  PRIMARY KEY (`id_role`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `role` (`id_role`, `name_role`) VALUES (1, 'Superadmin');
+INSERT INTO `role` (`id_role`, `name_role`) VALUES (2, 'Manager');
+INSERT INTO `role` (`id_role`, `name_role`) VALUES (3, 'Assitent Manager');
+INSERT INTO `role` (`id_role`, `name_role`) VALUES (4, 'Supervisor ');
+INSERT INTO `role` (`id_role`, `name_role`) VALUES (5, 'Human Captial');
+INSERT INTO `role` (`id_role`, `name_role`) VALUES (6, 'Employe');
+
+
+#
+# TABLE STRUCTURE FOR: settings
+#
+
+DROP TABLE IF EXISTS `settings`;
+
+CREATE TABLE `settings` (
+  `id_sett` int(11) NOT NULL AUTO_INCREMENT,
+  `name_application` varchar(255) NOT NULL,
+  `description` varchar(512) NOT NULL,
+  `sitelogo` varchar(128) NOT NULL,
+  `background` varchar(128) NOT NULL,
+  `sitetitle` varchar(128) NOT NULL,
+  `copyright` varchar(512) NOT NULL,
+  `nomor` varchar(13) NOT NULL,
+  `smtp_host` varchar(128) NOT NULL,
+  `smtp_email` varchar(128) NOT NULL,
+  `smtp_username` varchar(128) NOT NULL,
+  `smtp_password` varchar(128) NOT NULL,
+  `smtp_port` int(11) NOT NULL,
+  PRIMARY KEY (`id_sett`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `settings` (`id_sett`, `name_application`, `description`, `sitelogo`, `background`, `sitetitle`, `copyright`, `nomor`, `smtp_host`, `smtp_email`, `smtp_username`, `smtp_password`, `smtp_port`) VALUES (1, 'APP|MSI', '', 'auth.png', 'bg.jpg', 'MSI', 'By MSI', '6281210003701', 'mx.mailspace.id', 'no_reply@miga.co.id', 'no_reply@miga.co.id', 'mpiNGSiVailivela', 465);
+
+
+#
+# TABLE STRUCTURE FOR: token_users
+#
+
+DROP TABLE IF EXISTS `token_users`;
+
+CREATE TABLE `token_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_users` char(10) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `token` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (2, '18', '2024-03-24 04:24:51', 'Qjtpu5OoLLqLFHbKocEnoblP3Tp5Pemo3MxUUzBM4gk=');
+INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (3, '19', '2024-09-24 10:25:26', 'RfZPZohdz0HOG5sITeI1DE7B2sT+3iIjlgeeGQqG/c0=');
+INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (4, '20', '2024-09-22 20:20:12', 'n1o3/nCXYurvOIZWaHJs9orxMwNL2xtM+ibQfAp5Zfs=');
+
+
+#
+# TABLE STRUCTURE FOR: users
+#
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id_users` int(11) NOT NULL AUTO_INCREMENT,
+  `ip_address` char(45) NOT NULL,
+  `name_users` varchar(128) NOT NULL,
+  `phone` char(12) NOT NULL,
+  `gender` enum('L','P') NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `image` varchar(128) NOT NULL,
+  `company` varchar(128) NOT NULL,
+  `id_role` int(11) NOT NULL,
+  `is_active` int(11) NOT NULL,
+  `created_on` int(11) unsigned NOT NULL,
+  `last_login` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_users`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `users` (`id_users`, `ip_address`, `name_users`, `phone`, `gender`, `email`, `password`, `address`, `image`, `company`, `id_role`, `is_active`, `created_on`, `last_login`) VALUES (1, '', 'MUSAERi', '081210003702', 'L', 'musaeri1807@outlook.co.id', '$2y$10$lOorqpDFpgAfcofn6WB9Zu7oaHKlMcUSMFd858EsaWwnhOTqjYbc2', 'BANDUNG', 'man.png', '', 6, 1, 0, 0);
+INSERT INTO `users` (`id_users`, `ip_address`, `name_users`, `phone`, `gender`, `email`, `password`, `address`, `image`, `company`, `id_role`, `is_active`, `created_on`, `last_login`) VALUES (2, '', 'MUSA', '085864273756', 'L', 'musaeri1807@gmail.com', '$2y$10$qko6sreTnbi0Pu43sYFqj.Rv9HEa5dGuhIGissG0hS8m92kLjT5.W', 'Batulawang', 'man-1.png', '', 4, 1, 0, 0);
+INSERT INTO `users` (`id_users`, `ip_address`, `name_users`, `phone`, `gender`, `email`, `password`, `address`, `image`, `company`, `id_role`, `is_active`, `created_on`, `last_login`) VALUES (3, '', 'musaeri', '083', 'L', 'erick.java03@gmail.com', '$2y$10$lE77STxNZVtgP6cKAjyW0uM.oO43TPrahBJODE3YPbBBevv3nQFmu', 'Bandung', 'd7128161dc2c2bb320ce892df4983d6b.png', '', 3, 1, 0, 0);
+INSERT INTO `users` (`id_users`, `ip_address`, `name_users`, `phone`, `gender`, `email`, `password`, `address`, `image`, `company`, `id_role`, `is_active`, `created_on`, `last_login`) VALUES (19, '', 'MUSAERI GAVIN ALISHA', '081290908321', 'L', 'infomail17089@gmail.com', '$2y$10$8M00mRBOXErwOw.I9/KZ8.T0U9eN7nXIekmEUCY/8CO0dAkiBsQhy', 'Jl Raya Pemuda No 1 Pulo Gadung Jakarta Timur, Jakarta', '', '', 6, 1, 0, 0);
+INSERT INTO `users` (`id_users`, `ip_address`, `name_users`, `phone`, `gender`, `email`, `password`, `address`, `image`, `company`, `id_role`, `is_active`, `created_on`, `last_login`) VALUES (20, '', 'Musaeri', '081210003701', 'L', 'musaeri@eai.co.id', '$2y$10$N6Th3cm533IO2g1MoC/Lb.QbPv3GW6wOuzYOakNETcWNbIiDJTD.W', 'Jl Raya Pemuda No 1 Pulo Gadung Jakarta Timur, Jakarta', '', '', 6, 1, 0, 0);
+
+

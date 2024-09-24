@@ -31,7 +31,7 @@
           <p>Dengan menggunakan aplikasi ini, Anda setuju untuk mematuhi syarat dan ketentuan berikut:</p>
 
           <ol>
-            <li><strong>Pendaftaran Akun:</strong> Setiap karyawan yang menggunakan aplikasi ini harus mendaftar akun dengan menyediakan informasi yang benar, lengkap, dan akurat. Anda bertanggung jawab untuk menjaga kerahasiaan informasi login Anda dan tidak boleh memberikan informasi login Anda kepada pihak lain.</li>
+            <li><strong>Pendaftaran Akun:</strong> Setiap pengguna yang menggunakan aplikasi ini harus mendaftar akun dengan menyediakan informasi yang benar, lengkap, dan akurat. Anda bertanggung jawab untuk menjaga kerahasiaan informasi login Anda dan tidak boleh memberikan informasi login Anda kepada pihak lain.</li>
             <li><strong>Hak dan Tanggung Jawab:</strong> Anda diizinkan untuk menggunakan aplikasi ini untuk tujuan pekerjaan yang sah dan sesuai dengan peraturan yang berlaku di perusahaan. Anda bertanggung jawab atas segala aktivitas yang terjadi di dalam aplikasi dengan menggunakan akun Anda.</li>
             <li><strong>Perlindungan Data Pribadi:</strong> Kami menghargai privasi Anda dan akan melindungi data pribadi Anda sesuai dengan kebijakan privasi perusahaan. Informasi pribadi yang disediakan dalam aplikasi ini akan digunakan hanya untuk keperluan administrasi dan manajemen karyawan.</li>
             <li><strong>Penggunaan yang Sah:</strong> Anda setuju untuk tidak menggunakan aplikasi ini untuk tujuan yang melanggar hukum atau merugikan perusahaan atau karyawan lain. Hal ini termasuk namun tidak terbatas pada penggunaan yang tidak sah, penyalahgunaan, atau pembajakan akun.</li>

@@ -229,7 +229,7 @@
         $('.swalDefaultSuccess').click(function() {
             Toast.fire({
                 icon: 'success',
-                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                title: 'Tersimpan.'
             })
         });
         $('.swalDefaultInfo').click(function() {
