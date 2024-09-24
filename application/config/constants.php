@@ -92,18 +92,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('DATABASE', 'local_ymti');
 } else {
     // Online
-    define('HOSTNAME', 'sql3.freesqldatabase.com');
-    define('USERNAME', 'sql3733077');
-    define('PASSWORD', 'JPw221a1Fv');
-    define('DATABASE', 'sql3733077');
+    define('HOSTNAME', 'localhost');
+    define('USERNAME', 'musq8219_msi');
+    define('PASSWORD', 'c7x-[!M0J2P_');
+    define('DATABASE', 'musq8219_appmasi');
 }
 // Replication Database
 define('HOSTNAME_Replication', 'sql3.freesqldatabase.com');
 define('USERNAME_Replication', 'sql3733077');
 define('PASSWORD_Replication', 'JPw221a1Fv');
 define('DATABASE_Replication', 'sql3733077');
-
-// define('HOSTNAME', 'localhost');
-// define('USERNAME', 'musq8219_msi');
-// define('PASSWORD', 'c7x-[!M0J2P_');
-// define('DATABASE', 'musq8219_appmasi');
