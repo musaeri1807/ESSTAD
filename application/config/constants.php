@@ -94,7 +94,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     // Online
     define('HOSTNAME', 'localhost');
     define('USERNAME', 'musq8219_msi');
-    define('PASSWORD', 'E4;yY6S0=8~;Ni#lzB');
+    define('PASSWORD', 'c7x-[!M0J2P_');
     define('DATABASE', 'musq8219_appmasi');
 }
 // Replication Database
