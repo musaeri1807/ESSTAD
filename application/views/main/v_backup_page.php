@@ -1,18 +1,17 @@
-<!-- Main content -->
-<div class="container-fluid">
-  <div class="row">
+
+
+<div class="row">
     <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+          <i class="fa fa-edit"></i>
 
-      <div class="box-body">
-        <p>
-          Silahkan klik tombol dibawah untuk membackup file database aplikasi yang nantinya akan dibutuhkan ketika akan melakukan restore
-        </p>
-      </div>
-
-      <div class="card card-primary">
-        <div class="card-body">
-          <?php echo $this->session->flashdata('message') ?>
-          <a href="<?php echo base_url('Replication/backupDb') ?>" class="btn btn-info"><i class="fa fa-download"></i> Backup & Replication Database</a>
+          <h3 class="box-title">Buttons</h3>
+        </div>
+        <div class="box-body pad table-responsive">
+          <p>
+            <a href="<?php echo base_url('Replication/backupDb') ?>" class="btn btn-info"><i class="fa fa-download"></i> Backup & Replication Database</a><code><?php echo $this->session->flashdata('message'); ?></code>
+          </p>
           <table class="table datatable">
             <thead>
               <tr>
@@ -38,9 +37,10 @@
               <?php endforeach ?>
             </tbody>
           </table>
-
         </div>
+        <!-- /.box -->
       </div>
     </div>
+    <!-- /.col -->
   </div>
-</div><!-- /.container-fluid -->
+

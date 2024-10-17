@@ -5,3 +5,11 @@
   <!-- AdminLTE App -->
   <script src="<?= base_url(); ?>/AdminLTE-2.4.13/dist/js/adminlte.min.js"></script>
 
+
+
+  <!-- FastClick -->
+  <script src="<?= base_url(); ?>/AdminLTE-2.4.13/bower_components/fastclick/lib/fastclick.js"></script>
+
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="<?= base_url(); ?>/AdminLTE-2.4.13/dist/js/demo.js"></script>

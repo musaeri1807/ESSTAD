@@ -6,19 +6,44 @@ class Replication extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('session'); // testing session        
+        $this->load->model('Users_model');
         $this->load->helper('download', 'file');
     }
 
     public function index()
     {
-        $uri = array(
-            'header1' => $this->uri->segment('1'),
-            'header2' => $this->uri->segment('2')
-        );
-        // $dat['users'] = $this->M_mysqldata->userLogin($this->session->userdata('id_users'));
-        $dat['judul'] = "Backup Database";
-        $db['db'] = $this->db->get('backup')->result_array();
-        $data = array_merge($uri, $dat, $db);
+        // Authorization
+        $session = [
+            'email'             => 'infomail17089@gmail.com',
+            'id_users'          => '19',
+            'role'              => '6',
+            'login_state'       => TRUE,
+            'lastlogin'         => time()
+        ];
+        $this->session->set_userdata($session);
+        // Authorization
+
+        // Contruct
+        $userId = $this->session->userdata('id_users');
+        // echo $userId;
+
+        // Contruct
+        // var_dump($this->Users_model->userLogin($userId));
+
+        $data['user'] = $this->Users_model->userLogin($userId);
+        // var_dump($this->Users_model->userLogin($userId));
+
+        // die();
+
+        // $uri = array(
+        //     'header1' => $this->uri->segment('1'),
+        //     'header2' => $this->uri->segment('2')
+        // );
+        $data['user'] = $this->Users_model->userLogin($userId); //query data user
+        $data['judul'] = "Backup Database";
+        $data['db'] = $this->db->get('backup')->result_array();
+        // $data = array_merge($uri, $dat, $db);
         $this->template->viewsMain('main/v_backup_page', $data);
     }
 

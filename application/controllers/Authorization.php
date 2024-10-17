@@ -88,8 +88,8 @@ class Authorization extends CI_Controller
 					}
 
 					$this->session->set_userdata($session);
-					//Email
 
+					//Email
 					$this->_sendEmail($user['name_users'], $user['email'], $token, 'Login');
 
 					if (!empty($this->input->post('rememberMe'))) {

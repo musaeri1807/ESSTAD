@@ -8,7 +8,7 @@
         <img class="profile-user-img img-responsive img-circle" src="<?= base_url(); ?>/AdminLTE-2.4.13/dist/img/user2-160x160.jpg" alt="User profile picture">
         <h3 class="profile-username text-center">Musaeri</h3>
         <p class="text-muted text-center">
-          <?= $user["Role"];
+          <?= $user["id_role"];
           ?>
         </p>
 
@@ -50,13 +50,13 @@
               <li>
                 <i class="fa fa-envelope bg-blue"></i>
                 <div class="timeline-item">
-                  <h3 class="timeline-header"><a href="#"><?= $user['Email']; ?></a> </h3>
+                  <h3 class="timeline-header"><a href="#"><?= $user['email']; ?></a> </h3>
                 </div>
               </li>
               <li>
                 <i class="fa fa-user bg-aqua"></i>
                 <div class="timeline-item">
-                  <h3 class="timeline-header no-border"><a href="#"><?= $user['Name']; ?></a>
+                  <h3 class="timeline-header no-border"><a href="#"><?= $user['name_users']; ?></a>
                   </h3>
                 </div>
               </li>
@@ -64,9 +64,9 @@
                 <i class="fa fa-comments bg-yellow"></i>
 
                 <div class="timeline-item">
-                  <h3 class="timeline-header"><a href="#"><?= $user['Company']; ?></a> </h3>
+                  <h3 class="timeline-header"><a href="#"><?= $user['company']; ?></a> </h3>
                   <div class="timeline-body">
-                    <?= $user['Alamat']; ?>
+                    <?= $user['address']; ?>
                   </div>
                 </div>
               </li>

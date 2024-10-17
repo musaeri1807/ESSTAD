@@ -28,11 +28,11 @@ class Template
 			// head
 			$data['_head'] 					= $this->_ci->load->view('main/_frontend/_head', $data, TRUE);
 			// Header
-			$data['_nav'] 					= $this->_ci->load->view('main/_frontend/_nav', $data, TRUE);
+			$data['_header'] 				= $this->_ci->load->view('main/_frontend/_header', $data, TRUE);
+			// HeaderPage
+			$data['_headerPage'] 			= $this->_ci->load->view('main/_frontend/_headerPage', $data, TRUE);
 			//Sidebar
 			$data['_sidebar'] 				= $this->_ci->load->view('main/_frontend/_sidebar', $data, TRUE);
-
-			$data['_header'] 				= $this->_ci->load->view('main/_frontend/_header', $data, TRUE);
 			//Content
 			$data['_content'] 				= $this->_ci->load->view($tempMain, $data, TRUE);
 			//Footer

@@ -14,7 +14,7 @@ class Users_model extends CI_Model
     {
         $sql = "SELECT * FROM users U LEFT JOIN role R ON U.id_role=R.id_role WHERE U.id_users =$userid";
         $data = $this->db->query($sql);
-        return $data->row();
+        return $data->row_array();
     }
     public function logActivity()
     {
@@ -37,5 +37,4 @@ class Users_model extends CI_Model
         $data = $this->db->query($sql);
         return $data->row_array();
     }
-
 }

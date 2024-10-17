@@ -61,7 +61,7 @@ CREATE TABLE `backup` (
   `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `files` varchar(128) NOT NULL,
   PRIMARY KEY (`id_backup`)
-) ENGINE=InnoDB AUTO_INCREMENT=509 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=511 DEFAULT CHARSET=utf8mb4;
 
 #
 # TABLE STRUCTURE FOR: department
@@ -156,7 +156,7 @@ CREATE TABLE `logger` (
   `token` varchar(255) NOT NULL,
   `comment` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('9', '2024-09-22 19:00:22', 'musaeri@eai.coid', 'Account Verification', '3', '0N8OeKx4i650jUx9Gie3Oy6RaAfWhGVHP4xm052q2P8=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
 INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('10', '2024-09-22 19:03:13', 'musaeri@eai.co.id', 'Login', '1', 'e5j0l+YqauIc8DDL1pAsINEMsNcFwl1KG8yeQYfmM5I=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
@@ -177,6 +177,9 @@ INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `toke
 INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('25', '2024-09-23 21:45:56', 'infomail17089@gmail.com', 'Login', '1', 'wp84YDgcRv+VEErqnsGncKilWL48D8CGhW9bpwpvrlE=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
 INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('26', '2024-09-23 21:53:11', 'infomail17089@gmail.com', 'Logout', '4', 'cb48d5aa96ac4d3dd6e4e6dc34b2b9c5', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
 INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('27', '2024-09-24 10:25:30', 'infomail17089@gmail.com', 'Login', '1', 'RfZPZohdz0HOG5sITeI1DE7B2sT+3iIjlgeeGQqG/c0=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('28', '2024-09-24 14:46:12', 'infomail17089@gmail.com', 'Reset Password', '2', 'O9/ThKWYXdt8mFITgkMDjTcBix/OjIZTiAdxwLQ21ek=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('29', '2024-09-24 22:30:37', 'infomail17089@gmail.com', 'Login', '1', 'YXHqfoLG36iq9AiZH+7wO18pwzt83ooFmHKGwOfTQtM=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
+INSERT INTO `logger` (`id`, `created_on`, `created_by`, `type`, `type_id`, `token`, `comment`) VALUES ('30', '2024-09-25 07:36:49', 'infomail17089@gmail.com', 'Reset Password', '2', 'DLamf10Svn6PGLff8BbznU+jd3NDPms0U4cQ1XBlmAM=', '::1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36');
 
 
 #
@@ -194,7 +197,7 @@ CREATE TABLE `maintenance` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `maintenance` (`id`, `key`, `value`, `info_mail`, `info_nomor`) VALUES (1, 'maintenance_mode', 'FALSE', 'info@bisnis.com', '6281210003711');
+INSERT INTO `maintenance` (`id`, `key`, `value`, `info_mail`, `info_nomor`) VALUES (1, 'maintenance_mode', 'FALSE', 'info@musaeri.my.id', '6281210003701');
 
 
 #
@@ -284,7 +287,7 @@ CREATE TABLE `settings` (
   PRIMARY KEY (`id_sett`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `settings` (`id_sett`, `name_application`, `description`, `sitelogo`, `background`, `sitetitle`, `copyright`, `nomor`, `smtp_host`, `smtp_email`, `smtp_username`, `smtp_password`, `smtp_port`) VALUES (1, 'APP|MSI', '', 'auth.png', 'bg.jpg', 'MSI', 'By MSI', '6281210003701', 'mx.mailspace.id', 'no_reply@miga.co.id', 'no_reply@miga.co.id', 'mpiNGSiVailivela', 465);
+INSERT INTO `settings` (`id_sett`, `name_application`, `description`, `sitelogo`, `background`, `sitetitle`, `copyright`, `nomor`, `smtp_host`, `smtp_email`, `smtp_username`, `smtp_password`, `smtp_port`) VALUES (1, 'APP|MSI', '', 'auth.png', 'bg.jpg', 'MSI', 'By MSI', '6281210003701', 'haruman.iixcp.rumahweb.net', 'noreplay@musaeri.my.id', 'noreplay@musaeri.my.id', 'Pr8ja99z?K8%', 465);
 
 
 #
@@ -302,7 +305,7 @@ CREATE TABLE `token_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (2, '18', '2024-03-24 04:24:51', 'Qjtpu5OoLLqLFHbKocEnoblP3Tp5Pemo3MxUUzBM4gk=');
-INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (3, '19', '2024-09-24 10:25:26', 'RfZPZohdz0HOG5sITeI1DE7B2sT+3iIjlgeeGQqG/c0=');
+INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (3, '19', '2024-09-25 07:36:49', 'DLamf10Svn6PGLff8BbznU+jd3NDPms0U4cQ1XBlmAM=');
 INSERT INTO `token_users` (`id`, `id_users`, `date_created`, `token`) VALUES (4, '20', '2024-09-22 20:20:12', 'n1o3/nCXYurvOIZWaHJs9orxMwNL2xtM+ibQfAp5Zfs=');
 
 

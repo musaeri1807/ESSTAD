@@ -46,10 +46,10 @@
     				<li class="dropdown notifications-menu">
     					<!-- Menu toggle button -->
     					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    						<span class="hidden-xs">Hi, <?= "Musaeri"; ?></span>
+    						<span class="hidden-xs">Hi, <?= $user['name_users']; ?></span>
     					</a>
     					<ul class="dropdown-menu">
-    						<li class="footer"><a href="#"><i class="fa fa-users text-green"></i>Group Administrator</a></li>
+    						<li class="footer"><a href="#"><i class="fa fa-users text-green"></i>Group <?= $user['id_role']; ?></a></li>
     						<li>
     							<!-- Inner Menu: contains the notifications -->
     							<ul class="menu">
@@ -74,5 +74,5 @@
     			</ul>
     		</div>
     	</nav>
-
+		
     </header>

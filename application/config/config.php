@@ -141,7 +141,8 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+// $config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = FCPATH . 'vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -233,7 +234,7 @@ $config['allow_get_array'] = TRUE;
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
     $config['log_threshold'] = 1; // Tingkat detail tinggi untuk pengembangan   
 } else {
-    $config['log_threshold'] = 2; // Tingkat detail sedang untuk produksi    
+    $config['log_threshold'] = 1; // Tingkat detail sedang untuk produksi    
 }
 
 /*
