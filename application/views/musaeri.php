@@ -14,7 +14,8 @@
         }
 
         .container {
-            width: 800px;
+            width: 90%;
+            max-width: 800px;
             margin: 20px auto;
             background-color: #fff;
             padding: 20px;
@@ -102,7 +103,7 @@
         }
 
         .skills .skill-bar .skill-1 {
-            width: 32%;
+            width: 70%;
             background-color: #4CAF50;
         }
 
@@ -117,7 +118,7 @@
         }
 
         .skills .skill-bar .skill-4 {
-            width: 20%;
+            width: 90%;
             background-color: #ff9800;
         }
 
@@ -183,7 +184,7 @@
             margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 90%;
             max-width: 400px;
             border-radius: 10px;
         }
@@ -256,6 +257,20 @@
             display: flex;
             animation: slide 20s linear infinite;
         }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .skills .skill-name {
+                width: 80px;
+            }
+
+            .skills .skill-bar {
+                width: 150px;
+            }
+        }
     </style>
 </head>
 
@@ -263,9 +278,9 @@
     <div class="container">
         <div class="image-slider">
             <div class="slider-wrapper">
-                <img alt="Image 1" height="100" src="https://storage.googleapis.com/a1aa/image/2RAmVOYItC7nIBh1r5fedMU7feQRVfAquVO8zCDemlYUDzC7E.jpg" width="150" />
-                <img alt="Image 2" height="100" src="https://storage.googleapis.com/a1aa/image/6tO06Wn8hwoqCJHc5JnVxjIZk8kGondvf1d6zVkmHQEHmF2JA.jpg" width="150" />
-                <img alt="Image 3" height="100" src="https://storage.googleapis.com/a1aa/image/IA8MlvT1VQZfWyrZnrp0ecLmLZxXix8u0qdLX9pHkBKMMLsTA.jpg" width="150" />
+                <img alt="Image 1" height="100" src="<?= base_url('assets/images/iklan/pngwing.com (5).png') ?>" width="150" />
+                <img alt="Image 2" height="100" src="<?= base_url('assets/images/iklan/pngwing.com (6).png') ?>" width="150" />
+                <img alt="Image 3" height="100" src="<?= base_url('assets/images/iklan/pngwing.com (7).png') ?>" width="150" />
                 <img alt="Image 4" height="100" src="https://storage.googleapis.com/a1aa/image/vjy6CKL26BqLMFOVivpyyLg3fKgeYejmuw2CijOLsdoiYWYnA.jpg" width="150" />
                 <img alt="Image 5" height="100" src="https://storage.googleapis.com/a1aa/image/lNAEJJz6eQwxeUovfAUgXecuFYqQKBHV4LxEdelKkw0FiZhdC.jpg" width="150" />
                 <img alt="Image 6" height="100" src="https://storage.googleapis.com/a1aa/image/YITUDtgNheTAXiMCBgRcl2wJ08TVUae3snfakPJ94fEowswOB.jpg" width="150" />
@@ -326,7 +341,7 @@
                 <i class="fas fa-phone">
                 </i>
                 <p>
-                    Phone: +628121-000-3701
+                    Phone: +62812-1000-3701
                 </p>
             </div>
             <div class="contact-info">
@@ -340,9 +355,10 @@
                 <i class="fas fa-envelope">
                 </i>
                 <p>
-                    Email: musaeri@example.com
+                    Email: my@musaeri.my.id
                 </p>
             </div>
+
         </div>
         <!-- <div class="hobbies">
             <div class="section-title">
