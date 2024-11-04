@@ -7,7 +7,7 @@
   }
   ?>
 
-  <p class="login-box-msg"><?= $this->session->userdata('reset_email'); ?></p>
+  <p class="login-box-msg"><?= $this->session->userdata('UserName'); ?></p>
   <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-prepend">

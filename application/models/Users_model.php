@@ -6,6 +6,8 @@ class Users_model extends CI_Model
     public function userValid($username)
     {
         $sql = "SELECT * FROM users WHERE email='$username' OR phone ='$username'";
+        // $sql = "SELECT id_users,name_users,email,phone,is_active FROM users 
+        //         WHERE email='$username' OR phone ='$username'";
         $data = $this->db->query($sql);
         return $data->row_array();
     }

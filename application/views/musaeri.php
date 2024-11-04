@@ -255,7 +255,7 @@
 
         .slider-wrapper {
             display: flex;
-            animation: slide 20s linear infinite;
+            animation: slide 10s linear infinite;
         }
 
         @media (max-width: 600px) {
@@ -294,9 +294,10 @@
             </div>
         </div>
         <div class="login-button">
-            <button id="loginBtn">
+            <!-- <button id="loginBtn">
                 Login
-            </button>
+            </button> -->
+            <a href="<?= base_url('Authorization') ?>" type="button" class="login-button">Login</a>
         </div>
         <div class="header">
             <img alt="Profile Picture" height="150" src="<?= base_url('assets/images/musaeri.png') ?>" width="150" />
