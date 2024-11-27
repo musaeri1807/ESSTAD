@@ -72,41 +72,28 @@ class Authorization extends CI_Controller
 						'login_state'	=> TRUE,
 						'lastlogin'		=> time()
 					];
-					// siapkan token
-					$token = base64_encode(random_bytes(32));
-					$user_token = [
-						'id_users' => $user['id_users'],
-						'token' => $token,
-						'date_created' => date('Y-m-d H:i:s')
-					];
+					// update date
+					$this->db->where('id_users', $user['id_users']);
+					$this->db->update('users', ['last_login' => time()]);
 
-					if ($this->db->get_where('token_users', ['id_users' => $user['id_users']])->row_array()) {
-						$this->db->where('id_users', $user['id_users']);
-						$this->db->update('token_users', $user_token);
-					} else {
-						$this->db->insert('token_users', $user_token);
+					if ($this->db->affected_rows() > 0) {
+						$this->session->set_userdata($session);
+						//Email
+						$this->_sendEmail($user['name_users'], $user['email'], '', 'Login');
+						if (!empty($this->input->post('rememberMe'))) {
+							setcookie('loginUsername', $username, time() + (1 * 365 * 24 * 60 * 60));
+							setcookie('loginPassword', $password, time() + (1 * 365 * 24 * 60 * 60));
+							// Sudah di Centang;
+						} else {
+							setcookie('loginUsername', "");
+							setcookie('loginPassword', "");
+							// Belum di centang!;
+						}
+						$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
+						redirect('Authorization');
 					}
-
-					$this->session->set_userdata($session);
-
-					//Email
-					$this->_sendEmail($user['name_users'], $user['email'], '', 'Login');
-
-					if (!empty($this->input->post('rememberMe'))) {
-						setcookie('loginUsername', $username, time() + (1 * 365 * 24 * 60 * 60));
-						setcookie('loginPassword', $password, time() + (1 * 365 * 24 * 60 * 60));
-						// Sudah di Centang;
-					} else {
-						setcookie('loginUsername', "");
-						setcookie('loginPassword', "");
-						// Belum di centang!;
-					}
-					$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
-					redirect('Authorization');
 				} else {
 					// // Jika login gagal
-					// log_message('warning', 'Failed login attempt for user ' . $username . ' from IP ' . $this->input->ip_address());
-
 					$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Wrong password!</p></span>');
 					redirect('Authorization');
 				}
@@ -121,12 +108,11 @@ class Authorization extends CI_Controller
 	}
 	public function signup()
 	{
-
-		$this->form_validation->set_rules('name', 'Name', 'trim|required');
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]');
-		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[10]|max_length[12]|numeric|is_unique[users.phone]');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-		$this->form_validation->set_rules('terms', 'Terms', 'trim|required');
+		$this->form_validation->set_rules('name', 'name', 'trim|required');
+		$this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[users.email]');
+		$this->form_validation->set_rules('phone', 'phone', 'trim|required|min_length[10]|max_length[12]|numeric|is_unique[users.phone]');
+		$this->form_validation->set_rules('password', 'password', 'trim|required|min_length[8]');
+		$this->form_validation->set_rules('terms', 'terms', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
@@ -170,6 +156,9 @@ class Authorization extends CI_Controller
 							if ($this->db->affected_rows() > 0) {
 								//Email
 								$this->_sendEmail($name, $email, $token, 'Account Verification');
+								$nomor		=	$phone;
+								$message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
+								$this->_sendOTP($nomor, $message);
 							} else {
 								echo "Gagal Mendapatkan Token.";
 							}
@@ -202,18 +191,45 @@ class Authorization extends CI_Controller
 		if ($user) {
 			$user_token = $this->db->get_where('token_users', ['token' => $token])->row_array();
 			if ($user_token) {
-				// $this->session->set_userdata('email', $email);
-				if ($user['is_active'] == 0) {
-					# code...
-					$this->db->set('is_active', 1);
-					$this->db->where('email', $email);
-					$this->db->update('users');
-					// $this->session->unset_userdata('email');
-					$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
-					redirect('authorization');
+				if (time() - strtotime($user_token['date_created']) <= 1800) { //kurang dari=30 menit
+					if ($user['is_active'] == 0) {
+						$this->db->set('is_active', 1);
+						$this->db->where('email', $email);
+						$this->db->update('users');
+						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
+						redirect('authorization');
+					} else {
+						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Active.!</p></span>');
+						redirect('authorization');
+					}
 				} else {
-					$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Active.!</p></span>');
-					redirect('authorization');
+					if ($user['is_active'] == 0) {
+						// echo "kirim Ulang";
+						$token = base64_encode(random_bytes(32));
+						$user_token = [
+							'id_users' 		=> $user['id_users'],
+							'token' 		=> $token,
+							'date_created' 	=> date('Y-m-d H:i:s')
+						];
+						$this->db->get_where('token_users', ['id_users' => $user['id_users']])->row_array();
+						$this->db->where('id_users', $user['id_users']);
+						$this->db->update('token_users', $user_token);
+
+						if ($this->db->affected_rows() > 0) {
+							//Email
+							$this->_sendEmail($user['name_users'], $email, $token, 'Account Verification');
+							$nomor		=	$user['phone'];
+							$message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
+							$this->_sendOTP($nomor, $message);
+							$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Please check your email or whathttps to activated.!</p></span>');
+							redirect('authorization');
+						} else {
+							echo "Gagal Update Token.";
+						}
+					} else {
+						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Token expired!</p></span>');
+						redirect('authorization');
+					}
 				}
 			} else {
 				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong token!</p></span>');
@@ -226,7 +242,6 @@ class Authorization extends CI_Controller
 	}
 	public function forgot()
 	{
-
 		$this->form_validation->set_rules('username', 'username', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
@@ -270,8 +285,18 @@ class Authorization extends CI_Controller
 							} elseif (ctype_digit($username) && strlen($username) >= 10) {
 								$nomor = $user['phone'];
 								$this->session->set_userdata('NumberPhone', $nomor);
+								$this->db->where('phone_number', $nomor);
+								$this->db->delete('otp_users');
+								$rand 		= rand(100000, 999999);
+								$OTPUser 	= [
+									'phone_number' 	=> $nomor,
+									'otp' 			=> $rand,
+									'date_created' 	=> date('Y-m-d H:i:s')
+								];
+								$this->db->insert('otp_users', $OTPUser);
+								$message	= $rand . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
 								//OTP
-								$this->_SendOTP($nomor);
+								$this->_SendOTP($nomor, $message);
 								$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Please check your whatshap code OTP!</p></span>');
 								redirect('authorization/verifyOTP');
 								// OTP
@@ -460,23 +485,16 @@ class Authorization extends CI_Controller
 			$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Access send Email Succes!</p></span>');
 		}
 	}
-	private function _SendOTP($nomor)
+	private function _SendOTP($nomor, $message)
 	{
-		// OTP
-		$this->db->where('phone_number', $nomor);
-		$this->db->delete('otp_users');
-		$otp = rand(100000, 999999);
-		$dataOTP = [
-			'phone_number' 	=> $nomor,
-			'otp' 			=> $otp,
-			'date_created' 	=> date('Y-m-d H:i:s')
-		];
-		$this->db->insert('otp_users', $dataOTP);
-		$curl = curl_init();
-		$dataWA = [
+		// OTP	
+
+		$whatsapp = [
 			'target'            => $nomor,
-			'message'           => $otp . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini."
+			'message'           => $message
 		];
+		// Server OTP
+		$curl = curl_init();
 		curl_setopt(
 			$curl,
 			CURLOPT_HTTPHEADER,
@@ -486,18 +504,16 @@ class Authorization extends CI_Controller
 		);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($dataWA));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($whatsapp));
 		curl_setopt($curl, CURLOPT_URL, "https://api.fonnte.com/send");
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-
 		$result = curl_exec($curl);
 		if (curl_errno($curl)) {
 			$error_msg = curl_error($curl);
 			echo $error_msg;
 		}
 		curl_close($curl);
-
 		echo $result;
 	}
 

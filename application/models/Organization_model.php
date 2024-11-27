@@ -8,13 +8,14 @@ class Organization_model extends CI_Model
   {
     parent::__construct();
   }
-  public function depselect()  {
-
-    $sql    = "SELECT * FROM department ORDER BY id DESC ";
+  public function get_bspid()
+  {
+    $sql    = "SELECT * FROM branch ORDER BY id DESC ";
     $query  = $this->db->query($sql);
     $result = $query->result();
     return $result;
   }
+  // ''''''''''''''''''''''''''''''''''
   public function Add_Department($data)
   {
     $this->db->insert('department', $data);
@@ -36,33 +37,5 @@ class Organization_model extends CI_Model
   {
     $this->db->where('id', $id);
     $this->db->update('department', $data);
-  }
-
-  public function Add_Designation($data)
-  {
-    $this->db->insert('designation', $data);
-  }
-  public function designation_delete($des_id)
-  {
-    $this->db->delete('designation', array('id' => $des_id));
-  }
-
-  public function designation_edit($des)
-  {
-    $sql    = "SELECT * FROM `designation` WHERE `id`='$des'";
-    $query  = $this->db->query($sql);
-    $result = $query->row();
-    return $result;
-  }
-  public function Update_Designation($id, $data)
-  {
-    $this->db->where('id', $id);
-    $this->db->update('designation', $data);
-  }
-  public function desselect()
-  {
-    $query = $this->db->get('designation');
-    $result = $query->result();
-    return $result;
   }
 }

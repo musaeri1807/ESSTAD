@@ -39,4 +39,28 @@ class Users_model extends CI_Model
         $data = $this->db->query($sql);
         return $data->row_array();
     }
+    public function histroiMutasi($id)
+    {
+        $sql    = "SELECT 
+        field_id_saldo AS id,
+        field_no_referensi AS noreferensi,
+        field_tanggal_saldo AS tanggal,       
+        field_type_saldo AS type,
+        field_kredit_saldo AS kredit,
+        field_debit_saldo AS debit,
+        field_total_saldo AS saldo,
+        field_status AS status,
+        field_comments AS keterangan       
+        FROM tbltrxmutasisaldo S WHERE S.field_member_id='{$id}' ORDER BY S.field_id_saldo DESC";
+        $data   = $this->db->query($sql);
+        return $data->result_array();
+    }
+    public function sumSaldo($id)
+    {
+        $sql = "SELECT field_rekening AS account_id ,field_total_saldo AS saldo				
+		FROM tbltrxmutasisaldo S 		
+		WHERE S.field_member_id='{$id}' ORDER BY S.field_id_saldo DESC LIMIT 1";
+        $data = $this->db->query($sql);
+        return $data->row_array();
+    }
 }

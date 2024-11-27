@@ -10,6 +10,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     // reCAPTCHA supported 40+ languages listed here:
     // https://developers.google.com/recaptcha/docs/language
     $config['recaptcha_lang'] = 'en';
+} elseif ($_SERVER['SERVER_NAME'] == 'my.bspid.id') {
+    # code...
+    $config['recaptcha_site_key'] = '6LdDxoUqAAAAAAjnQeAWnGPk-C3HXfyPidtwV-8e';
+    $config['recaptcha_secret_key'] = '6LdDxoUqAAAAAGG2nFn6wLutR5VTDolWB8Vd5rnj';
+    // reCAPTCHA supported 40+ languages listed here:
+    // https://developers.google.com/recaptcha/docs/language
+    $config['recaptcha_lang'] = 'en';
 } else {
     # code...
     $config['recaptcha_site_key'] = '6LdCXhcbAAAAAKhaHQouGGvtU6u4fJUSx8dpQUGv';
@@ -18,6 +25,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     // https://developers.google.com/recaptcha/docs/language
     $config['recaptcha_lang'] = 'en';
 }
+
+
 
 
 /* End of file recaptcha.php */

@@ -45,8 +45,10 @@
     				<!-- User Account Menu -->
     				<li class="dropdown notifications-menu">
     					<!-- Menu toggle button -->
+
     					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    						<span class="hidden-xs">Hi, <?= $user['name_users']; ?></span>
+    						<i class=""> Hi, <?= $user['name_users']; ?></i>
+
     					</a>
     					<ul class="dropdown-menu">
     						<li class="footer"><a href="#"><i class="fa fa-users text-green"></i>Group <?= $user['id_role']; ?></a></li>
@@ -54,11 +56,11 @@
     							<!-- Inner Menu: contains the notifications -->
     							<ul class="menu">
     								<li><!-- start notification -->
-    									<a href="#">
-    										<i class="fa fa-user text-aqua"></i> Account Setting
+    									<a href="<?= base_url('homepage/accountSetting') ?>">
+    										<i class="fa fa-gear text-aqua"></i> Setting Akun
     									</a>
-    									<a href="#">
-    										<i class="fa fa-gears text-yellow"></i> Security
+    									<a href="<?= base_url('homepage/changePassword') ?>">
+    										<i class="fa fa-shield text-yellow"></i> Keamanan
     									</a>
     								</li>
     								<!-- end notification -->
@@ -74,5 +76,5 @@
     			</ul>
     		</div>
     	</nav>
-		
+
     </header>

@@ -5,5 +5,5 @@
 		<?php echo (ENVIRONMENT === 'development') ?  '<strong>' . CI_VERSION . '</strong>' : '' ?>
 	</div>
 	<!-- Default to the left -->
-	<strong>Copyright &copy; <?= date('Y'); ?> <a href="#">Company</a>.</strong> All rights reserved.
+	<strong>Copyright &copy; <?= date('Y'); ?> <a href="#">MSI</a>.</strong> All rights reserved.
 </footer>
