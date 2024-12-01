@@ -1,6 +1,6 @@
 <div class="card-body">
   <?php if ($this->session->flashdata('message') == null) {
-    echo '<span class="text-primary"><p class="login-box-msg">Enter your Phone | email to reset</p></span>';
+    echo '<span class="text-primary"><p class="login-box-msg">Masukkan Phone atau Email</p></span>';
   } else {
     echo  $this->session->flashdata('message');
   }
@@ -8,12 +8,17 @@
   <!-- <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p> -->
   <form action="<?= base_url('authorization/forgot'); ?>" method="post">
     <div class="input-group mb-3">
-      <input type="text" name="username" class="form-control" placeholder="Email Or Phone" required>
       <div class="input-group-append">
+        <div class="input-group-text">
+        <span class="fas fa-users"></span>
+        </div>
+      </div>
+      <input type="text" name="username" class="form-control" placeholder="Email atau Phone" required>
+      <!-- <div class="input-group-append">
         <div class="input-group-text">
           <span class="fas fa-envelope"></span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="input-group mb-3">
       <div class="input-group-append">
@@ -22,13 +27,12 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button type="submit" class="btn btn-primary btn-block">Request new password</button>
+        <button type="submit" name="reset" class="btn btn-block bg-gradient-primary" value="reset">Minta password baru</button>
       </div>
-      <!-- /.col -->
     </div>
   </form>
   <p class="mt-3">
-    Already have an account? <a href="<?= base_url('authorization'); ?>">Login</a>
+    <a href="<?= base_url('authorization'); ?>" class="btn btn-block btn-outline-primary">Login</a>    
   </p>
 </div>
 <!-- /.login-card-body -->

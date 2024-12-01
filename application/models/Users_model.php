@@ -5,7 +5,15 @@ class Users_model extends CI_Model
 {
     public function userValid($username)
     {
-        $sql = "SELECT * FROM users WHERE email='$username' OR phone ='$username'";
+        $sql = "SELECT 
+                    users.field_user_id AS id_users,
+                    users.field_nama AS name_users,
+                    users.field_email AS email,
+                    users.field_handphone AS phone,
+                    users.field_password AS password,
+                    users.field_status_aktif AS is_active
+                FROM tbluserlogin users 
+                WHERE field_email='{$username}' OR field_handphone ='{$username}'";
         // $sql = "SELECT id_users,name_users,email,phone,is_active FROM users 
         //         WHERE email='$username' OR phone ='$username'";
         $data = $this->db->query($sql);
@@ -14,9 +22,27 @@ class Users_model extends CI_Model
 
     public function userLogin($userid)
     {
-        $sql = "SELECT * FROM users U LEFT JOIN role R ON U.id_role=R.id_role WHERE U.id_users =$userid";
+        // $sql = "SELECT * FROM users U LEFT JOIN role R ON U.id_role=R.id_role WHERE U.id_users =$userid";
+        $sql = "SELECT 
+                    users.field_user_id AS id_users,
+                    users.field_nama AS name_users,
+                    users.field_email AS email,
+                    users.field_handphone AS phone,
+                    users.field_password AS password,
+                    users.field_status_aktif AS is_active
+                FROM tbluserlogin users 
+                WHERE field_user_id='{$userid}'";
         $data = $this->db->query($sql);
         return $data->row_array();
+    }
+    public function userUpdated($username, $data)
+    {
+        $this->db->set($data);
+        // $this->db->set('field_password', $password);
+        $this->db->where('field_email', $username);
+        $this->db->or_where('field_handphone', $username);
+        $updated = $this->db->update('tbluserlogin');
+        return $updated;
     }
     public function logActivity()
     {

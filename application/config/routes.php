@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 // $route['default_controller'] = 'Ztest/recaptcha'Authorization;replicateTables
 // $route['default_controller'] = 'Replication/replicateTablesMasterSlave';
-$route['default_controller'] = 'Homepage';
+$route['default_controller'] = 'Authorization';
 $route['404_override'] = 'Error404';
 $route['translate_uri_dashes'] = FALSE;
 

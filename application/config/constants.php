@@ -89,13 +89,14 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('HOSTNAME', 'localhost');
     define('USERNAME', 'root');
     define('PASSWORD', '');
-    define('DATABASE', 'local_ymti');
+    define('DATABASE', 'local_vpsbsp');
 } elseif ($_SERVER['SERVER_NAME'] == '172.24.12.183' or '192.168.0.154') {
     // locahost
     define('HOSTNAME', 'localhost');
     define('USERNAME', 'root');
     define('PASSWORD', '');
-    define('DATABASE', 'local_ymti');
+    define('DATABASE', 'local_vpsbsp');
+    // local_ymti
 } else {
     // Online
     define('HOSTNAME', 'localhost');

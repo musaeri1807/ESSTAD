@@ -23,7 +23,7 @@ class Settings_model extends CI_Model
 	public function get_config_value($key)
 	{
 		$this->db->where('key', $key);
-		$query = $this->db->get('maintenance');
+		$query = $this->db->get('tblmaintenance');
 		if ($query->num_rows() > 0) {
 			return $query->row();
 		} else {

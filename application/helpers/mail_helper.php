@@ -74,7 +74,7 @@ function auth_mail($name, $link, $subject)
     
         <div class="container">
             <div class="header">
-                <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo ESSTAD">
+                <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo">
             </div>
             <div class="content" style="color: #000000;">
             <h4>Hallo, ' . $name . '</h4>  
@@ -182,7 +182,7 @@ function info_mail($name, $subject)
     
         <div class="container">
             <div class="header">
-                <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo ESSTAD">
+                <img class="logo" src="https://musaeri.my.id/assets/images/signin.png" alt="Logo">
             </div>
             <div class="content" style="color: #000000;">
                 <h4>Hallo, ' . $name . '</h4> 

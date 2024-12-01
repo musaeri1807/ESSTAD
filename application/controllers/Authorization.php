@@ -56,9 +56,9 @@ class Authorization extends CI_Controller
 
 	private function _signin()
 	{
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$user = $this->Users_model->userValid($username);
+		$username 	= $this->input->post('username');
+		$password 	= $this->input->post('password');
+		$user 		= $this->Users_model->userValid($username);
 		// jika usernya ada
 		if ($user) {
 			// jika usernya aktif
@@ -68,14 +68,12 @@ class Authorization extends CI_Controller
 					$session = [
 						'email' 		=> $user['email'],
 						'id_users'		=> $user['id_users'],
-						'role'			=> $user['id_role'],
+						// 'role'			=> $user['id_role'],
 						'login_state'	=> TRUE,
 						'lastlogin'		=> time()
 					];
 					// update date
-					$this->db->where('id_users', $user['id_users']);
-					$this->db->update('users', ['last_login' => time()]);
-
+					$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
 					if ($this->db->affected_rows() > 0) {
 						$this->session->set_userdata($session);
 						//Email
@@ -102,10 +100,11 @@ class Authorization extends CI_Controller
 				redirect('Authorization');
 			}
 		} else {
-			$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Email is not registered!</p></span>');
+			$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Tidak terdaftar!</p></span>');
 			redirect('Authorization');
 		}
 	}
+
 	public function signup()
 	{
 		$this->form_validation->set_rules('name', 'name', 'trim|required');
@@ -185,9 +184,9 @@ class Authorization extends CI_Controller
 	}
 	public function verify()
 	{
-		$email = $this->input->get('email');
-		$token = $this->input->get('token');
-		$user = $this->db->get_where('users', ['email' => $email])->row_array();
+		$email	= $this->input->get('email');
+		$token	= $this->input->get('token');
+		$user	= $this->db->get_where('users', ['email' => $email])->row_array();
 		if ($user) {
 			$user_token = $this->db->get_where('token_users', ['token' => $token])->row_array();
 			if ($user_token) {
@@ -258,7 +257,8 @@ class Authorization extends CI_Controller
 				$response = $this->recaptcha->verifyResponse($recaptcha);
 				if (isset($response['success']) and $response['success'] === true) {
 					$username 	= $this->input->post('username');
-					$user 		= $this->Users_model->userValid($username);
+					$button 	= $this->input->post('OTP');
+					$user 		= $this->Users_model->userValid($username); //valid User
 					if ($user) {
 						if ($user['is_active'] == 1) {
 							if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
@@ -285,6 +285,7 @@ class Authorization extends CI_Controller
 							} elseif (ctype_digit($username) && strlen($username) >= 10) {
 								$nomor = $user['phone'];
 								$this->session->set_userdata('NumberPhone', $nomor);
+								$this->session->unset_userdata('button');
 								$this->db->where('phone_number', $nomor);
 								$this->db->delete('otp_users');
 								$rand 		= rand(100000, 999999);
@@ -294,10 +295,10 @@ class Authorization extends CI_Controller
 									'date_created' 	=> date('Y-m-d H:i:s')
 								];
 								$this->db->insert('otp_users', $OTPUser);
-								$message	= $rand . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
+								$message	= '*' . $rand . '*' . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
 								//OTP
 								$this->_SendOTP($nomor, $message);
-								$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Please check your whatshap code OTP!</p></span>');
+								$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!</p></span>');
 								redirect('authorization/verifyOTP');
 								// OTP
 							} else {
@@ -321,13 +322,19 @@ class Authorization extends CI_Controller
 			}
 		}
 	}
-	public function verifyOTP()
+	public function signinOTP()
 	{
-		if (!$this->session->userdata('NumberPhone')) {
-			redirect('authorization/forgot');
-		}
-
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules(
+			'username',
+			'phone',
+			'trim|required|numeric|min_length[10]|max_length[12]',
+			[
+				'required'    => 'Kolom {field} wajib diisi.',
+				'min_length'  => 'Kolom {field} minimal harus berisi {param} karakter.',
+				'max_length'  => 'Kolom {field} minimal harus berisi {param} karakter.',
+				'numeric'	  => 'Kolom {field} harus berisi angka.'
+			]
+		);
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
@@ -335,30 +342,155 @@ class Authorization extends CI_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewsAuth('authorization/v-forgotOTP', $data);
+			$this->template->viewsAuth('authorization/v-otp2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
 			if (!empty($recaptcha)) {
 				$response = $this->recaptcha->verifyResponse($recaptcha);
 				if (isset($response['success']) and $response['success'] === true) {
-					$number 	= $this->input->post('username');
+					$username 	= $this->input->post('username');
+					$button 	= $this->input->post('OTP');
+					$user 		= $this->Users_model->userValid($username); //valid User
+					if ($user) {
+						if ($user['is_active'] == 1) {
+							$nomor = $user['phone'];
+							$this->session->set_userdata('NumberPhone', $nomor);
+							$this->session->set_userdata('button', $button);
+							$this->db->where('phone_number', $nomor);
+							$this->db->delete('otp_users');
+							$rand 		= rand(100000, 999999);
+							$OTPUser 	= [
+								'phone_number' 	=> $nomor,
+								'otp' 			=> $rand,
+								'date_created' 	=> date('Y-m-d H:i:s')
+							];
+							$this->db->insert('otp_users', $OTPUser);
+							$message	= '*' . $rand . '*' . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
+							//OTP
+							$this->_SendOTP($nomor, $message);
+							$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!</p></span>');
+							redirect('authorization/verifyOTP'); //private
+							// OTP							
+						} else {
+							$this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">it not activated yet!</p></span>');
+							redirect('authorization');
+						}
+					} else {
+						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Nomor tida terdaftar!</p></span>');
+						redirect('authorization/signinOTP');
+					}
+				} else {
+					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
+					redirect('authorization/signinOTP');
+				}
+			} else {
+				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
+				redirect('authorization/signinOTP');
+			}
+		}
+	}
+	public function verifyOTP()
+	{
+		if (!$this->session->userdata('NumberPhone')) {
+			redirect('authorization');
+		}
 
+		$this->form_validation->set_rules('1', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules('2', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules('3', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules('4', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules('5', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules('6', 'Username', 'trim|required|numeric');
+		if ($this->form_validation->run() == false) {
+			$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
+			$query = $this->db->get('otp_users');
+			$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
+			$DateCreated = strtotime(date($result['date_created']));
+			if (time() - $DateCreated <= 600) {
+				$sett = $this->db->get('settings')->row_array();
+				$ting = array(
+					'Title' => ' OTP',
+					'widget' => $this->recaptcha->getWidget()
+				);
+				$data = array_merge($sett, $ting);
+				$this->template->viewsAuth('authorization/v-verifyotp', $data);
+			} else {
+				$button = $this->session->userdata('button');
+				if ($button == 'signin') {
+					$this->session->unset_userdata('NumberPhone');
+					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP expired</p></span>');
+					redirect('authorization/signinotp');
+				} else {
+					$this->session->unset_userdata('NumberPhone');
+					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP expired2</p></span>');
+					redirect('authorization/forgot');
+				}
+			}
+		} else {
+			// validasinya success
+			$recaptcha = $this->input->post('g-recaptcha-response');
+			if (!empty($recaptcha)) {
+				$response = $this->recaptcha->verifyResponse($recaptcha);
+				if (isset($response['success']) and $response['success'] === true) {
+					$satu 	= $this->input->post('1');
+					$dua 	= $this->input->post('2');
+					$tiga 	= $this->input->post('3');
+					$empat 	= $this->input->post('4');
+					$lima 	= $this->input->post('5');
+					$enam 	= $this->input->post('6');
+					$number = $satu . $dua . $tiga . $empat . $lima . $enam; // 123456					
 					$this->db->where('otp', $number);
 					$query = $this->db->get('otp_users');
 					$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
 					$DateCreated = strtotime(date($result['date_created']));
 					if ($result) {
 						if (time() - $DateCreated <= 600) {
-							$this->session->set_userdata('UserName', $result['phone_number']);
-							$this->changePassword();
+							if ($this->session->userdata('button') == 'signin') {
+								$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
+								$session 	= [
+									'email' 		=> $user['email'],
+									'id_users'		=> $user['id_users'],
+									// 'role'			=> $user['id_role'],
+									'login_state'	=> TRUE,
+									'lastlogin'		=> time()
+								];
+								$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
+								if ($this->db->affected_rows() > 0) {
+									$this->session->set_userdata($session);
+									$this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
+									$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
+									redirect('Authorization');
+								}
+							} else {
+								$this->session->set_userdata('UserName', $result['phone_number']);
+								$this->changePassword();
+							}
 						} else {
 							$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP expired</p></span>');
 							redirect('authorization/forgot');
 						}
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Wrong</p></span>');
-						redirect('authorization/forgot');
+						$attempt = $this->session->userdata('attempt') ?? 0;
+						$attempt++;
+						$this->session->set_userdata('attempt', $attempt); // Tambahkan percobaan
+
+						if ($attempt >= 3) {
+							$this->session->unset_userdata('attempt');
+							$this->session->unset_userdata('NumberPhone');
+							$button = $this->session->userdata('button');
+							if ($button == 'signin') {
+								$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
+								redirect('authorization/signinotp');
+								// $this->session->sess_destroy();
+							} else {
+								$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
+								redirect('authorization/forgot');
+							}
+						} else {
+							$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah! ke' . $attempt . 'x</p></span>');
+							redirect('authorization/verifyOTP');
+						}
 					}
 				} else {
 					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
@@ -373,9 +505,10 @@ class Authorization extends CI_Controller
 
 	public function reset()
 	{
-		$email = $this->input->get('email');
-		$token = $this->input->get('token');
-		$user = $this->db->get_where('users', ['email' => $email])->row_array();
+		$email 	= $this->input->get('email');
+		$token 	= $this->input->get('token');
+		// $user 	= $this->db->get_where('users', ['email' => $email])->row_array();
+		$user	= $this->Users_model->userValid($email);
 		if ($user) {
 			$user_token = $this->db->get_where('token_users', ['token' => $token])->row_array();
 
@@ -419,12 +552,7 @@ class Authorization extends CI_Controller
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
 			$username = $this->session->userdata('UserName');
-
-			$this->db->set('password', $password);
-			$this->db->where('email', $username);
-			$this->db->or_where('phone', $username);
-			$this->db->update('users');
-
+			$this->Users_model->userUpdated($username, ['field_password' => $password]);
 			$this->session->unset_userdata('UserName');
 			$this->session->sess_destroy();
 			// $this->db->delete('token_users', ['email' => $email]);

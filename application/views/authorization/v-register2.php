@@ -5,12 +5,25 @@
   } elseif ($this->session->flashdata('message') == 'recaptcha') {
     echo  '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>';
   } elseif ($this->session->flashdata('message') == 'false') {
-    echo  '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha.!</p></span>';
-  } else {
-    echo '<span class="text-primary"> <p class="login-box-msg">Register a new membership</p></span>';
-  }
+    echo  '<span class="text-danger "><p class="login-box-msg">Kesalahan recaptcha.!</p></span>';
+  } 
   ?>
   <form action="<?= base_url('authorization/signup'); ?>" method="post">
+    <div class="row">
+      <div class="col-12">
+        <div class="icheck-primary">
+          <span> <b>Daftar Nasabah BSP</b></span>
+        </div>
+      </div>
+      <div class="col-4">
+        <!-- <a href="<?= base_url('authorization/signup'); ?>" type="submit" class="btn btn-block btn-outline-primary">Masuk</a> -->
+      </div>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-append">
+
+      </div>
+    </div>
     <div class="input-group mb-3">
       <div class="input-group-append">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -22,7 +35,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-phone"></i></span>
       </div>
-      <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" value="<?= set_value('phone'); ?>" required>
+      <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="Phone" value="<?= set_value('phone'); ?>" required>
     </div>
     <span class="text-danger small"><?= form_error('phone'); ?></span>
     <div class="input-group mb-3">
@@ -57,17 +70,18 @@
         <div class="icheck-primary">
           <input type="checkbox" id="agreeTerms" name="terms" value="agree">
           <label for="agreeTerms">
-            I agree to the <a href="<?= base_url('authorization/terms'); ?>">terms</a>
+            Saya setuju dg <a href="<?= base_url('authorization/terms'); ?>">ketentuan</a>
           </label>
         </div>
       </div>
       <!-- /.col -->
       <div class="col-4">
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <button type="submit" class="btn btn-block bg-gradient-primary">Daftar</button>
       </div>
       <!-- /.col -->
     </div>
   </form>
-
-  <a href="<?= base_url('authorization'); ?>" class="text-center">I already have a membership</a>
+  <p class="mt-3">
+    <a href="<?= base_url('authorization'); ?>" class="btn btn-block btn-outline-primary">Login</a>
+  </p>
 </div>

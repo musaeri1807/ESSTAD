@@ -1,11 +1,22 @@
 <div class="card-body">
   <?php if ($this->session->flashdata('message') == null) {
-    echo '<span class="text-primary"><p class="login-box-msg">Sign in to start your session</p></span>';
+    // echo '<span class="text-primary"><p class="login-box-msg">Masuk ke BSP</p></span>';
   } else {
     echo  $this->session->flashdata('message');
   }
   ?>
+
   <form action="<?= base_url('authorization'); ?>" method="post">
+    <div class="row mb-2">
+      <div class="col-8">
+        <div class="icheck-primary">
+          <span> <b>Masuk ke BSP</b></span>
+        </div>
+      </div>
+      <div class="col-4">
+        <a href="<?= base_url('authorization/signup'); ?>" type="submit" class="btn btn-block btn-outline-primary">Daftar</a>
+      </div>
+    </div>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -51,19 +62,22 @@
                                                                   }
                                                                   ?>>
           <label for="remember">
-            Remember Me
+            <!-- Remember Me -->
+            Ingatkan
           </label>
         </div>
       </div>
       <!-- /.col -->
       <div class="col-4">
-        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        <button type="submit" class="btn btn-block bg-gradient-primary">Masuk</button>
       </div>
       <!-- /.col -->
     </div>
   </form>
+  <p class="mt-3">
+    <a href="<?= base_url('authorization/forgot'); ?>" type="submit" class="btn btn-block btn-outline-primary">Saya lupa password</a>
+    <a href="<?= base_url('authorization/signinotp'); ?>" type="submit" class="btn btn-block btn-outline-primary">Masuk dengan OTP</a>
 
-  <p class="mt-3">Don't have account..? <a href="<?= base_url('authorization/signup'); ?>">Create an account</a><br><a href="<?= base_url('authorization/forgot'); ?>">I forgot my password</a></p>
-  
+  </p>
 </div>
 <!-- /.card-body -->

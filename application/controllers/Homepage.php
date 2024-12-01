@@ -22,7 +22,7 @@ class Homepage extends CI_Controller
         $session = [
             'email'             => 'infomail17089@gmail.com',
             'id_users'          => '1',
-            'role'              => '6',
+            // 'role'              => '6',
             'login_state'       => TRUE,
             'lastlogin'         => time(),
             'account_id'        => '081291711116'
