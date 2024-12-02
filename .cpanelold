@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1733358/public_html/my.bspid.id
+    - export DEPLOYPATH=/home/musq8219/public_html
     - /bin/cp -R application $DEPLOYPATH
     - /bin/cp -R AdminLTE-2.4.13 $DEPLOYPATH
     - /bin/cp -R assets $DEPLOYPATH

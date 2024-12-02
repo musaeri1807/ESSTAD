@@ -90,20 +90,15 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('USERNAME', 'root');
     define('PASSWORD', '');
     define('DATABASE', 'local_vpsbsp');
-} elseif ($_SERVER['SERVER_NAME'] == '172.24.12.183' or '192.168.0.154') {
-    // locahost
-    define('HOSTNAME', 'localhost');
-    define('USERNAME', 'root');
-    define('PASSWORD', '');
-    define('DATABASE', 'local_vpsbsp');
-    // local_ymti
 } else {
     // Online
     define('HOSTNAME', 'localhost');
-    define('USERNAME', 'musq8219_msi');
-    define('PASSWORD', 'c7x-[!M0J2P_');
-    define('DATABASE', 'musq8219_appmasi');
+    define('USERNAME', 'u1733358_development');
+    define('PASSWORD', '-%6HLTRHrBA2');
+    define('DATABASE', 'u1733358_develop');
 }
+
+
 // Replication Database
 define('HOSTNAME_Replication', 'sql3.freesqldatabase.com');
 define('USERNAME_Replication', 'sql3733077');

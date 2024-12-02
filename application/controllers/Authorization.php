@@ -324,6 +324,7 @@ class Authorization extends CI_Controller
 	}
 	public function signinOTP()
 	{
+		// var_dump($this->session->all_userdata());
 		$this->form_validation->set_rules(
 			'username',
 			'phone',
@@ -373,11 +374,11 @@ class Authorization extends CI_Controller
 							redirect('authorization/verifyOTP'); //private
 							// OTP							
 						} else {
-							$this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">it not activated yet!</p></span>');
+							$this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">Belum aktif!</p></span>');
 							redirect('authorization');
 						}
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Nomor tida terdaftar!</p></span>');
+						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Nomor tidak terdaftar!</p></span>');
 						redirect('authorization/signinOTP');
 					}
 				} else {
@@ -395,6 +396,7 @@ class Authorization extends CI_Controller
 		if (!$this->session->userdata('NumberPhone')) {
 			redirect('authorization');
 		}
+		// $this->session->set_userdata('NumberPhone', '081210003701');
 
 		$this->form_validation->set_rules('1', 'Username', 'trim|required|numeric');
 		$this->form_validation->set_rules('2', 'Username', 'trim|required|numeric');
@@ -403,6 +405,7 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('5', 'Username', 'trim|required|numeric');
 		$this->form_validation->set_rules('6', 'Username', 'trim|required|numeric');
 		if ($this->form_validation->run() == false) {
+
 			$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
 			$query = $this->db->get('otp_users');
 			$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
@@ -416,6 +419,8 @@ class Authorization extends CI_Controller
 				$data = array_merge($sett, $ting);
 				$this->template->viewsAuth('authorization/v-verifyotp', $data);
 			} else {
+				$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
+				$this->db->delete('otp_users');
 				$button = $this->session->userdata('button');
 				if ($button == 'signin') {
 					$this->session->unset_userdata('NumberPhone');
@@ -423,7 +428,7 @@ class Authorization extends CI_Controller
 					redirect('authorization/signinotp');
 				} else {
 					$this->session->unset_userdata('NumberPhone');
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP expired2</p></span>');
+					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Reset expired</p></span>');
 					redirect('authorization/forgot');
 				}
 			}
@@ -473,16 +478,16 @@ class Authorization extends CI_Controller
 					} else {
 						$attempt = $this->session->userdata('attempt') ?? 0;
 						$attempt++;
-						$this->session->set_userdata('attempt', $attempt); // Tambahkan percobaan
+						$this->session->set_userdata('attempt', $attempt);
 
 						if ($attempt >= 3) {
-							$this->session->unset_userdata('attempt');
-							$this->session->unset_userdata('NumberPhone');
+							$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
+							$this->db->delete('otp_users');
+							$this->session->unset_userdata(['attempt', 'NumberPhone']);
 							$button = $this->session->userdata('button');
 							if ($button == 'signin') {
 								$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
 								redirect('authorization/signinotp');
-								// $this->session->sess_destroy();
 							} else {
 								$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
 								redirect('authorization/forgot');
