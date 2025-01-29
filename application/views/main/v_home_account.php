@@ -28,7 +28,7 @@ $message = 1;
   </div>
 <?php endif; ?>
 
-
+<?php echo $user['email'] ?>
 <div class="row">
   <div class="col-md-12">
     <!-- Input data -->
@@ -46,7 +46,7 @@ $message = 1;
             <select name="" id="" class="form-control">
               <option value="">-Pilih Bank Sampah -</option>
               <?php foreach ($bspid as $bsp) { ?>
-                <option value="<?= $bsp->id ?>"><?= 'Bank Sampah '.$bsp->branch . '-' . $bsp->alamat; ?></option>
+                <option value="<?= $bsp->id ?>"><?= 'Bank Sampah ' . $bsp->branch . '-' . $bsp->alamat; ?></option>
               <?php } ?>
             </select>
           </div>
@@ -58,7 +58,7 @@ $message = 1;
             <div class="input-group-addon">
               <i class="fa fa-credit-card"></i>
             </div>
-            <input type="text" name="NIK" class="form-control" value="" data-inputmask="'mask': '999999 9999999999'" data-mask>
+            <input type="tel" name="NIK" class="form-control" value="" data-inputmask="'mask': '999999 9999999999'" data-mask>
           </div>
         </div>
         <!-- Date -->

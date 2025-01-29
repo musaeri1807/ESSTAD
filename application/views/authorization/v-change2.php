@@ -1,13 +1,8 @@
 <div class="card-body">
-  <?php if (!empty(form_error('password1'))) {
-    $this->session->set_flashdata('message', '<span class="text-warning"><p class="login-box-msg">The Password field does not match the Repeat Password field.!</p></span>');
-    echo  $this->session->flashdata('message');
-  } else {
-    echo '<span class="text-primary "><p class="login-box-msg">Change password new your to account</p></span>';
-  }
-  ?>
-
-  <p class="login-box-msg"><?= $this->session->userdata('UserName'); ?></p>
+  <span>
+    <p class="login-box-msg">Change password new your to account</p>
+  </span>
+  <p class="login-box-msg"><b><?= $this->session->userdata('UserName'); ?></b></p>
   <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-prepend">

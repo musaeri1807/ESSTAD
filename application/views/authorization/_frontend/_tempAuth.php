@@ -3,12 +3,15 @@
 <!-- head -->
 <?= @$_head; ?>
 
-<body class="hold-transition login-page " style="background-image: url(<?= base_url('/assets/images/' . $background); ?>);">
+<body class="hold-transition login-page " style="background-image: url(<?= base_url('/assets/images/' . $background); ?>);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    background-position: center center;">
     <!-- <body class="hold-transition login-page "> -->
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo Aplikasi" height="90">
+                <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo Aplikasi" height="100">
             </div>
             <!-- content -->
             <?= @$_content; ?>

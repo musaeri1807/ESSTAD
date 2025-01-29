@@ -1,9 +1,9 @@
 <!-- ........... -->
-<?php if ($user['company'] == ''): ?>
-  <div class="alert alert-success">Condition is true!</div>
-<?php else: ?>
-  <div class="alert alert-danger">Condition is false!</div>
-<?php endif; ?>
+
+<div class="alert alert-success">Condition is true!</div>
+
+<div class="alert alert-danger">Condition is false!</div>
+
 
 <?php ?>
 

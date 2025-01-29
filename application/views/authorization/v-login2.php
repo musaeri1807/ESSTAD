@@ -1,16 +1,17 @@
 <div class="card-body">
-  <?php if ($this->session->flashdata('message') == null) {
-    // echo '<span class="text-primary"><p class="login-box-msg">Masuk ke BSP</p></span>';
+
+  <!-- <?php if ($this->session->flashdata('message') == null) {
+    echo '<span class="text-primary"><p class="login-box-msg">Masuk ke BSP</p></span>';
   } else {
     echo  $this->session->flashdata('message');
   }
-  ?>
+  ?> -->
 
   <form action="<?= base_url('authorization'); ?>" method="post">
     <div class="row mb-2">
       <div class="col-8">
         <div class="icheck-primary">
-          <span> <b>Masuk ke BSP</b></span>
+          <span> <b>Masuk <?= $name_application  ?></b></span>
         </div>
       </div>
       <div class="col-4">
@@ -21,12 +22,12 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
       </div>
-      <input type="text" name="username" class="form-control" placeholder="Email Or Phone" value="<?php if (isset($_COOKIE['loginUsername'])) {
-                                                                                                    echo $_COOKIE['loginUsername'];
-                                                                                                  } else {
-                                                                                                    echo set_value('username');
-                                                                                                  }
-                                                                                                  ?>" required>
+      <input type="text" name="username" class="form-control" placeholder="mail@xxx Or 08xxx" value="<?php if (isset($_COOKIE['loginUsername'])) {
+                                                                                                        echo $_COOKIE['loginUsername'];
+                                                                                                      } else {
+                                                                                                        echo set_value('username');
+                                                                                                      }
+                                                                                                      ?>" required>
     </div>
     <div class="input-group mb-3">
       <div class="input-group-prepend">

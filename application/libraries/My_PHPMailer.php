@@ -24,15 +24,15 @@ class My_PHPMailer
         try {
             //Server settings
             $this->mail->isSMTP();
-            $this->mail->Host       = 'haruman.iixcp.rumahweb.net'; // Ganti dengan SMTP server Anda
+            $this->mail->Host       = 'mx.mailspace.id'; // Ganti dengan SMTP server Anda
             $this->mail->SMTPAuth   = true;
-            $this->mail->Username   = 'noreplay@musaeri.my.id'; // Ganti dengan email Anda
-            $this->mail->Password   = 'Pr8ja99z?K8%'; // Ganti dengan password email Anda
+            $this->mail->Username   = 'no_reply@miga.co.id'; // Ganti dengan email Anda
+            $this->mail->Password   = 'P@ssw0rdmiga.2022#'; // Ganti dengan password email Anda
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Gunakan TLS atau SSL
-            $this->mail->Port       = 587; // Port untuk TLS
+            $this->mail->Port       = 465; // Port untuk TLS
 
             //Recipients
-            $this->mail->setFrom('noreplay@musaeri.my.id', 'Mailer'); // Ganti dengan email pengirim
+            $this->mail->setFrom('no_reply@miga.co.id', 'no_reply'); // Ganti dengan email pengirim
             $this->mail->addAddress($to); // Add a recipient
 
             //Content

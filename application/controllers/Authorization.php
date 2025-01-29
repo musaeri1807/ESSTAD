@@ -14,7 +14,12 @@ class Authorization extends CI_Controller
 		$this->load->library('logger');
 		$this->load->library('recaptcha');
 		$this->load->model('Users_model');
+		$this->load->model('Organization_model');
 		$this->load->helper('url');
+		$this->load->helper('security');
+		$this->load->helper('norekening_helper');
+
+
 		require APPPATH . 'third_party/PHPMailer/Exception.php';
 		require APPPATH . 'third_party/PHPMailer/PHPMailer.php';
 		require APPPATH . 'third_party/PHPMailer/SMTP.php';
@@ -22,9 +27,14 @@ class Authorization extends CI_Controller
 
 	public function index()
 	{
-		if ($this->session->userdata('email') and $this->session->userdata('id_users')) {
-			redirect('Homepage');
-		}
+		// if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
+		// 	redirect('Homepage');
+		// }
+		
+		// $this->session->sess_destroy();
+		var_dump($this->session->all_userdata());
+		// $this->changePassword();
+		// die();
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
@@ -38,17 +48,19 @@ class Authorization extends CI_Controller
 			$this->template->viewsAuth('authorization/v-login2', $data);
 		} else {
 			// validasinya success
-			$recaptcha = $this->input->post('g-recaptcha-response');
+			$recaptcha = $this->input->post('g-recaptcha-response', TRUE);
 			if (!empty($recaptcha)) {
 				$response = $this->recaptcha->verifyResponse($recaptcha);
 				if (isset($response['success']) and $response['success'] === true) {
 					$this->_signin();
 				} else {
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha!');
+					// $this->session->set_flashdata('message_error', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
 					redirect('Authorization');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
+				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha');
+				// $this->session->set_flashdata('message_error', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
 				redirect('Authorization');
 			}
 		}
@@ -56,8 +68,8 @@ class Authorization extends CI_Controller
 
 	private function _signin()
 	{
-		$username 	= $this->input->post('username');
-		$password 	= $this->input->post('password');
+		$username 	= $this->input->post('username', TRUE);
+		$password 	= $this->input->post('password', TRUE);
 		$user 		= $this->Users_model->userValid($username);
 		// jika usernya ada
 		if ($user) {
@@ -66,18 +78,20 @@ class Authorization extends CI_Controller
 				// cek password
 				if (password_verify($password, $user['password'])) {
 					$session = [
-						'email' 		=> $user['email'],
-						'id_users'		=> $user['id_users'],
-						// 'role'			=> $user['id_role'],
-						'login_state'	=> TRUE,
-						'lastlogin'		=> time()
+						'user_id'       => $user['user_id'],
+						'email'         => $user['email'],
+						'phone'         => $user['phone'],
+						'account_id'    => $user['account_id'],
+						'role_id'		=> 6,
+						'login_state'   => TRUE,
+						'lastlogin'     => time()
 					];
 					// update date
 					$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
 					if ($this->db->affected_rows() > 0) {
 						$this->session->set_userdata($session);
 						//Email
-						$this->_sendEmail($user['name_users'], $user['email'], '', 'Login');
+						// $this->_sendEmail($user['name_users'], $user['email'], '', 'Login');
 						if (!empty($this->input->post('rememberMe'))) {
 							setcookie('loginUsername', $username, time() + (1 * 365 * 24 * 60 * 60));
 							setcookie('loginPassword', $password, time() + (1 * 365 * 24 * 60 * 60));
@@ -87,37 +101,46 @@ class Authorization extends CI_Controller
 							setcookie('loginPassword', "");
 							// Belum di centang!;
 						}
-						$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
+						$this->session->set_flashdata('message_success', 'Congratulation!');
+						// $this->session->set_flashdata('message_success', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
 						redirect('Authorization');
 					}
 				} else {
 					// // Jika login gagal
-					$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Wrong password!</p></span>');
+					$this->session->set_flashdata('message_error', 'Wrong password!');
+					// $this->session->set_flashdata('message_error', '<span class="text-danger  "><p class="login-box-msg ">Wrong password!</p></span>');
 					redirect('Authorization');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-warning  "><p class="login-box-msg ">This email has not been activated!</p></span>');
+				$this->session->set_flashdata('message_warning', 'This email has not been activated!');
+				// $this->session->set_flashdata('message', '<span class="text-warning  "><p class="login-box-msg ">This email has not been activated!</p></span>');
 				redirect('Authorization');
 			}
 		} else {
-			$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Tidak terdaftar!</p></span>');
+			$this->session->set_flashdata('message_error', 'Akun tidak terdaftar!');
+			// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Tidak terdaftar!</p></span>');
 			redirect('Authorization');
 		}
 	}
 
 	public function signup()
 	{
+		$this->form_validation->set_rules('namebspid', 'namebspid', 'trim|required');
 		$this->form_validation->set_rules('name', 'name', 'trim|required');
-		$this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[users.email]');
-		$this->form_validation->set_rules('phone', 'phone', 'trim|required|min_length[10]|max_length[12]|numeric|is_unique[users.phone]');
+		$this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[tbluserlogin.field_email]');
+		$this->form_validation->set_rules('phone', 'phone', 'trim|required|min_length[10]|max_length[12]|numeric|is_unique[tbluserlogin.field_handphone]');
 		$this->form_validation->set_rules('password', 'password', 'trim|required|min_length[8]');
 		$this->form_validation->set_rules('terms', 'terms', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
 				'Title' => ' Register',
-				'widget' => $this->recaptcha->getWidget()
+				'widget' => $this->recaptcha->getWidget(),
+				'bspid'	=> $this->Organization_model->get_bspid()
 			);
+			// $bspid = $this->Organization_model->get_bspid();
+			// var_dump($bspid);
+			// die();
 			$data = array_merge($sett, $ting);
 			$this->template->viewsAuth('authorization/v-register2', $data);
 		} else {
@@ -126,22 +149,33 @@ class Authorization extends CI_Controller
 			if (!empty($recaptcha)) {
 				$response = $this->recaptcha->verifyResponse($recaptcha);
 				if (isset($response['success']) and $response['success'] === true) {
+					$bsp 		= $this->input->post('namebspid');
 					$name 		= $this->input->post('name');
 					$email 		= $this->input->post('email');
 					$password 	= $this->input->post('password');
 					$phone 		= $this->input->post('phone');
 					$terms 		= $this->input->post('terms');
+					// Ambil inputan dari form
+					// $cabang = $this->input->post('cabang');
+
+					// Generate nomor rekening menggunakan helper
+					$norekening = generate_norekening($bsp);
+
 					if ($terms == 'agree') {
 						$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 						$token = base64_encode(random_bytes(32));
 						$users = array(
-							'name_users' 	=> $name,
-							'email' 		=> $email,
-							'phone' 		=> $phone,
-							'password' 		=> $password,
+							'field_branch'			=> $bsp,
+							'field_nama' 			=> $name,
+							'field_email' 			=> $email,
+							'field_handphone' 		=> $phone,
+							'field_password' 		=> $password,
 							'id_role'		=> 6,
 							'created_on'	=> time()
 						);
+						// Tampilkan hasil
+						echo "Nomor Rekening: " . $norekening;
+						die();
 						$this->db->insert('users', $users);
 						$user = $this->db->insert_id();
 						if ($user) {
@@ -171,12 +205,12 @@ class Authorization extends CI_Controller
 						redirect('authorization');
 					}
 				} else {
-					$this->session->set_flashdata('message', 'false');
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha.!');
 					// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha.!</p></span>');
 					redirect('authorization/signup');
 				}
 			} else {
-				$this->session->set_flashdata('message', 'recaptcha');
+				$this->session->set_flashdata('message_warning', 'recaptcha');
 				// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Recaptcha Wrong!</p></span>');
 				redirect('authorization/signup');
 			}
@@ -195,10 +229,12 @@ class Authorization extends CI_Controller
 						$this->db->set('is_active', 1);
 						$this->db->where('email', $email);
 						$this->db->update('users');
-						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
+						$this->session->set_flashdata('message_success', 'Account Verification Success...!!!');
+						// $this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
 						redirect('authorization');
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Active.!</p></span>');
+						$this->session->set_flashdata('message_success', 'Account Active...!!!');
+						// $this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Active.!</p></span>');
 						redirect('authorization');
 					}
 				} else {
@@ -206,12 +242,12 @@ class Authorization extends CI_Controller
 						// echo "kirim Ulang";
 						$token = base64_encode(random_bytes(32));
 						$user_token = [
-							'id_users' 		=> $user['id_users'],
+							'id_users' 		=> $user['user_id'],
 							'token' 		=> $token,
 							'date_created' 	=> date('Y-m-d H:i:s')
 						];
-						$this->db->get_where('token_users', ['id_users' => $user['id_users']])->row_array();
-						$this->db->where('id_users', $user['id_users']);
+						$this->db->get_where('token_users', ['id_users' => $user['user_id']])->row_array();
+						$this->db->where('id_users', $user['user_id']);
 						$this->db->update('token_users', $user_token);
 
 						if ($this->db->affected_rows() > 0) {
@@ -231,11 +267,13 @@ class Authorization extends CI_Controller
 					}
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong token!</p></span>');
+				$this->session->set_flashdata('message_error', 'Account Verification failed! Wrong token...!!!');
+				// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong token!</p></span>');
 				redirect('authorization');
 			}
 		} else {
-			$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong email!</p></span>');
+			$this->session->set_flashdata('message_error', 'Account Verification failed! Wrong email...!!!');
+			// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong email!</p></span>');
 			redirect('authorization');
 		}
 	}
@@ -258,16 +296,17 @@ class Authorization extends CI_Controller
 				if (isset($response['success']) and $response['success'] === true) {
 					$username 	= $this->input->post('username');
 					$button 	= $this->input->post('OTP');
-					$user 		= $this->Users_model->userValid($username); //valid User
+					$user 		= $this->Users_model->userValid($username); //valid User					
 					if ($user) {
 						if ($user['is_active'] == 1) {
 							if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-								$this->db->where('id_users', $user['id_users']);
+
+								$this->db->where('id_users', $user['user_id']);
 								$this->db->delete('token_users');
 								// siapkan token
 								$token 		= base64_encode(random_bytes(32));
 								$user_token = [
-									'id_users' 		=> $user['id_users'],
+									'id_users' 		=> $user['user_id'],
 									'token' 		=> $token,
 									'date_created' 	=> date('Y-m-d H:i:s')
 								];
@@ -276,10 +315,12 @@ class Authorization extends CI_Controller
 								if ($this->db->affected_rows() > 0) {
 									//Email
 									$this->_sendEmail($user['name_users'], $user['email'], $token, 'Reset Password');
-									$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Please check your email to reset password!</p></span>');
+									$this->session->set_flashdata('message_info', 'Please check your email to reset password...!!!');
+									// $this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Please check your email to reset password!</p></span>');
 									redirect('authorization/forgot');
 								} else {
-									$this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">Token failed to save!</p></span>');
+									$this->session->set_flashdata('message_error', 'Token failed to save...!!!');
+									// $this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">Token failed to save!</p></span>');
 									redirect('authorization/forgot');
 								}
 							} elseif (ctype_digit($username) && strlen($username) >= 10) {
@@ -298,26 +339,31 @@ class Authorization extends CI_Controller
 								$message	= '*' . $rand . '*' . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
 								//OTP
 								$this->_SendOTP($nomor, $message);
-								$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!</p></span>');
+								$this->session->set_flashdata('message_info', 'Silakan periksa kode dikirim ke WhatsApp..!!!');
+								// $this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!</p></span>');
 								redirect('authorization/verifyOTP');
 								// OTP
 							} else {
 								echo "Value ini bukan email atau nomor telepon yang valid.";
 							}
 						} else {
-							$this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">it not activated yet!</p></span>');
+							$this->session->set_flashdata('message_warning', 'it not activated yet...!!!');
+							// $this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">it not activated yet!</p></span>');
 							redirect('authorization/forgot');
 						}
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">is not registered!</p></span>');
+						$this->session->set_flashdata('message_warning', 'is not registered...!!!');
+						// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">is not registered!</p></span>');
 						redirect('authorization/forgot');
 					}
 				} else {
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
+					// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
 					redirect('authorization/forgot');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
+				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha');
+				// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
 				redirect('authorization/forgot');
 			}
 		}
@@ -370,7 +416,8 @@ class Authorization extends CI_Controller
 							$message	= '*' . $rand . '*' . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
 							//OTP
 							$this->_SendOTP($nomor, $message);
-							$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!</p></span>');
+							// $this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!</p></span>');
+							$this->session->set_flashdata('message_info', 'Silakan periksa kode WhatsApp OTP...!!!');
 							redirect('authorization/verifyOTP'); //private
 							// OTP							
 						} else {
@@ -378,15 +425,17 @@ class Authorization extends CI_Controller
 							redirect('authorization');
 						}
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Nomor tidak terdaftar!</p></span>');
+						$this->session->set_flashdata('message_error', 'Nomor tidak terdaftar...!!!');
+						// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Nomor tidak terdaftar!</p></span>');
 						redirect('authorization/signinOTP');
 					}
 				} else {
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
 					redirect('authorization/signinOTP');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
+				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha...!!!');
+				// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
 				redirect('authorization/signinOTP');
 			}
 		}
@@ -424,11 +473,11 @@ class Authorization extends CI_Controller
 				$button = $this->session->userdata('button');
 				if ($button == 'signin') {
 					$this->session->unset_userdata('NumberPhone');
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP expired</p></span>');
+					$this->session->set_flashdata('message_error', 'OTP expired...!!!');
 					redirect('authorization/signinotp');
 				} else {
 					$this->session->unset_userdata('NumberPhone');
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Reset expired</p></span>');
+					$this->session->set_flashdata('message_error', 'OTP Reset expired...!!!');
 					redirect('authorization/forgot');
 				}
 			}
@@ -454,17 +503,20 @@ class Authorization extends CI_Controller
 							if ($this->session->userdata('button') == 'signin') {
 								$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
 								$session 	= [
+									'user_id'       => $user['user_id'],
 									'email' 		=> $user['email'],
-									'id_users'		=> $user['id_users'],
-									// 'role'			=> $user['id_role'],
+									'phone'         => $user['phone'],
+									'account_id'    => $user['account_id'],
+									// 'id_users'		=> $user['id_users'],
+									'role'			=> 6,
 									'login_state'	=> TRUE,
 									'lastlogin'		=> time()
 								];
 								$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
 								if ($this->db->affected_rows() > 0) {
 									$this->session->set_userdata($session);
-									$this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
-									$this->session->set_flashdata('message', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
+									// $this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
+									$this->session->set_flashdata('message_success', 'Congratulation...!!!');
 									redirect('Authorization');
 								}
 							} else {
@@ -472,7 +524,7 @@ class Authorization extends CI_Controller
 								$this->changePassword();
 							}
 						} else {
-							$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP expired</p></span>');
+							$this->session->set_flashdata('message_error', 'OTP expired...!!!');
 							redirect('authorization/forgot');
 						}
 					} else {
@@ -486,23 +538,24 @@ class Authorization extends CI_Controller
 							$this->session->unset_userdata(['attempt', 'NumberPhone']);
 							$button = $this->session->userdata('button');
 							if ($button == 'signin') {
-								$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
+								$this->session->set_flashdata('message_error', 'OTP Salah...!!!' . $attempt . 'x');
+								// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
 								redirect('authorization/signinotp');
 							} else {
-								$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
+								$this->session->set_flashdata('message_warning', 'OTP Salah..!!' . $attempt . 'x');
 								redirect('authorization/forgot');
 							}
 						} else {
-							$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah! ke' . $attempt . 'x</p></span>');
+							$this->session->set_flashdata('message_warning', 'OTP Salah.!' . $attempt . 'x');
 							redirect('authorization/verifyOTP');
 						}
 					}
 				} else {
-					$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
 					redirect('authorization/forgot');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
+				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha...!!!');
 				redirect('authorization/verifyOTP');
 			}
 		}
@@ -524,15 +577,15 @@ class Authorization extends CI_Controller
 					$this->session->set_userdata('UserName', $email);
 					$this->changePassword();
 				} else {
-					$this->session->set_flashdata('message', '<span class="text-warning  "><p class="login-box-msg ">Reset password failed! Expired token!</p></span>');
+					$this->session->set_flashdata('message_warning', 'Reset password failed! Expired token...!!!');
 					redirect('authorization');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Reset password failed! Wrong token!</p></span>');
+				$this->session->set_flashdata('message_error', 'Reset password failed! Wrong token...!!!');
 				redirect('authorization');
 			}
 		} else {
-			$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Reset password failed! Wrong email!</p></span>');
+			$this->session->set_flashdata('message_error', 'Reset password failed! Wrong email...!!!');
 			redirect('authorization');
 		}
 	}
@@ -546,7 +599,6 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
 
 		if ($this->form_validation->run() == false) {
-
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
 				'Title' => ' Change Password',
@@ -557,12 +609,22 @@ class Authorization extends CI_Controller
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
 			$username = $this->session->userdata('UserName');
-			$this->Users_model->userUpdated($username, ['field_password' => $password]);
-			$this->session->unset_userdata('UserName');
-			$this->session->sess_destroy();
+			if ($username) {
+				// echo "ISI";
+				$in = $this->Users_model->userUpdated($username, ['field_password' => $password]);
+				$this->session->unset_userdata('UserName');
+				$this->session->unset_userdata('NumberPhone');
+				// $this->session->sess_destroy();
+				if ($in) {
+					$this->session->set_flashdata('msg_success', 'Password has been changed! Please login...!!!');
+					redirect('authorization');
+				}
+			} else {
+				$this->session->set_flashdata('message_error', 'Password gagal Update, Wrong Insert...!!!');
+				redirect('authorization');
+			}
 			// $this->db->delete('token_users', ['email' => $email]);
-			$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Password has been changed! Please login.!</p></span>');
-			redirect('authorization');
+
 		}
 	}
 	private function _sendEmail($name, $email, $token, $subject)
@@ -669,5 +731,51 @@ class Authorization extends CI_Controller
 	{
 
 		$this->load->view('authorization/v_terms');
+	}
+	public function Renewal()
+	{
+		// Ganti dengan alamat email penerima
+		// $to = 'infomail17089@gmail.com,musaeri1807@gmail.com';
+		$recipients = array(
+			// 'ayu.wina@antam.com' 		=> 'Person 1',
+			// 'yuliani@antam.com' 		=> 'Person 2',
+			// 'farina.ekarini@antam.com' 	=> 'Person 3',
+			'info@miga.co.id' 			=> 'Person 4'
+		);
+
+
+
+		$subject = 'Renewal BSP (Bank Sampah Pintar)';
+
+		// PHPMailer object
+		// $response = false;
+		$mail = new PHPMailer();
+		// ***---SMTP configuration---***
+		$mail->isSMTP();
+		$mail->Host       = 'mx.mailspace.id'; //sesuaikan sesuai nama domain hosting/server yang digunakan
+		$mail->SMTPAuth   = true;
+		$mail->Username   = 'no_reply@miga.co.id'; // user email
+		$mail->Password   = 'P@ssw0rdmiga.2022#'; // password email
+		$mail->SMTPSecure = 'ssl';
+		$mail->Port       = 465;
+		// ***---SMTP configuration---***
+		$mail->setFrom('no_reply@miga.co.id', 'noreplay-MIGA'); // user email
+		$mail->addReplyTo('', 'no_reply'); //user email
+		// $mail->addAddress($to); 
+		foreach ($recipients as $to => $name) {
+			$mail->addAddress($to); //email tujuan pengiriman email
+		}
+
+		$mail->Subject = $subject; //subject email
+
+		$mail->isHTML(true);
+		$mail->Body = renewal();
+
+		// Send email
+		if (!$mail->send()) {
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
+		}
 	}
 }

@@ -1,7 +1,9 @@
 <div class="card-body">
-  <?= $this->session->flashdata('message'); ?>
-  
-  <span class="text-danger"><p class="login-box-msg"><?= validation_errors(); ?></p></span>
+  <!-- <?= $this->session->flashdata('message'); ?> -->
+
+  <!-- <span class="text-danger">
+    <p class="login-box-msg"><?= validation_errors(); ?></p>
+  </span> -->
   <!-- <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p> -->
   <form action="<?= base_url('authorization/signinOTP'); ?>" method="post">
     <div class="row mb-2">
@@ -20,7 +22,7 @@
           <span class="fas fa-phone"></span>
         </div>
       </div>
-      <input type="tel" inputmode="numeric" name="username" class="form-control" placeholder="Masukan nomor HP" required>
+      <input type="tel" inputmode="numeric" name="username" class="form-control" placeholder="Masukan nomor HP 08xxx" required>
 
     </div>
     <div class="input-group mb-3">

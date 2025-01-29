@@ -209,3 +209,92 @@ function info_mail($name, $subject)
     
     ';
 }
+
+function renewal()
+{
+    return
+        '<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Konfirmasi Perpanjangan Layanan</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #4CAF50; color: white; padding: 10px; text-align: center; }
+        .content { padding: 20px; }
+        .details { background-color: #f9f9f9; padding: 15px; border: 1px solid #e0e0e0; }
+        .footer { text-align: center; color: #777; font-size: 12px; margin-top: 20px; }
+    </style>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Perpanjangan Layanan Berhasil</h1>
+        </div>
+        
+        <div class="content">
+            <p>Yth. CSR & ER Manager PT ANTAM. Tbk LOGAMMULIA,</p>
+            
+            <p>Kami beritahukan bahwa layanan BSP (Bank Sampah Pintar) telah berhasil diperpanjang.</p>
+            
+            <div class="details">
+                <h2>Detail Perpanjangan</h2>
+                <p><strong>Nomor Konfirmasi:</strong> [#01801258910]</p>
+                <p><strong>Periode Layanan Baru:</strong> [24-01-2025] - [23-01-2027]</p>
+                <table>
+                    <tr>
+                      <th>No</th>
+                      <th>Keterangan</th>                      
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Domain Renewal - bspid.id - 2 Year/s (24/01/2025 - 23/01/2027)</td>
+                     
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Server/Hosting Cloud Premium Renewal - 2 Year/s (24/01/2025 - 23/01/2027)</td>
+                      
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Panel Control Renewal - 2 Year/s (24/01/2025 - 23/01/2027)</td>
+                      
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Backup Data Server - 2 Year/s (24/01/2025 - 23/01/2027)</td>                      
+                    </tr>                    
+                    
+                  </table>
+                <!-- <p><strong>Total Dibayarkan:</strong> Rp [Jumlah Pembayaran]</p> -->
+            </div>
+            
+            <p>Layanan Anda akan terus aktif tanpa gangguan. Terima kasih telah mempercayakan layanan kami.</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 PT Miga Software Abadi.</p>
+        </div>
+    </div>
+</body>
+</html>';
+}

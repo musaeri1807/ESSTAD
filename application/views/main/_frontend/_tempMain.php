@@ -13,13 +13,7 @@
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
 
-      <?php
-      if ($user['id_role'] == 6) {
-        echo @$_headerPage;
-      } else {
-        echo @$_headerPage;
-      }
-      ?>
+      <?= @$_headerPage; ?>
 
       <!-- Main content -->
       <section class="content container-fluid">

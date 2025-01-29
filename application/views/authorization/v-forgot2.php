@@ -1,11 +1,11 @@
 <div class="card-body">
-  <?php if ($this->session->flashdata('message') == null) {
+  <!-- <?php if ($this->session->flashdata('message') == null) {
     echo '<span class="text-primary"><p class="login-box-msg">Masukkan Phone atau Email</p></span>';
   } else {
     echo  $this->session->flashdata('message');
   }
-  ?>
-  <!-- <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p> -->
+  ?> -->
+  <p class="login-box-msg"><b>Masukkan Phone atau Email</b></p>
   <form action="<?= base_url('authorization/forgot'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-append">

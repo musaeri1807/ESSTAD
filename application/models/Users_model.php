@@ -6,7 +6,8 @@ class Users_model extends CI_Model
     public function userValid($username)
     {
         $sql = "SELECT 
-                    users.field_user_id AS id_users,
+                    users.field_user_id AS user_id,
+                    users.field_member_id AS account_id,
                     users.field_nama AS name_users,
                     users.field_email AS email,
                     users.field_handphone AS phone,
@@ -29,6 +30,8 @@ class Users_model extends CI_Model
                     users.field_email AS email,
                     users.field_handphone AS phone,
                     users.field_password AS password,
+                    users.last_login AS last_login,
+                    created_on,
                     users.field_status_aktif AS is_active
                 FROM tbluserlogin users 
                 WHERE field_user_id='{$userid}'";

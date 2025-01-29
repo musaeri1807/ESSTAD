@@ -1,3 +1,6 @@
+<!--load swal js -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- jQuery -->
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -46,3 +49,85 @@
         }
     }
 </script>
+
+<!-- Pesan Error -->
+<?php if ($this->session->flashdata('message_error')): ?>
+    <script>
+        Swal.fire({
+            title: 'Error...!!!',
+            text: '<?= $this->session->flashdata('message_error'); ?>',
+            icon: 'error',
+            // showConfirmButton: false,
+            // confirmButtonText: 'Try Again',
+            // timer: 1500
+        });
+    </script>
+<?php endif; ?>
+<!-- Pesan warning -->
+<?php if ($this->session->flashdata('message_warning')): ?>
+    <script>
+        Swal.fire({
+            title: 'Warning...!!!',
+            text: '<?= $this->session->flashdata('message_warning'); ?>',
+            icon: 'warning',
+            // showConfirmButton: false,
+            // confirmButtonText: 'Try Again',
+            // timer: 1500
+        });
+    </script>
+<?php endif; ?>
+<!-- Pesan info -->
+<?php if ($this->session->flashdata('message_info')): ?>
+    <script>
+        Swal.fire({
+            title: 'Info...!!!',
+            text: '<?= $this->session->flashdata('message_info'); ?>',
+            icon: 'info'
+            // confirmButtonText: 'Lanjutkan'
+        });
+    </script>
+<?php endif; ?>
+<!-- Pesan success login -->
+<?php if ($this->session->flashdata('message_success')): ?>
+    <script>
+        Swal.fire({
+            title: 'Success...!!!',
+            text: '<?= $this->session->flashdata('message_success'); ?>',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500 // Durasi dalam milidetik
+        });
+        // Arahkan setelah timer selesai
+        setTimeout(() => {
+            window.location.href = '<?= site_url("Homepage"); ?>'; // Arahkan ke Home Page
+        }, 1500); // Sesuaikan dengan timer SweetAlert
+    </script>
+<?php endif; ?>
+
+<!-- Pesan success -->
+<?php if ($this->session->flashdata('msg_success')): ?>
+    <script>
+        Swal.fire({
+            title: 'Success...!!!',
+            text: '<?= $this->session->flashdata('msg_success'); ?>',
+            icon: 'success',
+            // confirmButtonText: 'Lanjutkan'
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         window.location.href = '<?= site_url("Authorization"); ?>'; // Arahkan ke Authorization
+            //     }
+        });
+    </script>
+<?php endif; ?>
+
+<!-- Pesan form validation -->
+<?php if (validation_errors()): ?>
+    <script>
+        Swal.fire({
+            title: 'Error validation...!!!',
+            text: <?= json_encode(strip_tags(validation_errors())); ?>,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    </script>
+<?php endif; ?>

@@ -51,7 +51,7 @@
 
     					</a>
     					<ul class="dropdown-menu">
-    						<li class="footer"><a href="#"><i class="fa fa-users text-green"></i>Group <?= $user['id_role']; ?></a></li>
+    						<li class="footer"><a href="#"><i class="fa fa-users text-green"></i>Group <?= 'id_role'; ?></a></li>
     						<li>
     							<!-- Inner Menu: contains the notifications -->
     							<ul class="menu">
@@ -59,7 +59,7 @@
     									<a href="<?= base_url('homepage/accountSetting') ?>">
     										<i class="fa fa-gear text-aqua"></i> Setting Akun
     									</a>
-    									<a href="<?= base_url('homepage/changePassword') ?>">
+    									<a href="<?= base_url('security') ?>">
     										<i class="fa fa-shield text-yellow"></i> Keamanan
     									</a>
     								</li>

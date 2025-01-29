@@ -7,6 +7,6 @@ class Welcome extends CI_Controller
 
 	public function index()
 	{
-		$this->load->view('top-nav');
+		$this->load->view('welcome');
 	}
 }
