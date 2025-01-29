@@ -49,7 +49,7 @@
       <div class="input-group-append">
         <span class="input-group-text"> <i class="fas fa-envelope"></i></span>
       </div>
-      <input type="email" name="email" class="form-control" placeholder="Email" value="<?= set_value('email'); ?>musaeri@antam.com" required>
+      <input type="email" name="email" class="form-control" placeholder="Email" value="<?= set_value('email'); ?>miga.informatika@gmail.com" required>
     </div>
     <span class="text-danger small"><?= form_error('email'); ?></span>
     <div class="input-group mb-3">

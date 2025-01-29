@@ -41,7 +41,7 @@ class Homepage extends CI_Controller
 
     public function index()
     {
-        var_dump($this->session->all_userdata());
+        // var_dump($this->session->all_userdata());
 
         $data = $this->prepareData('Home');
         $this->template->viewsMain('main/v_home_page', $data);

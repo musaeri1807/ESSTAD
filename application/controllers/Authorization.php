@@ -32,7 +32,7 @@ class Authorization extends CI_Controller
 		// }
 		
 		// $this->session->sess_destroy();
-		var_dump($this->session->all_userdata());
+		// var_dump($this->session->all_userdata());
 		// $this->changePassword();
 		// die();
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
