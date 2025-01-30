@@ -30,7 +30,7 @@ class Authorization extends CI_Controller
 		// if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
 		// 	redirect('Homepage');
 		// }
-		
+
 		// $this->session->sess_destroy();
 		// var_dump($this->session->all_userdata());
 		// $this->changePassword();
@@ -595,6 +595,19 @@ class Authorization extends CI_Controller
 			redirect('authorization');
 		}
 
+		print_r($_SERVER['REQUEST_METHOD']);
+
+		// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// 	$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+		// 	if ($this->form_validation->run() == FALSE) {
+		// 		$this->load->view('user_form');
+		// 	} else {
+		// 		echo "Form valid!";
+		// 	}
+		// }
+
+
 		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
 		$this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
 
@@ -741,6 +754,7 @@ class Authorization extends CI_Controller
 			// 'yuliani@antam.com' 		=> 'Person 2',
 			// 'farina.ekarini@antam.com' 	=> 'Person 3',
 			'info@miga.co.id' 			=> 'Person 4'
+
 		);
 
 
