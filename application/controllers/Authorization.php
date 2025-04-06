@@ -17,7 +17,7 @@ class Authorization extends CI_Controller
 		$this->load->model('Organization_model');
 		$this->load->helper('url');
 		$this->load->helper('security');
-		$this->load->helper('norekening_helper');
+		$this->load->helper('nogenerate_helper');
 
 
 		require APPPATH . 'third_party/PHPMailer/Exception.php';
@@ -56,12 +56,12 @@ class Authorization extends CI_Controller
 				} else {
 					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha!');
 					// $this->session->set_flashdata('message_error', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
-					redirect('Authorization');
+					redirect('authorization');
 				}
 			} else {
 				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha');
 				// $this->session->set_flashdata('message_error', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
-				redirect('Authorization');
+				redirect('authorization');
 			}
 		}
 	}
@@ -103,43 +103,59 @@ class Authorization extends CI_Controller
 						}
 						$this->session->set_flashdata('message_success', 'Congratulation!');
 						// $this->session->set_flashdata('message_success', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
-						redirect('Authorization');
+						redirect('authorization');
 					}
 				} else {
 					// // Jika login gagal
 					$this->session->set_flashdata('message_error', 'Wrong password!');
 					// $this->session->set_flashdata('message_error', '<span class="text-danger  "><p class="login-box-msg ">Wrong password!</p></span>');
-					redirect('Authorization');
+					redirect('authorization');
 				}
 			} else {
 				$this->session->set_flashdata('message_warning', 'This email has not been activated!');
 				// $this->session->set_flashdata('message', '<span class="text-warning  "><p class="login-box-msg ">This email has not been activated!</p></span>');
-				redirect('Authorization');
+				redirect('authorization');
 			}
 		} else {
 			$this->session->set_flashdata('message_error', 'Akun tidak terdaftar!');
 			// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Tidak terdaftar!</p></span>');
-			redirect('Authorization');
+			redirect('authorization');
 		}
 	}
 
 	public function signup()
 	{
-		$this->form_validation->set_rules('namebspid', 'namebspid', 'trim|required');
+		$this->form_validation->set_rules('bspid', 'bspid', 'trim|required');
 		$this->form_validation->set_rules('name', 'name', 'trim|required');
 		$this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[tbluserlogin.field_email]');
 		$this->form_validation->set_rules('phone', 'phone', 'trim|required|min_length[10]|max_length[12]|numeric|is_unique[tbluserlogin.field_handphone]');
 		$this->form_validation->set_rules('password', 'password', 'trim|required|min_length[8]');
 		$this->form_validation->set_rules('terms', 'terms', 'trim|required');
 		if ($this->form_validation->run() == false) {
+			// generate token tiap kali buka form
+			$token = bin2hex(random_bytes(32)); // 32 karakter
+			$this->session->set_userdata('register_token', $token);
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
-				'Title' => ' Register',
-				'widget' => $this->recaptcha->getWidget(),
-				'bspid'	=> $this->Organization_model->get_bspid()
+				'token' 	=> $token,
+				'Title' 	=> ' Register',
+				'widget' 	=> $this->recaptcha->getWidget(),
+				'bspid'		=> $this->Organization_model->get_bspid()
 			);
-			// $bspid = $this->Organization_model->get_bspid();
-			// var_dump($bspid);
+			// Tampilkan hasil
+			// Ambil ID cabang dari form			
+			// Generate nomor rekening
+			// echo $norekening = generate_norekening($cabang);
+			// die();
+
+			// $bspid = $this->Organization_model->get_bspid_by_id(3172090003);
+			// var_dump($bspid->CABANG);
+			// die();
+
+			// $bspid = 'reff';
+			// $noReff = generate_no_referensi($bspid);
+			// echo $noReff; 
+			// Misal: 24Reff000000123
 			// die();
 			$data = array_merge($sett, $ting);
 			$this->template->viewsAuth('authorization/v-register2', $data);
@@ -149,60 +165,102 @@ class Authorization extends CI_Controller
 			if (!empty($recaptcha)) {
 				$response = $this->recaptcha->verifyResponse($recaptcha);
 				if (isset($response['success']) and $response['success'] === true) {
-					$bsp 		= $this->input->post('namebspid');
+					$bsp 		= $this->input->post('bspid');
 					$name 		= $this->input->post('name');
 					$email 		= $this->input->post('email');
 					$password 	= $this->input->post('password');
 					$phone 		= $this->input->post('phone');
 					$terms 		= $this->input->post('terms');
+					$token		= $this->input->post('token');
 					// Ambil inputan dari form
 					// $cabang = $this->input->post('cabang');
-
 					// Generate nomor rekening menggunakan helper
-					$norekening = generate_norekening($bsp);
-
 					if ($terms == 'agree') {
-						$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-						$token = base64_encode(random_bytes(32));
-						$users = array(
-							'field_branch'			=> $bsp,
-							'field_nama' 			=> $name,
-							'field_email' 			=> $email,
-							'field_handphone' 		=> $phone,
-							'field_password' 		=> $password,
-							'id_role'		=> 6,
-							'created_on'	=> time()
-						);
-						// Tampilkan hasil
-						echo "Nomor Rekening: " . $norekening;
-						die();
-						$this->db->insert('users', $users);
-						$user = $this->db->insert_id();
-						if ($user) {
-							// siapkan token
-							$user_token = [
-								'id_users' => $user,
-								'token' => $token,
-								'date_created' => date('Y-m-d H:i:s')
+						if ($token === $this->session->userdata('register_token')) {
+							$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+							// $user = array(
+							// 	'field_branch'			=> $bsp,
+							// 	'field_nama' 			=> $name,
+							// 	'field_email' 			=> $email,
+							// 	'field_handphone' 		=> $phone,
+							// 	'field_password' 		=> $password,
+							// 	'id_role'		=> 6,
+							// 	'created_on'	=> time()
+							// );
+							$this->db->trans_start();
+							$users = [
+								'field_nama'  			=> $name,
+								'field_email' 			=> $email,
+								'field_handphone'  		=> $phone,
+								'field_password'		=> $password,
+								'field_branch'			=> $bsp,
+								'field_status_aktif' 	=> '0',
+								'field_blokir_status' 	=> 'A',
+								'field_token'			=> $token,
+								'field_log'				=> date('Y-m-d H:i:s'),
+								'field_tanggal_reg' 	=> date('Y-m-d'),
+								'field_time_reg' 		=> date('H:i:s'),
+								'field_token_otp'		=> (rand(999, 9999)),
+								'field_member_id'		=> $bsp . $phone,
+								'field_ipaddress'		=> $_SERVER['REMOTE_ADDR'],
+								'created_on'			=> time()
 							];
-							$this->db->insert('token_users', $user_token);
-							if ($this->db->affected_rows() > 0) {
-								//Email
-								$this->_sendEmail($name, $email, $token, 'Account Verification');
-								$nomor		=	$phone;
-								$message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
-								$this->_sendOTP($nomor, $message);
+
+							$this->db->insert('tbluserlogin', $users);
+							$user = $this->db->insert_id();
+							if ($user) {
+								// Insert ke tblnasabah
+								$nasabah_data = [
+									'id_UserLogin' => $user,
+									'No_Rekening'  => generate_norekening($bsp)
+								];
+								$this->db->insert('tblnasabah', $nasabah_data);
+								// Insert ke tblpewaris
+								$pewaris_data = [
+									'id_UserLogin' => $user
+								];
+								$this->db->insert('tblpewaris', $pewaris_data);
+								// siapkan token
+								$token = base64_encode(random_bytes(32));
+								$user_token = [
+									'id_users' => $user,
+									'token' => $token,
+									'date_created' => date('Y-m-d H:i:s')
+								];
+								$this->db->insert('token_users', $user_token);
+								if ($this->db->affected_rows() > 0) {
+									$bspid = $this->Organization_model->get_bspid_by_id($bsp);
+									//Email
+									$this->_sendEmail($name, $email, $token, 'Account Verification');
+									$nomor		=	$phone;
+									// $message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
+									$message	=	'Terima kasih banyak atas pendaftaran Anda! sebagai nasabah B S P (*Bank Sampah Pintar*) *' . $bspid->CABANG . '*, Segera untuk aktivasi dengan membuka email Anda di ' . $email . ' Kurang dari 30 Menit';
+									$this->_sendOTP($nomor, $message);
+								} else {
+									$this->session->set_flashdata('message_error', 'Token Error..!');
+								}
 							} else {
-								echo "Gagal Mendapatkan Token.";
+								$this->session->set_flashdata('message_error', 'ID Error..!');
+							}
+							$this->db->trans_complete();
+							if ($this->db->trans_status() === TRUE) {
+								// echo "Berhasil menyimpan data.";
+								$this->session->unset_userdata('register_token');
+								$this->session->set_flashdata('message_success', 'Congratulation.!');
+								redirect('authorization/signup');
+							} else {
+								// gagal, bisa tampilkan error atau rollback
+								// echo "Gagal menyimpan data.";
+								$this->session->set_flashdata('message_error', 'Simpan Data Gagal..!');
+								redirect('authorization/signup');
 							}
 						} else {
-							echo " Gagal Mendapatkan ID";
+							$this->session->set_flashdata('message_error', 'Token Regiter  Error..!');
+							redirect('authorization/signup');
 						}
-						$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Congratulation.! Please check your email to activated.!</p></span>');
-						redirect('authorization');
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Wrong ! Your account has not been created yet.!</p></span>');
-						redirect('authorization');
+						$this->session->set_flashdata('message_warning', 'Wrong ! agree');
+						redirect('authorization/signup');
 					}
 				} else {
 					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha.!');
@@ -595,19 +653,6 @@ class Authorization extends CI_Controller
 			redirect('authorization');
 		}
 
-		print_r($_SERVER['REQUEST_METHOD']);
-
-		// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		// 	$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-
-		// 	if ($this->form_validation->run() == FALSE) {
-		// 		$this->load->view('user_form');
-		// 	} else {
-		// 		echo "Form valid!";
-		// 	}
-		// }
-
-
 		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
 		$this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
 
@@ -637,7 +682,6 @@ class Authorization extends CI_Controller
 				redirect('authorization');
 			}
 			// $this->db->delete('token_users', ['email' => $email]);
-
 		}
 	}
 	private function _sendEmail($name, $email, $token, $subject)
@@ -748,12 +792,12 @@ class Authorization extends CI_Controller
 	public function Renewal()
 	{
 		// Ganti dengan alamat email penerima
-		// $to = 'infomail17089@gmail.com,musaeri1807@gmail.com';
+		// $to = 'infomail17089@gmail.com,musaeri1807@gmail.com,info@miga.co.id';
 		$recipients = array(
-			// 'ayu.wina@antam.com' 		=> 'Person 1',
-			// 'yuliani@antam.com' 		=> 'Person 2',
-			// 'farina.ekarini@antam.com' 	=> 'Person 3',
-			'info@miga.co.id' 			=> 'Person 4'
+			// 'ayu.wina@antam.com' 			=> 'Person 1',
+			// 'yuliani@antam.com' 				=> 'Person 2',
+			// 'farina.ekarini@antam.com' 		=> 'Person 3',
+			'infomail17089@gmail.com' 			=> 'Person 4'
 
 		);
 
@@ -779,7 +823,8 @@ class Authorization extends CI_Controller
 		foreach ($recipients as $to => $name) {
 			$mail->addAddress($to); //email tujuan pengiriman email
 		}
-
+		$file_path = FCPATH . 'assets/attachment/invoice-#01801258910.pdf';
+		$mail->AddAttachment($file_path);
 		$mail->Subject = $subject; //subject email
 
 		$mail->isHTML(true);

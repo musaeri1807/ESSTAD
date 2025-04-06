@@ -1,14 +1,5 @@
 <div class="card-body">
-  <?php if (!empty(form_error('terms'))) {
-    $this->session->set_flashdata('message', '<span class="text-danger"><p class="login-box-msg">Checkbox is unchecked.!</p></span>');
-    echo $this->session->flashdata('message');
-  } elseif ($this->session->flashdata('message') == 'recaptcha') {
-    echo  '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>';
-  } elseif ($this->session->flashdata('message') == 'false') {
-    echo  '<span class="text-danger "><p class="login-box-msg">Kesalahan recaptcha.!</p></span>';
-  }
-  ?>
-  <form action="<?= base_url('authorization/signup'); ?>" method="post">
+  <form action="<?= base_url('authorization/signup'); ?>" method="post" onsubmit="this.submit.disabled = true;">
     <div class="row mb-2">
       <div class="col-12">
         <div class="icheck-primary">
@@ -24,25 +15,25 @@
         <span class="input-group-text"><i class="fas fa-university"></i></span>
       </div>
       <select name="bspid" id="bspid" class="form-control">
-        <option value="">--Pilih BSP--</option>
+        <option value="">- Pilih B S P -</option>
         <?php foreach ($bspid as $bsp) { ?>
-          <option value="<?= $bsp->id ?>"><?= 'BS' . $bsp->branch . '-' . $bsp->alamat; ?></option>
+          <option value="<?= $bsp->ID ?>"><?= 'B S P - ' . $bsp->CABANG; ?></option>
         <?php } ?>
       </select>
-      <!-- <input type="text" name="name" class="form-control" placeholder="Full name" value="<?= set_value('name'); ?>" required> -->
     </div>
+    <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
     <div class="input-group mb-3">
       <div class="input-group-append">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
       </div>
-      <input type="text" name="name" class="form-control" placeholder="Nama lengkap" value="<?= set_value('name'); ?> MU" required>
+      <input type="text" name="name" class="form-control" placeholder="Nama lengkap" value="<?= set_value('name'); ?> MUSAERi" required>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+        <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
       </div>
-      <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="08xxx" value="<?= set_value('phone'); ?> 081290908321" required>
+      <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="08xxx" value="<?= set_value('phone'); ?> 081210003701" required>
     </div>
     <span class="text-danger small"><?= form_error('phone'); ?></span>
     <div class="input-group mb-3">

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding-bottom: 70px;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 20px 15px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .period-chip {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .period-chip.active {
+            background: white;
+            color: #007bff;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+
+        .category-list {
+            margin-top: 15px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .category-details {
+            flex: 1;
+        }
+
+        .category-name {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .category-percent {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #007bff;
+            border-radius: 3px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item.active {
+            color: #007bff;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .trend-up {
+            color: #28a745;
+        }
+
+        .trend-down {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Period Selector -->
+    <div class="header">
+        <h1>Statistics</h1>
+        <div class="period-selector">
+            <div class="period-chip active">Week</div>
+            <div class="period-chip">Month</div>
+            <div class="period-chip">3 Months</div>
+            <div class="period-chip">6 Months</div>
+            <div class="period-chip">Year</div>
+            <div class="period-chip">Custom</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="summary-label">Total Spending</div>
+                <div class="summary-value">$1,234.56</div>
+                <div class="trend-indicator trend-down">
+                    ↓ 5.2% vs last period
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Income</div>
+                <div class="summary-value">$2,345.67</div>
+                <div class="trend-indicator trend-up">
+                    ↑ 12.3% vs last period
+                </div>
+            </div>
+        </div>
+
+        <!-- Spending Chart -->
+        <div class="stat-card">
+            <div class="card-header">
+                <div class="card-title">Spending Overview</div>
+            </div>
+            <div class="chart-container">
+                <!-- Placeholder for chart -->
+                <svg width="100%" height="100%" viewBox="0 0 300 200">
+                    <path d="M0 180 L50 150 L100 160 L150 130 L200 140 L250 120 L300 100" 
+                          fill="none" 
+                          stroke="#007bff" 
+                          stroke-width="2"/>
+                    <path d="M0 180 L50 150 L100 160 L150 130 L200 140 L250 120 L300 100 L300 180 L0 180" 
+                          fill="rgba(0,123,255,0.1)"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="stat-card">
+            <div class="card-header">
+                <div class="card-title">Spending by Category</div>
+            </div>
+            <div class="category-list">
+                <div class="category-item">
+                    <div class="category-info">
+                        <div class="category-icon" style="background: #e3f2fd;">🛒</div>
+                        <div class="category-details">
+                            <div class="category-name">Shopping</div>
+                            <div class="category-percent">35% ($432.10)</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 35%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-info">
+                        <div class="category-icon" style="background: #fff3e0;">🍽️</div>
+                        <div class="category-details">
+                            <div class="category-name">Food & Dining</div>
+                            <div class="category-percent">25% ($308.64)</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-info">
+                        <div class="category-icon" style="background: #e8f5e9;">🚗</div>
+                        <div class="category-details">
+                            <div class="category-name">Transportation</div>
+                            <div class="category-percent">20% ($246.91)</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-info">
+                        <div class="category-icon" style="background: #fce4ec;">🏠</div>
+                        <div class="category-details">
+                            <div class="category-name">Bills & Utilities</div>
+                            <div class="category-percent">15% ($185.18)</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 15%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item">
+            <i>🏠</i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <i>📊</i>
+            <span>Statistics</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i>📃</i>
+            <span>History</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i>👤</i>
+            <span>Profile</span>
+        </a>
+    </nav>
+</body>
+</html>

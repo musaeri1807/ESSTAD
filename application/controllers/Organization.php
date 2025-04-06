@@ -9,15 +9,15 @@
         {
             parent::__construct();
             $this->load->database();
-            $this->load->model('M_mysqldata');
-            $this->load->model('dashboard_model');
-            $this->load->model('employee_model');
-            $this->load->model('organization_model');
-            $this->load->model('settings_model');
-            $this->load->model('leave_model');
-            $this->load->library('form_validation');
-            $this->load->library('session');
-            $this->load->helper('url');
+            // $this->load->model('M_mysqldata');
+            // $this->load->model('dashboard_model');
+            // $this->load->model('employee_model');
+            // $this->load->model('organization_model');
+            // $this->load->model('settings_model');
+            // $this->load->model('leave_model');
+            // $this->load->library('form_validation');
+            // $this->load->library('session');
+            // $this->load->helper('url');
         }
 
         public function index()
