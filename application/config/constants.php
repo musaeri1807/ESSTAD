@@ -84,12 +84,12 @@ defined('EXIT_DATABASE')       or define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      or define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-if ($_SERVER['SERVER_NAME'] == 'musaeri.my.id') {
+if ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
     // Online
-    define('HOSTNAME', 'localhost');
-    define('USERNAME', 'musq8219_msi');
-    define('PASSWORD', 'c7x-[!M0J2P_');
-    define('DATABASE', 'musq8219_appmasi');
+    define('HOSTNAME', 'srv1867.hstgr.io');
+    define('USERNAME', 'u602049557_BSP4dmiN');
+    define('PASSWORD', 'A5]yk2*]Zg5');
+    define('DATABASE', 'u602049557_BSPpr0d');
 } elseif ($_SERVER['SERVER_NAME'] == 'my.bspid.id') {
     // Online
     define('HOSTNAME', 'localhost');
