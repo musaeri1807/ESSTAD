@@ -19,8 +19,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     $config['recaptcha_lang'] = 'en';
 } elseif ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
     # code...
-    $config['recaptcha_site_key'] = '6Lcn5BYrAAAAAG6FH6G-uq7Y2uJhrF2yDthuoVt1';
-    $config['recaptcha_secret_key'] = '6Lcn5BYrAAAAAOs4BVa5lCEMhNakFy8QPThwYM9n';
+    $config['recaptcha_site_key'] = '6Leu5BYrAAAAAEQcjHZxz35K4yQNrPwNo262oijI';
+    $config['recaptcha_secret_key'] = '6Leu5BYrAAAAAAVhj3rcmSi0ZIgxfgViXOCEqgUT';
     // reCAPTCHA supported 40+ languages listed here:
     // https://developers.google.com/recaptcha/docs/language
     $config['recaptcha_lang'] = 'en';
