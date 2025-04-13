@@ -11,7 +11,7 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo Aplikasi" height="100">
+                <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo" height="100">
             </div>
             <!-- content -->
             <?= @$_content; ?>

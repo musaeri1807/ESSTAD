@@ -32,7 +32,7 @@
     </div>
   </form>
   <p class="mt-3">
-    <a href="<?= base_url('authorization'); ?>" class="btn btn-block btn-outline-primary">Login</a>    
+    <a href="<?= base_url('login'); ?>" class="btn btn-block btn-outline-primary">Login</a>    
   </p>
 </div>
 <!-- /.login-card-body -->

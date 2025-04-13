@@ -39,7 +39,7 @@
             <li><strong>Penghapusan Akses:</strong> .</li>
           </ol>
         </div>
-        <a href="<?= base_url('authorization/signup'); ?>" class="btn btn-primary">Next Register</a>
+        <a href="<?= base_url('register'); ?>" class="btn btn-primary">Next Register</a>
       </div><!-- /.card-body -->
     </div>
   </div><!-- /.container-fluid -->

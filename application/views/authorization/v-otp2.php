@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="col-4">
-        <a href="<?= base_url('authorization/signup'); ?>" type="submit" class="btn btn-block btn-outline-primary">Daftar</a>
+        <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-primary">Daftar</a>
       </div>
     </div>
     <div class="input-group mb-3">
@@ -37,7 +37,7 @@
     </div>
   </form>
   <p class="mt-3">
-    <a href="<?= base_url('authorization'); ?>" class="btn btn-block btn-outline-primary">Kembali</a>
+    <a href="<?= base_url('login'); ?>" class="btn btn-block btn-outline-primary">Kembali</a>
   </p>
 </div>
 <!-- /.login-card-body -->

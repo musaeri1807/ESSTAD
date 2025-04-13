@@ -130,7 +130,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
-
             <!-- Main content -->
             <div class="content">
                 <div class="container">
@@ -174,10 +173,92 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     </div>
                     <!-- /.row -->
-                    <?php
-                    $data = 2;
-                    if (1 == $data) { ?>
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="card card-primary card-tabs">
+                                <div class="card-header p-0 pt-1">
+                                    <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Settings</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                                            Home.
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                            Profile.
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                                            
+                                            
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
 
+                                                            <h2>Laporan Transaksi</h2>
+                                                            <select name="" id="">
+                                                                <option value="">Pilih Bulan</option>
+                                                                <option value="">Januari</option>
+                                                                <option value="">Februari</option>
+                                                            </select>
+                                                            <button>Sumbit</button>
+                                                            <table border="1" cellpadding="5">
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Tanggal</th>
+                                                                    <th>Kategori</th>
+                                                                    <th>Deskripsi</th>
+                                                                    <th>Jumlah</th>
+                                                                </tr>
+                                                                <?php if (!empty($transactions)) {
+                                                                    $no = 1;
+                                                                    foreach ($transactions as $row) { ?>
+                                                                        <tr>
+                                                                            <td><?= $no++ ?></td>
+                                                                            <td><?= $row->date ?></td>
+                                                                            <td><?= $row->category ?></td>
+                                                                            <td><?= $row->description ?></td>
+                                                                            <td><?= $row->amount ?></td>
+                                                                        </tr>
+                                                                    <?php }
+                                                                } else { ?>
+                                                                    <tr>
+                                                                        <td colspan="5">Tidak ada data.</td>
+                                                                    </tr>
+                                                                <?php } ?>
+                                                            </table>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /.col-md-6 -->
+                                           
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+                                            Password.
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    $data = 1;
+                    if (1 == $data) { ?>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">

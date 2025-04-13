@@ -1,5 +1,5 @@
 <div class="card-body">
-  <form action="<?= base_url('authorization/signup'); ?>" method="post" onsubmit="this.submit.disabled = true;">
+  <form action="<?= base_url('register'); ?>" method="post" onsubmit="this.submit.disabled = true;">
     <div class="row mb-2">
       <div class="col-12">
         <div class="icheck-primary">
@@ -26,14 +26,14 @@
       <div class="input-group-append">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
       </div>
-      <input type="text" name="name" class="form-control" placeholder="Nama lengkap" value="<?= set_value('name'); ?>" required>
+      <input type="text" name="name" class="form-control" placeholder="Nama" value="<?= set_value('name'); ?>" required>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
       </div>
-      <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="08xxx" value="<?= set_value('phone'); ?>" required>
+      <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="08 xxx " value="<?= set_value('phone'); ?>" required>
     </div>
     <span class="text-danger small"><?= form_error('phone'); ?></span>
     <div class="input-group mb-3">
@@ -68,7 +68,7 @@
         <div class="icheck-primary">
           <input type="checkbox" id="agreeTerms" name="terms" value="agree">
           <label for="agreeTerms">
-            Saya setuju dg <a href="<?= base_url('authorization/terms'); ?>">ketentuan</a>
+            Saya setuju dg <a href="<?= base_url('terms'); ?>">ketentuan</a>
           </label>
         </div>
       </div>
@@ -80,6 +80,6 @@
     </div>
   </form>
   <p class="mt-3">
-    <a href="<?= base_url('authorization'); ?>" class="btn btn-block btn-outline-primary">Login</a>
+    <a href="<?= base_url('login'); ?>" class="btn btn-block btn-outline-primary">Login</a>
   </p>
 </div>

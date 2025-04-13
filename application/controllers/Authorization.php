@@ -284,20 +284,27 @@ class Authorization extends CI_Controller
 			if ($user_token) {
 				if (time() - strtotime($user_token['date_created']) <= 1800) { //kurang dari=30 menit
 					if ($user['is_active'] == 0) {
-						$this->db->set('is_active', 1);
-						$this->db->where('email', $email);
-						$this->db->update('users');
-						$this->session->set_flashdata('message_success', 'Account Verification Success...!!!');
-						// $this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Verification Success.!</p></span>');
-						redirect('authorization');
+						$this->Users_model->userUpdated($email, ['field_status_aktif' => '1']);
+						if ($this->db->affected_rows() > 0) {
+							// Kirim email success dan kirim WA Success
+							// Berhasil memperbarui
+							$nomor		=	$user['phone'];
+							$message	=	'Akun Anda sudah aktif. Selamat datang! Bank Sampah Pintar (B S P)';
+							$this->_sendOTP($nomor, $message);
+							$this->session->set_flashdata('message_success', 'Verification Account Success...!!!');
+							redirect('authorization');
+						} else {
+							// Tidak ada yang diperbarui
+							$this->session->set_flashdata('message_warning', 'Gagal Verification Updated ...!!!');
+							redirect('authorization');
+						}
 					} else {
-						$this->session->set_flashdata('message_success', 'Account Active...!!!');
-						// $this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Account Active.!</p></span>');
+						$this->session->set_flashdata('message_info', 'Account is Active...!!!');
 						redirect('authorization');
 					}
 				} else {
 					if ($user['is_active'] == 0) {
-						// echo "kirim Ulang";
+						// echo "generade Ulang";
 						$token = base64_encode(random_bytes(32));
 						$user_token = [
 							'id_users' 		=> $user['user_id'],
@@ -307,31 +314,29 @@ class Authorization extends CI_Controller
 						$this->db->get_where('token_users', ['id_users' => $user['user_id']])->row_array();
 						$this->db->where('id_users', $user['user_id']);
 						$this->db->update('token_users', $user_token);
-
 						if ($this->db->affected_rows() > 0) {
 							//Email
 							$this->_sendEmail($user['name_users'], $email, $token, 'Account Verification');
 							$nomor		=	$user['phone'];
-							$message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
+							$message	=	'Silakan cek Email terbaru anda di ' . $email . 'untuk aktivasi ulang';
 							$this->_sendOTP($nomor, $message);
-							$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Please check your email or whathttps to activated.!</p></span>');
+							$this->session->set_flashdata('message_info', 'Kami kirim tautan terbaru silakan periksa Email Anda...!!!');
 							redirect('authorization');
 						} else {
-							echo "Gagal Update Token.";
+							// echo "Gagal Update Token.";
+							$this->session->set_flashdata('message_warning', 'Gagal Updated Token...!');
 						}
 					} else {
-						$this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Token expired!</p></span>');
+						$this->session->set_flashdata('message_warning', 'Token expired...!!!');
 						redirect('authorization');
 					}
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Account Verification failed! Wrong token...!!!');
-				// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong token!</p></span>');
+				$this->session->set_flashdata('message_error', 'Verification Account failed! Token Salah...!!!');
 				redirect('authorization');
 			}
 		} else {
-			$this->session->set_flashdata('message_error', 'Account Verification failed! Wrong email...!!!');
-			// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Account Verification failed! Wrong email!</p></span>');
+			$this->session->set_flashdata('message_error', 'Verification Account failed! Email Salah...!!!');
 			redirect('authorization');
 		}
 	}
@@ -689,12 +694,12 @@ class Authorization extends CI_Controller
 		//load Database
 		$set = $this->db->get('settings')->row_array();
 		if ($subject == 'Account Verification') {
-			$link = base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
+			$link = base_url() . 'verify?email=' . $email . '&token=' . urlencode($token);
 			$bodyEmail = auth_mail($name, $link, $subject);
 			$idlog = '3';
 			// $bodyEmail = 'Click this link to verify you account : <a href="' . base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token) . '">Activate</a>';
 		} else if ($subject == 'Reset Password') {
-			$link = base_url() . 'authorization/reset?email=' . $email . '&token=' . urlencode($token);
+			$link = base_url() . 'reset?email=' . $email . '&token=' . urlencode($token);
 			$bodyEmail = auth_mail($name, $link, $subject);
 			$idlog = '2';
 		} else {

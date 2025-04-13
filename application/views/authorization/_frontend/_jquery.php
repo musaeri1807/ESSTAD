@@ -76,6 +76,7 @@
         });
     </script>
 <?php endif; ?>
+
 <!-- Pesan info -->
 <?php if ($this->session->flashdata('message_info')): ?>
     <script>
@@ -99,7 +100,7 @@
         });
         // Arahkan setelah timer selesai
         setTimeout(() => {
-            window.location.href = '<?= site_url("Homepage"); ?>'; // Arahkan ke Home Page
+            window.location.href = '<?= site_url("login"); ?>'; // Arahkan ke Home Page
         }, 1500); // Sesuaikan dengan timer SweetAlert
     </script>
 <?php endif; ?>
@@ -114,7 +115,7 @@
             // confirmButtonText: 'Lanjutkan'
             // }).then((result) => {
             //     if (result.isConfirmed) {
-            //         window.location.href = '<?= site_url("Authorization"); ?>'; // Arahkan ke Authorization
+            //         window.location.href = ''; // Arahkan ke Authorization
             //     }
         });
     </script>

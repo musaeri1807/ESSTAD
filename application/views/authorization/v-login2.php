@@ -7,7 +7,7 @@
   }
   ?> -->
 
-  <form action="<?= base_url('authorization'); ?>" method="post">
+  <form action="<?= base_url('login'); ?>" method="post">
     <div class="row mb-2">
       <div class="col-8">
         <div class="icheck-primary">
@@ -15,14 +15,14 @@
         </div>
       </div>
       <div class="col-4">
-        <a href="<?= base_url('authorization/signup'); ?>" type="submit" class="btn btn-block btn-outline-primary">Daftar</a>
+        <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-primary">Daftar</a>
       </div>
     </div>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+        <span class="input-group-text"><i class="fas fa-users"></i></span>
       </div>
-      <input type="text" name="username" class="form-control" placeholder="mail@xxx Or 08xxx" value="<?php if (isset($_COOKIE['loginUsername'])) {
+      <input type="text" name="username" class="form-control" placeholder="Email atau WhatsApp (08)" value="<?php if (isset($_COOKIE['loginUsername'])) {
                                                                                                         echo $_COOKIE['loginUsername'];
                                                                                                       } else {
                                                                                                         echo set_value('username');
@@ -76,8 +76,8 @@
     </div>
   </form>
   <p class="mt-3">
-    <a href="<?= base_url('authorization/forgot'); ?>" type="submit" class="btn btn-block btn-outline-primary">Saya lupa password</a>
-    <a href="<?= base_url('authorization/signinotp'); ?>" type="submit" class="btn btn-block btn-outline-primary">Masuk dengan OTP</a>
+    <a href="<?= base_url('forgot'); ?>" type="submit" class="btn btn-block btn-outline-primary">Saya lupa password</a>
+    <a href="<?= base_url('otp'); ?>" type="submit" class="btn btn-block btn-outline-primary">Masuk dengan OTP</a>
 
   </p>
 </div>

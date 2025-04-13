@@ -13,17 +13,16 @@ class Users_model extends CI_Model
                     users.field_handphone AS phone,
                     users.field_password AS password,
                     users.field_status_aktif AS is_active
-                FROM tbluserlogin users 
-                WHERE field_email='{$username}' OR field_handphone ='{$username}'";
-        // $sql = "SELECT id_users,name_users,email,phone,is_active FROM users 
-        //         WHERE email='$username' OR phone ='$username'";
-        $data = $this->db->query($sql);
+                FROM tbluserlogin users                
+                WHERE users.field_email = ? OR users.field_handphone = ?";
+        // $data = $this->db->query($sql);
+        $data = $this->db->query($sql, [$username, $username]);
         return $data->row_array();
     }
 
     public function userLogin($userid)
     {
-        // $sql = "SELECT * FROM users U LEFT JOIN role R ON U.id_role=R.id_role WHERE U.id_users =$userid";
+        
         $sql = "SELECT 
                     users.field_user_id AS id_users,
                     users.field_nama AS name_users,
@@ -34,14 +33,13 @@ class Users_model extends CI_Model
                     created_on,
                     users.field_status_aktif AS is_active
                 FROM tbluserlogin users 
-                WHERE field_user_id='{$userid}'";
-        $data = $this->db->query($sql);
+                WHERE users.field_user_id=?";        
+        $data = $this->db->query($sql, [$userid]);
         return $data->row_array();
     }
     public function userUpdated($username, $data)
     {
-        $this->db->set($data);
-        // $this->db->set('field_password', $password);
+        $this->db->set($data);        
         $this->db->where('field_email', $username);
         $this->db->or_where('field_handphone', $username);
         $updated = $this->db->update('tbluserlogin');
@@ -80,16 +78,16 @@ class Users_model extends CI_Model
         field_total_saldo AS saldo,
         field_status AS status,
         field_comments AS keterangan       
-        FROM tbltrxmutasisaldo S WHERE S.field_member_id='{$id}' ORDER BY S.field_id_saldo DESC";
-        $data   = $this->db->query($sql);
+        FROM tbltrxmutasisaldo S WHERE S.field_member_id=? ORDER BY S.field_id_saldo DESC";
+        $data   = $this->db->query($sql,[$id]);
         return $data->result_array();
     }
     public function sumSaldo($id)
     {
         $sql = "SELECT field_rekening AS account_id ,field_total_saldo AS saldo				
 		FROM tbltrxmutasisaldo S 		
-		WHERE S.field_member_id='{$id}' ORDER BY S.field_id_saldo DESC LIMIT 1";
-        $data = $this->db->query($sql);
+		WHERE S.field_member_id=? ORDER BY S.field_id_saldo DESC LIMIT 1";
+        $data = $this->db->query($sql,[$id]);
         return $data->row_array();
     }
 }
