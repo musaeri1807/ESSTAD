@@ -17,6 +17,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     // reCAPTCHA supported 40+ languages listed here:
     // https://developers.google.com/recaptcha/docs/language
     $config['recaptcha_lang'] = 'en';
+} elseif ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
+    # code...
+    $config['recaptcha_site_key'] = '6Lcn5BYrAAAAAG6FH6G-uq7Y2uJhrF2yDthuoVt1';
+    $config['recaptcha_secret_key'] = '6Lcn5BYrAAAAAOs4BVa5lCEMhNakFy8QPThwYM9n';
+    // reCAPTCHA supported 40+ languages listed here:
+    // https://developers.google.com/recaptcha/docs/language
+    $config['recaptcha_lang'] = 'en';
 } else {
     # code...
     $config['recaptcha_site_key'] = '6LdCXhcbAAAAAKhaHQouGGvtU6u4fJUSx8dpQUGv';
