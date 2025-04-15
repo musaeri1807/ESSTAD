@@ -44,8 +44,8 @@
                     'header1' => $this->uri->segment('1'),
                     'header2' => $this->uri->segment('2')
                 );
-                $dat['users'] = $this->M_mysqldata->userLogin($this->session->userdata('id_users'));
-                $data = array_merge($uri, $dat);
+                // $dat['users'] = $this->M_mysqldata->userLogin($this->session->userdata('id_users'));
+                // $data = array_merge($uri, $dat);
                 $data['department'] = $this->organization_model->depselect();
                 $this->template->views('backend/department', $data);
                 // var_dump($this->session->userdata('login_state'));

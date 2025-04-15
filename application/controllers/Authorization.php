@@ -27,9 +27,9 @@ class Authorization extends CI_Controller
 
 	public function index()
 	{
-		if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
-			redirect('Homepage');
-		}
+		// if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
+		// 	redirect('Homepage');
+		// }
 
 		// $this->session->sess_destroy();
 		// var_dump($this->session->all_userdata());
@@ -54,8 +54,7 @@ class Authorization extends CI_Controller
 				if (isset($response['success']) and $response['success'] === true) {
 					$this->_signin();
 				} else {
-					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha!');
-					// $this->session->set_flashdata('message_error', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha!</p></span>');
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha!');					
 					redirect('authorization');
 				}
 			} else {

@@ -7,7 +7,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="BSP,Bank Sampah Pintar, BSP, pok lisa" name="keywords">
     <meta content="Digitalikasi Bank Sampah,bank sampah pintar,emas,gold,aplikasi,bersih" name="description">
-
+    <meta content="Digitalikasi Bank Sampah,bank sampah pintar,emas,gold,aplikasi,bersih" name="description">
+    <meta name="keywords" content="bank sampah digital, login bank sampah, register nasabah bpsid, bpsid, bank sampah indonesia, saldo bank sampah">
+    <meta name="author" content="BPSID Team">
     <!-- Favicon -->
     <link href="<?php echo base_url(); ?>assets/frontend/img/icon_bspid.png" rel="icon">
 
@@ -105,7 +107,7 @@
                     </div>
                 </div> -->
                 <!-- <a href="contact.html" class="nav-item nav-link">Kontak</a> -->
-                <a href="<?php echo base_url('auth') ?>" class="nav-item nav-link">Login</a>
+                <a href="<?php echo base_url('login') ?>" class="nav-item nav-link">Login</a>
             </div>
         </div>
     </nav>

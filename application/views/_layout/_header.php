@@ -1,4 +1,6 @@
       <!-- Content Header (Page header) -->
+      <?php $header1 = "dddd";
+		$header2 = 'ddd'; ?>
       <section class="content-header">
       	<div class="container-fluid">
       		<div class="row mb-2">
