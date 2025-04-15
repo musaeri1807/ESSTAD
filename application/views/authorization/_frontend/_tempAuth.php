@@ -12,6 +12,7 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo" height="100">
+                <br> <?php echo $_SERVER['HTTP_HOST']; ?>
             </div>
             <!-- content -->
             <?= @$_content; ?>
