@@ -198,57 +198,104 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             Home.
                                         </div>
                                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                                            Profile.
+                                            <!-- Bts -->
+                                            <div class="card-header">
+                                                <h3 class="card-title">PROFIL</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Nama</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Username">
+                                                </div>
+                                                <!-- <h4>With icons</h4> -->
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    </div>
+                                                    <input type="email" class="form-control" placeholder="Email">
+                                                </div>
+                                            </div>
+                                            <!-- /.card-body -->
+                                            <!-- Bts -->
                                         </div>
                                         <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                                            
-                                            
-                                                <div class="col-lg-12">
-                                                    <div class="card">
-                                                        <div class="card-body">
-
-                                                            <h2>Laporan Transaksi</h2>
-                                                            <select name="" id="">
-                                                                <option value="">Pilih Bulan</option>
-                                                                <option value="">Januari</option>
-                                                                <option value="">Februari</option>
-                                                            </select>
-                                                            <button>Sumbit</button>
-                                                            <table border="1" cellpadding="5">
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Tanggal</th>
-                                                                    <th>Kategori</th>
-                                                                    <th>Deskripsi</th>
-                                                                    <th>Jumlah</th>
-                                                                </tr>
-                                                                <?php if (!empty($transactions)) {
-                                                                    $no = 1;
-                                                                    foreach ($transactions as $row) { ?>
-                                                                        <tr>
-                                                                            <td><?= $no++ ?></td>
-                                                                            <td><?= $row->date ?></td>
-                                                                            <td><?= $row->category ?></td>
-                                                                            <td><?= $row->description ?></td>
-                                                                            <td><?= $row->amount ?></td>
-                                                                        </tr>
-                                                                    <?php }
-                                                                } else { ?>
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h2>Laporan Transaksi</h2>
+                                                        <select name="" id="">
+                                                            <option value="">Pilih Bulan</option>
+                                                            <option value="">Januari</option>
+                                                            <option value="">Februari</option>
+                                                        </select>
+                                                        <button>Sumbit</button>
+                                                        <table border="1" cellpadding="5">
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Tanggal</th>
+                                                                <th>Kategori</th>
+                                                                <th>Deskripsi</th>
+                                                                <th>Jumlah</th>
+                                                            </tr>
+                                                            <?php if (!empty($transactions)) {
+                                                                $no = 1;
+                                                                foreach ($transactions as $row) { ?>
                                                                     <tr>
-                                                                        <td colspan="5">Tidak ada data.</td>
+                                                                        <td><?= $no++ ?></td>
+                                                                        <td><?= $row->date ?></td>
+                                                                        <td><?= $row->category ?></td>
+                                                                        <td><?= $row->description ?></td>
+                                                                        <td><?= $row->amount ?></td>
                                                                     </tr>
-                                                                <?php } ?>
-                                                            </table>
-
-
-                                                        </div>
+                                                                <?php }
+                                                            } else { ?>
+                                                                <tr>
+                                                                    <td colspan="5">Tidak ada data.</td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                                <!-- /.col-md-6 -->
-                                           
+                                            </div>
+                                            <!-- /.col-md-6 -->
+
                                         </div>
-                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
-                                            Password.
+                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">                                           
+                                            <!-- Bts -->
+                                            <div class="card-header">
+                                                <h3 class="card-title"> <b>Change Password</b></h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Pwd Lama</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Username">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Pwd Baru</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Username">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Pwd Konirmasi</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Username">
+                                                </div>
+                                                <!-- <h4>With icons</h4>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    </div>
+                                                    <input type="email" class="form-control" placeholder="Email">
+                                                </div> -->
+                                            </div>
+                                            <!-- /.card-body -->
+                                            <!-- Bts -->
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +304,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
                     <?php
-                    $data = 1;
+                    $data = 2;
                     if (1 == $data) { ?>
                         <div class="row">
                             <div class="col-lg-12">

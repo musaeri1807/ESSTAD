@@ -27,9 +27,9 @@ class Authorization extends CI_Controller
 
 	public function index()
 	{
-		// if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
-		// 	redirect('Homepage');
-		// }
+		if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
+			redirect('Homepage');
+		}
 
 		// $this->session->sess_destroy();
 		// var_dump($this->session->all_userdata());
@@ -462,6 +462,8 @@ class Authorization extends CI_Controller
 					$username 	= $this->input->post('username');
 					$button 	= $this->input->post('OTP');
 					$user 		= $this->Users_model->userValid($username); //valid User
+					// var_dump($user);
+					// die();
 					if ($user) {
 						if ($user['is_active'] == 1) {
 							$nomor = $user['phone'];
@@ -484,8 +486,8 @@ class Authorization extends CI_Controller
 							redirect('authorization/verifyOTP'); //private
 							// OTP							
 						} else {
-							$this->session->set_flashdata('message', '<span class="text-warning "><p class="login-box-msg ">Belum aktif!</p></span>');
-							redirect('authorization');
+							$this->session->set_flashdata('message_error', 'Belum aktif...!!!');
+							redirect('otp');
 						}
 					} else {
 						$this->session->set_flashdata('message_error', 'Nomor tidak terdaftar...!!!');

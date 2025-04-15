@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 // $route['default_controller'] = 'Ztest/recaptcha'Authorization;replicateTables
 // $route['default_controller'] = 'Replication/replicateTablesMasterSlave';
-$route['default_controller'] = 'Authorization';
+$route['default_controller'] = 'Welcome';
 $route['404_override'] = 'Error404';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -69,3 +69,12 @@ $route['terms']     = 'authorization/terms';
 //SEO 
 $route['sitemap.xml'] = 'sitemap';
 $route['robots.txt']  = 'sitemap/robots';
+
+// Frontend
+$route['home']              = 'Welcome';
+$route['home']              = 'Welcome/index';
+$route['aboutme']             = 'Welcome/tentangkami';
+$route['tonase']            = 'Welcome/tonase';
+$route['service-nasabah']   = 'Welcome/layanannasabah';
+$route['service-bsp']       = 'Welcome/layananunit';
+$route['register-bsp']      = 'Welcome/unit';

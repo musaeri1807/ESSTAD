@@ -13,23 +13,23 @@ class Homepage extends CI_Controller
         $this->load->model('Settings_model');
         $this->load->model('Organization_model');
 
-        if ($this->session->userdata('login_state') == false) {
-            // $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Salah! Anda belum Login..!</p></span>');
-            $this->session->set_flashdata('message_warning', 'Maaf,Anda Belum Login...!!!');
-            redirect('Authorization');
-        }
+        // if ($this->session->userdata('login_state') == false) {
+        //     // $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Salah! Anda belum Login..!</p></span>');
+        //     $this->session->set_flashdata('message_warning', 'Maaf,Anda Belum Login...!!!');
+        //     redirect('Authorization');
+        // }
 
-        // $session = [
-        //     'user_id'           => '227',
-        //     'email'             => 'musaeri1807@gmail.com',
-        //     'phone'             => '081210003701',
-        //     'account_id'        => '081210003701',
-        //     'role_id'           => '6',
-        //     'login_state'       => TRUE,
-        //     'company'           => '1234',
-        //     'lastlogin'         => time()
-        // ];
-        // $this->session->set_userdata($session);
+        $session = [
+            'user_id'           => '227',
+            'email'             => 'musaeri1807@gmail.com',
+            'phone'             => '081210003701',
+            'account_id'        => '081210003701',
+            'role_id'           => '6',
+            'login_state'       => TRUE,
+            'company'           => '1234',
+            'lastlogin'         => time()
+        ];
+        $this->session->set_userdata($session);
 
 
         // __construct
