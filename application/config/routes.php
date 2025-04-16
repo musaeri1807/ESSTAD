@@ -62,6 +62,7 @@ $route['security']  = 'Homepage/securitySetting';
 $route['login']     = 'Authorization';
 $route['register']  = 'Authorization/signup';
 $route['verify']    = 'Authorization/verify';
+$route['verifyotp'] = 'Authorization/verifyOTP';
 $route['forgot']    = 'Authorization/forgot';
 $route['reset']     = 'Authorization/reset';
 $route['otp']       = 'Authorization/signinotp';
