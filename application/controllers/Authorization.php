@@ -509,6 +509,10 @@ class Authorization extends CI_Controller
 		$this->form_validation->set_rules('5', 'Username', 'trim|required|numeric');
 		$this->form_validation->set_rules('6', 'Username', 'trim|required|numeric');
 		if ($this->form_validation->run() == false) {
+			// generate token tiap kali buka form
+			$token = bin2hex(random_bytes(32)); // 32 karakter
+			$this->session->set_userdata('verify_token', $token);
+
 			$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
 			$query = $this->db->get('otp_users');
 			$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
@@ -516,8 +520,9 @@ class Authorization extends CI_Controller
 			if (time() - $DateCreated <= 600) {
 				$sett = $this->db->get('settings')->row_array();
 				$ting = array(
-					'Title' => ' OTP',
-					'widget' => $this->recaptcha->getWidget()
+					'token' 	=> $token,
+					'Title' 	=> ' OTP',
+					'widget' 	=> $this->recaptcha->getWidget()
 				);
 				$data = array_merge($sett, $ting);
 				$this->template->viewsAuth('authorization/v-verifyotp', $data);
@@ -537,81 +542,75 @@ class Authorization extends CI_Controller
 			}
 		} else {
 			// validasinya success
-			$recaptcha = $this->input->post('g-recaptcha-response');
-			// if (!empty($recaptcha)) {
-			$response = $this->recaptcha->verifyResponse($recaptcha);
-			// if (isset($response['success']) and $response['success'] === true) {
-			$satu 	= $this->input->post('1');
-			$dua 	= $this->input->post('2');
-			$tiga 	= $this->input->post('3');
-			$empat 	= $this->input->post('4');
-			$lima 	= $this->input->post('5');
-			$enam 	= $this->input->post('6');
-			$number = $satu . $dua . $tiga . $empat . $lima . $enam; // 123456					
-			$this->db->where('otp', $number);
-			$query = $this->db->get('otp_users');
-			$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
-			$DateCreated = strtotime(date($result['date_created']));
-			if ($result) {
-				if (time() - $DateCreated <= 600) {
-					if ($this->session->userdata('button') == 'signin') {
-						$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
-						$session 	= [
-							'user_id'       => $user['user_id'],
-							'email' 		=> $user['email'],
-							'phone'         => $user['phone'],
-							'account_id'    => $user['account_id'],
-							// 'id_users'		=> $user['id_users'],
-							'role'			=> 6,
-							'login_state'	=> TRUE,
-							'lastlogin'		=> time()
-						];
-						$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
-						if ($this->db->affected_rows() > 0) {
-							$this->session->set_userdata($session);
-							// $this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
-							$this->session->set_flashdata('message_success', 'Congratulation...!!!');
-							redirect('login');
+			$token		= $this->input->post('token');
+			if ($token === $this->session->userdata('verify_token')) {
+				$satu 	= $this->input->post('1');
+				$dua 	= $this->input->post('2');
+				$tiga 	= $this->input->post('3');
+				$empat 	= $this->input->post('4');
+				$lima 	= $this->input->post('5');
+				$enam 	= $this->input->post('6');
+				$number = $satu . $dua . $tiga . $empat . $lima . $enam; // 123456					
+				$this->db->where('otp', $number);
+				$query = $this->db->get('otp_users');
+				$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
+				$DateCreated = strtotime(date($result['date_created']));
+				if ($result) {
+					if (time() - $DateCreated <= 600) {
+						if ($this->session->userdata('button') == 'signin') {
+							$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
+							$session 	= [
+								'user_id'       => $user['user_id'],
+								'email' 		=> $user['email'],
+								'phone'         => $user['phone'],
+								'account_id'    => $user['account_id'],
+								// 'id_users'		=> $user['id_users'],
+								'role'			=> 6,
+								'login_state'	=> TRUE,
+								'lastlogin'		=> time()
+							];
+							$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
+							if ($this->db->affected_rows() > 0) {
+								$this->session->set_userdata($session);
+								// $this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
+								$this->session->set_flashdata('message_success', 'Congratulation...!!!');
+								redirect('login');
+							}
+						} else {
+							$this->session->set_userdata('UserName', $result['phone_number']);
+							$this->changePassword();
 						}
 					} else {
-						$this->session->set_userdata('UserName', $result['phone_number']);
-						$this->changePassword();
-					}
-				} else {
-					$this->session->set_flashdata('message_error', 'OTP expired...!!!');
-					redirect('forgot');
-				}
-			} else {
-				$attempt = $this->session->userdata('attempt') ?? 0;
-				$attempt++;
-				$this->session->set_userdata('attempt', $attempt);
-
-				if ($attempt >= 3) {
-					$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
-					$this->db->delete('otp_users');
-					$this->session->unset_userdata(['attempt', 'NumberPhone']);
-					$button = $this->session->userdata('button');
-					if ($button == 'signin') {
-						$this->session->set_flashdata('message_error', 'OTP Salah...!!!' . $attempt . 'x');
-						// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">OTP Salah!' . $attempt . 'x</p></span>');
-						redirect('otp');
-					} else {
-						$this->session->set_flashdata('message_warning', 'OTP Salah..!!' . $attempt . 'x');
+						$this->session->set_flashdata('message_error', 'OTP expired...!!!');
 						redirect('forgot');
 					}
 				} else {
-					$this->session->set_flashdata('message_warning', 'OTP Salah.!' . $attempt . 'x');
-					redirect('verify-otp');
+					$attempt = $this->session->userdata('attempt') ?? 0;
+					$attempt++;
+					$this->session->set_userdata('attempt', $attempt);
+
+					if ($attempt >= 3) {
+						$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
+						$this->db->delete('otp_users');
+						$this->session->unset_userdata(['attempt', 'NumberPhone']);
+						$button = $this->session->userdata('button');
+						if ($button == 'signin') {
+							$this->session->set_flashdata('message_error', 'OTP Salah...!!!' . $attempt . 'x');
+							redirect('otp');
+						} else {
+							$this->session->set_flashdata('message_warning', 'OTP Salah..!!' . $attempt . 'x');
+							redirect('forgot');
+						}
+					} else {
+						$this->session->set_flashdata('message_warning', 'OTP Salah.!' . $attempt . 'x');
+						redirect('verify-otp');
+					}
 				}
+			} else {
+				$this->session->set_flashdata('message_error', 'Token OTP  Error..!');
+				// redirect('verify-otp');
+				redirect('forgot');
 			}
-			// 	} else {
-			// 		$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
-			// 		redirect('forgot');
-			// 	}
-			// } else {
-			// 	$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha...!!!');
-			// 	redirect('verify-otp');
-			// }
 		}
 	}
 
