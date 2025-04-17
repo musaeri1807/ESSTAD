@@ -1,17 +1,10 @@
 <div class="card-body">
-  <?php
-  //if ($this->session->flashdata('message') == null) {
-  // echo '<span class="text-primary"><p class="login-box-msg"><b>OTP</b></p></span>';
-  //} else {
-  // echo  $this->session->flashdata('message');
-  // }
-  ?>
   <span">
-    <p class="login-box-msg ">Silakan periksa kode WhatsApp OTP!!!</p>
+    <p class="login-box-msg ">Silakan periksa kode OTP di WhatsApp!!!</p>
     </span>
     <!-- <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p> -->
     <p class="login-box-msg"><b><?= $this->session->userdata('NumberPhone'); ?></b></p>
-    <form action="<?= base_url('authorization/verifyOTP'); ?>" method="post">
+    <form action="<?= base_url('verify-otp'); ?>" method="post">
       <div class="input-group mb-3">
         <div class="row">
           <div class="col-2">
@@ -36,7 +29,7 @@
       </div>
       <div class="input-group mb-3">
         <div class="input-group-append">
-          <?php echo $widget; ?>
+          <!-- <?php echo $widget; ?> -->
         </div>
       </div>
       <div class="row">

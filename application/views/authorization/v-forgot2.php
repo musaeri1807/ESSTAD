@@ -1,19 +1,13 @@
 <div class="card-body">
-  <!-- <?php if ($this->session->flashdata('message') == null) {
-    echo '<span class="text-primary"><p class="login-box-msg">Masukkan Phone atau Email</p></span>';
-  } else {
-    echo  $this->session->flashdata('message');
-  }
-  ?> -->
-  <p class="login-box-msg"><b>Masukkan Phone atau Email</b></p>
+  <p class="login-box-msg"><b>Masukkan WhatsApp atau Email</b></p>
   <form action="<?= base_url('authorization/forgot'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-append">
         <div class="input-group-text">
-        <span class="fas fa-users"></span>
+          <span class="fas fa-users"></span>
         </div>
       </div>
-      <input type="text" name="username" class="form-control" placeholder="Email atau Phone" required>
+      <input type="text" name="username" class="form-control" placeholder="Email atau WhatsApp (08)" required>
       <!-- <div class="input-group-append">
         <div class="input-group-text">
           <span class="fas fa-envelope"></span>
@@ -32,7 +26,7 @@
     </div>
   </form>
   <p class="mt-3">
-    <a href="<?= base_url('login'); ?>" class="btn btn-block btn-outline-primary">Login</a>    
+    <a href="<?= base_url('login'); ?>" class="btn btn-block btn-outline-primary">Login</a>
   </p>
 </div>
 <!-- /.login-card-body -->

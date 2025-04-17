@@ -49,9 +49,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-// $route['default_controller'] = 'Ztest/recaptcha'Authorization;replicateTables
+// $route['default_controller'] = 'Ztest/recaptcha'Authorization;replicateTablesWelcome
 // $route['default_controller'] = 'Replication/replicateTablesMasterSlave';
-$route['default_controller'] = 'Welcome';
+$route['default_controller'] = 'Authorization';
 $route['404_override'] = 'Error404';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -62,7 +62,7 @@ $route['security']  = 'Homepage/securitySetting';
 $route['login']     = 'Authorization';
 $route['register']  = 'Authorization/signup';
 $route['verify']    = 'Authorization/verify';
-$route['verifyotp'] = 'Authorization/verifyOTP';
+$route['verify-otp'] = 'Authorization/verifyOTP';
 $route['forgot']    = 'Authorization/forgot';
 $route['reset']     = 'Authorization/reset';
 $route['otp']       = 'Authorization/signinotp';
