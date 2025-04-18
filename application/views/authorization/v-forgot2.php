@@ -1,13 +1,13 @@
 <div class="card-body">
-  <p class="login-box-msg"><b>Masukkan WhatsApp atau Email</b></p>
-  <form action="<?= base_url('authorization/forgot'); ?>" method="post">
+  <p class="login-box-msg"><b>Reset Password Akun Anda</b></p>
+  <form action="<?= base_url('forgot'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-append">
         <div class="input-group-text">
           <span class="fas fa-users"></span>
         </div>
       </div>
-      <input type="text" name="username" class="form-control" placeholder="Email atau WhatsApp (08)" required>
+      <input type="text" name="username" class="form-control" placeholder="Masukan  Email atau WhatsApp (08)" required>
       <!-- <div class="input-group-append">
         <div class="input-group-text">
           <span class="fas fa-envelope"></span>

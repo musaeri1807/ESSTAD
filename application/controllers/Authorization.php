@@ -497,9 +497,9 @@ class Authorization extends CI_Controller
 
 	public function verifyOTP()
 	{
-		// if (!$this->session->userdata('NumberPhone')) {
-		// 	redirect('login');
-		// }
+		if (!$this->session->userdata('NumberPhone')) {
+			redirect('login');
+		}
 		// $this->session->set_userdata('NumberPhone', '081210003701');
 
 		$this->form_validation->set_rules('1', 'Username', 'trim|required|numeric');
@@ -726,7 +726,7 @@ class Authorization extends CI_Controller
 				->token($token) //Token identify Action
 				->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
 				->log(); //Add Database Entry	
-			$this->session->set_flashdata('message', '<span class="text-success  "><p class="login-box-msg ">Access send Email Succes!</p></span>');
+			$this->session->set_flashdata('message_info', 'Access send Email Succes!!!');
 		}
 	}
 	private function _SendOTP($nomor, $message)
@@ -786,9 +786,9 @@ class Authorization extends CI_Controller
 		// Ganti dengan alamat email penerima
 		// $to = 'infomail17089@gmail.com,musaeri1807@gmail.com,info@miga.co.id';
 		$recipients = array(
-			// 'ayu.wina@antam.com' 			=> 'Person 1',
-			// 'yuliani@antam.com' 				=> 'Person 2',
-			// 'farina.ekarini@antam.com' 		=> 'Person 3',
+			// '' 			=> 'Person 1',
+			// '' 				=> 'Person 2',
+			// '' 		=> 'Person 3',
 			'infomail17089@gmail.com' 			=> 'Person 4'
 
 		);

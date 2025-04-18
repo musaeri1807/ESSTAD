@@ -179,10 +179,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="card-header p-0 pt-1">
                                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Home</a>
+                                            <a class="nav-link " id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
+                                            <a class="nav-link active" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
@@ -194,28 +194,211 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <div class="card-body">
                                     <div class="tab-content" id="custom-tabs-one-tabContent">
-                                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                                            Home.
+                                        <div class="tab-pane fade " id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+
+                                            <div class="card-header">
+                                                <h3 class="card-title"><b>Home</b></h3>
+                                            </div>
+
+                                            <!-- /.card-header -->
+                                            <div class="card-body p-0">
+                                                <div class="table-responsive">
+                                                    <table class="table m-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Order ID</th>
+                                                                <th>Item</th>
+                                                                <th>Status</th>
+                                                                <th>Popularity</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                                                <td>Call of Duty IV</td>
+                                                                <td><span class="badge badge-success">Shipped</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                                                                <td>Samsung Smart TV</td>
+                                                                <td><span class="badge badge-warning">Pending</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                                                <td>iPhone 6 Plus</td>
+                                                                <td><span class="badge badge-danger">Delivered</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                                                <td>Samsung Smart TV</td>
+                                                                <td><span class="badge badge-info">Processing</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                                                                <td>Samsung Smart TV</td>
+                                                                <td><span class="badge badge-warning">Pending</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                                                <td>iPhone 6 Plus</td>
+                                                                <td><span class="badge badge-danger">Delivered</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                                                <td>Call of Duty IV</td>
+                                                                <td><span class="badge badge-success">Shipped</span></td>
+                                                                <td>
+                                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.table-responsive -->
+                                            </div>
                                         </div>
-                                        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                                             <!-- Bts -->
                                             <div class="card-header">
-                                                <h3 class="card-title">PROFIL</h3>
+                                                <h3 class="card-title"><b>Profil</b></h3>
                                             </div>
                                             <div class="card-body">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Nama</span>
+                                                <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                        </div>
+                                                        <input type="text" name="name" class="form-control" id="name" placeholder="Nama" required>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Username">
-                                                </div>
-                                                <!-- <h4>With icons</h4> -->
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
+                                                        </div>
+                                                        <input type="tel" inputmode="numeric" name="phone" class="form-control" id="phone" placeholder="Whatsapp" required disabled>
                                                     </div>
-                                                    <input type="email" class="form-control" placeholder="Email">
-                                                </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                        </div>
+                                                        <input type="email" name="email" class="form-control" id="email" placeholder="Email" required disabled>
+                                                    </div>
+
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-university"></i></span>
+                                                        </div>
+                                                        <input type="text" name="cabang" class="form-control" id="cabang" placeholder="Cabang" required disabled>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary btn-block">Mengubah</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.card-body -->
+                                            <!-- Bts -->
+                                            <!-- Bts -->
+                                            <div class="card-header">
+                                                <h3 class="card-title"><b>Data</b></h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-address-card "></i></span>
+                                                        </div>
+                                                        <input type="tel" inputmode="numeric" name="nik" class="form-control" id="nik" placeholder="NIK" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-address-card "></i></span>
+                                                        </div>
+                                                        <input type="tel" inputmode="numeric" name="npwp" class="form-control" id="npwp" placeholder="NPWP" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                                                        </div>
+                                                        <select class="form-control" name="JK" id="JK">
+                                                            <option value="">Pilih Jenis Kelamin</option>
+                                                            <option value="">Laki-Laki</option>
+                                                            <option value="">Perempuan</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                        </div>
+                                                        <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Alamat" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                        </div>
+                                                        <select class="form-control" name="provinsi" id="provinsi">
+                                                            <option value="">Pilih Provinsi</option>
+                                                            <option value="">A</option>
+                                                            <option value="">B</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                        </div>
+                                                        <select class="form-control" name="kota" id="kota">
+                                                            <option value="">Pilih Kabupaten/Kota</option>
+                                                            <option value="">A</option>
+                                                            <option value="">B</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                        </div>
+                                                        <select class="form-control" name="kecamatan" id="kecamata">
+                                                            <option value="">Pilih Kecamatan</option>
+                                                            <option value="">A</option>
+                                                            <option value="">B</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                        </div>
+                                                        <select class="form-control" name="desa" id="desa">
+                                                            <option value="">Pilih Kelurahan/Desa</option>
+                                                            <option value="">A</option>
+                                                            <option value="">B</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary btn-block">Mengubah</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                             <!-- /.card-body -->
                                             <!-- Bts -->
@@ -262,30 +445,51 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- /.col-md-6 -->
 
                                         </div>
-                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">                                           
+                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+
                                             <!-- Bts -->
                                             <div class="card-header">
                                                 <h3 class="card-title"> <b>Change Password</b></h3>
                                             </div>
                                             <div class="card-body">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Pwd Lama</span>
+
+                                                <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                        </div>
+                                                        <input type="password" name="password1" class="form-control" id="password" placeholder="Password" required>
+                                                        <!-- show password -->
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" onclick="password_show_hide();">
+                                                                <i class="fas fa-eye" id="show_eye"></i>
+                                                                <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                                                            </span>
+                                                        </div>
+                                                        <!-- show password -->
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Username">
-                                                </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Pwd Baru</span>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                        </div>
+                                                        <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirm Password" required>
+                                                        <!-- show password -->
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" onclick="password_show_hidee();">
+                                                                <i class="fas fa-eye" id="show_eyee"></i>
+                                                                <i class="fas fa-eye-slash d-none" id="hide_eyee"></i>
+                                                            </span>
+                                                        </div>
+                                                        <!-- show password -->
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Username">
-                                                </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Pwd Konirmasi</span>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary btn-block">Mengubah Password</button>
+                                                        </div>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Username">
-                                                </div>
+                                                </form>
+
                                                 <!-- <h4>With icons</h4>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -303,80 +507,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                     </div>
-                    <?php
-                    $data = 2;
-                    if (1 == $data) { ?>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            Some quick example text to build on the card title and make up the bulk of the card's
-                                            content.
-                                        </p>
-                                        <a href="#" class="card-link">Card link</a>
-                                        <a href="#" class="card-link">Another link</a>
-                                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a>
                                 </div>
-                                <div class="card card-primary card-outline">
-                                    <div class="card-body">
-                                        <a href="#" class="card-link">Card link</a>
-                                        <a href="#" class="card-link">Another link</a>
-                                    </div>
-                                </div><!-- /.card -->
-                            </div>
-                            <!-- /.col-md-6 -->
+                            </div><!-- /.card -->
                         </div>
-                        <!-- /.row -->
-                    <?php
-                    } else { ?>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
+                        <!-- /.col-md-6 -->
+                    </div>
+                    <!-- /.row -->
 
-                                        <h2>Laporan Transaksi</h2>
-                                        <select name="" id="">
-                                            <option value="">Pilih Bulan</option>
-                                            <option value="">Januari</option>
-                                            <option value="">Februari</option>
-                                        </select>
-                                        <button>Sumbit</button>
-                                        <table border="1" cellpadding="5">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Tanggal</th>
-                                                <th>Kategori</th>
-                                                <th>Deskripsi</th>
-                                                <th>Jumlah</th>
-                                            </tr>
-                                            <?php if (!empty($transactions)) {
-                                                $no = 1;
-                                                foreach ($transactions as $row) { ?>
-                                                    <tr>
-                                                        <td><?= $no++ ?></td>
-                                                        <td><?= $row->date ?></td>
-                                                        <td><?= $row->category ?></td>
-                                                        <td><?= $row->description ?></td>
-                                                        <td><?= $row->amount ?></td>
-                                                    </tr>
-                                                <?php }
-                                            } else { ?>
-                                                <tr>
-                                                    <td colspan="5">Tidak ada data.</td>
-                                                </tr>
-                                            <?php } ?>
-                                        </table>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.col-md-6 -->
-                        </div>
-                        <!-- /.row -->
-                    <?php }; ?>
 
 
                 </div><!-- /.container-fluid -->
@@ -408,6 +553,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?= base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <!-- <script src="<?= base_url(); ?>/assets/dist/js/demo.js"></script> -->
+
+    <script>
+        function password_show_hide() {
+            var x = document.getElementById("password");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (x.type === "password") {
+                x.type = "text";
+                show_eye.style.display = "none";
+                hide_eye.style.display = "block";
+            } else {
+                x.type = "password";
+                show_eye.style.display = "block";
+                hide_eye.style.display = "none";
+            }
+        }
+
+        function password_show_hidee() {
+            var y = document.getElementById("password2");
+            var show = document.getElementById("show_eyee");
+            var hide = document.getElementById("hide_eyee");
+            hide.classList.remove("d-none");
+            if (y.type === "password") {
+                y.type = "text";
+                show.style.display = "none";
+                hide.style.display = "block";
+            } else {
+                y.type = "password";
+                show.style.display = "block";
+                hide.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

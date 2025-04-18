@@ -30,7 +30,7 @@
       <div class="input-group mb-3">
         <div class="input-group-append">
           <!-- <?php echo $widget; ?> -->
-          <input type="text" name="token" class="form-control" value="<?= $token; ?>" required>
+          <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
         </div>
       </div>
       <div class="row">
