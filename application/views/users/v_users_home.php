@@ -16,6 +16,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/dist/css/adminlte.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -36,7 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="<?= base_url('Users'); ?>" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
@@ -46,7 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link">Akun</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Password</a>
+                            <a href="#" class="nav-link">Password</a> -->
                         </li>
 
                     </ul>
@@ -114,7 +122,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-md-3 col-sm-6 col-12">
                             <div class="info-box">
                                 <span class="info-box-icon bg-warning"><i class="far fa-user"></i></span>
-
                                 <div class="info-box-content">
                                     <span class="info-box-text">Saldo Emas</span>
                                     <span class="info-box-number">13,648</span>
@@ -155,7 +162,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- /.description-block -->
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-6 border-right">
+                                        <div class="col-sm-6 border-left">
                                             <div class="description-block">
                                                 <h5 class="description-header">13,000</h5>
                                                 <span class="description-text">Harga Buyback</span>
@@ -182,10 +189,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <a class="nav-link " id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
+                                            <a class="nav-link " id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
+                                            <a class="nav-link active" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Settings</a>
@@ -275,7 +282,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <!-- /.table-responsive -->
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade show active" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                        <div class="tab-pane fade " id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                                             <!-- Bts -->
                                             <div class="card-header">
                                                 <h3 class="card-title"><b>Profil</b></h3>
@@ -403,46 +410,99 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- /.card-body -->
                                             <!-- Bts -->
                                         </div>
-                                        <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h2>Laporan Transaksi</h2>
-                                                        <select name="" id="">
-                                                            <option value="">Pilih Bulan</option>
-                                                            <option value="">Januari</option>
-                                                            <option value="">Februari</option>
-                                                        </select>
-                                                        <button>Sumbit</button>
-                                                        <table border="1" cellpadding="5">
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Tanggal</th>
-                                                                <th>Kategori</th>
-                                                                <th>Deskripsi</th>
-                                                                <th>Jumlah</th>
-                                                            </tr>
-                                                            <?php if (!empty($transactions)) {
-                                                                $no = 1;
-                                                                foreach ($transactions as $row) { ?>
-                                                                    <tr>
-                                                                        <td><?= $no++ ?></td>
-                                                                        <td><?= $row->date ?></td>
-                                                                        <td><?= $row->category ?></td>
-                                                                        <td><?= $row->description ?></td>
-                                                                        <td><?= $row->amount ?></td>
-                                                                    </tr>
-                                                                <?php }
-                                                            } else { ?>
-                                                                <tr>
-                                                                    <td colspan="5">Tidak ada data.</td>
-                                                                </tr>
-                                                            <?php } ?>
-                                                        </table>
-                                                    </div>
-                                                </div>
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                                            <div class="card-header">
+                                                <h3 class="card-title"><b>Mutasi</b></h3>
                                             </div>
-                                            <!-- /.col-md-6 -->
+                                            <div class="card-body">
+
+                                                <form action="#" method="GET">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                        </div>
+
+                                                        <input type="date" name="dari" class="form-control" value="<?= $this->input->get('dari') ?>">
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                        </div>
+                                                        <input type="date" name="sampai" class="form-control" value="<?= $this->input->get('sampai') ?>">
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <?php if (isset($mutasi) && !empty($mutasi)) { ?>
+
+                                                    <?php
+                                                    // Grouping data berdasarkan tanggal
+                                                    $grouped = [];
+                                                    foreach ($mutasi as $row) {
+                                                        $tanggal = date('d-m-Y', strtotime($row->field_tanggal_saldo));
+                                                        $grouped[$tanggal][] = $row;
+                                                    }
+                                                    ?>
+
+                                                    <table class="table table-bordered table-sm">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <!-- <th>Keterangan</th>
+            <th>Type</th> -->
+                                                                <!-- <th>-Debit+Kredit</th> -->
+                                                                <!-- <th>+Kredit</th> -->
+                                                                <!-- <th>Saldo</th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($grouped as $tanggal => $transaksis): ?>
+                                                                <!-- Baris Tanggal sebagai Row -->
+                                                                <tr style="background-color: #f0f0f0; font-weight: bold;">
+                                                                    <td colspan="4"> <?= date('d F Y', strtotime($tanggal)) ?></td>
+
+                                                                </tr>
+                                                                <?php foreach ($transaksis as $row): ?>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td><?= $row->field_no_referensi ?></td>
+                                                                        <td>
+                                                                            <?php if ($row->field_type_saldo == '300') {
+                                                                                echo "<b>+ " . $row->field_kredit_saldo . "<br>" . "<small>" . $row->field_time . " WIB" . "<small>";
+                                                                            } elseif ($row->field_type_saldo == '200') {
+                                                                                echo "<b>- " . $row->field_debit_saldo . "<br>" . "<small> " . $row->field_time . " WIB" . "<small>";
+                                                                            } elseif ($row->field_type_saldo == '100') {
+                                                                                echo "<b>+ " . $row->field_kredit_saldo . "<br>" . "<small>" . $row->field_time . " WIB" . "<small>";
+                                                                            }
+
+                                                                            ?>
+                                                                        </td>
+                                                                        <!-- <td><?= $row->field_kredit_saldo ?></td> -->
+                                                                        <!-- <td><?= $row->field_total_saldo ?></td> -->
+                                                                    </tr>
+                                                                <?php endforeach; ?>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+
+
+
+
+                                                <?php } else { ?>
+                                                    <div class="alert alert-info">Tidak ada data mutasi untuk rentang tanggal ini.</div>
+                                                <?php } ?>
+
+
+
+                                            </div>
+
+
 
                                         </div>
                                         <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
@@ -551,8 +611,50 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?= base_url(); ?>/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="<?= base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <!-- <script src="<?= base_url(); ?>/assets/dist/js/demo.js"></script> -->
+
+
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="<?= base_url(); ?>/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="<?= base_url(); ?>/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="<?= base_url(); ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/jszip/jszip.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="<?= base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
+
+    <!-- Page specific script -->
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 
     <script>
         function password_show_hide() {

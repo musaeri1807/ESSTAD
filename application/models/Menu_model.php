@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Menu_model extends CI_Model {
+class Menu_model extends CI_Model
+{
 
 	public function getMainMenu()
 	{
@@ -23,9 +24,9 @@ class Menu_model extends CI_Model {
 	{
 
 		if ($post['ada_submenu'] == '1') {
-			$menu_utama = $this->db->get_where('menu', ['submenu' => 0])->num_rows();	
+			$menu_utama = $this->db->get_where('menu', ['submenu' => 0])->num_rows();
 			$urutan = $menu_utama + 1;
-		}else{
+		} else {
 			$submenu = $this->db->get_where('menu', ['submenu' => $post['submenu']])->num_rows();
 			$urutan = $submenu + 1;
 		}
@@ -58,7 +59,7 @@ class Menu_model extends CI_Model {
 
 	public function orderMenu($post)
 	{
-		for ($i=0; $i < count($post['menu']); $i++) { 
+		for ($i = 0; $i < count($post['menu']); $i++) {
 			$j = $i;
 
 			$id_menu = $post['menu'][$i]['id'];
@@ -67,7 +68,7 @@ class Menu_model extends CI_Model {
 
 				$children = $post['menu'][$i]['children'];
 
-				for ($k=0; $k < count($children); $k++) { 
+				for ($k = 0; $k < count($children); $k++) {
 
 					$id_sub_menu = $post['menu'][$i]['children'][$k]['id'];
 
@@ -81,11 +82,9 @@ class Menu_model extends CI_Model {
 				}
 
 				$ada_submenu = 1;
-
-			}else{
+			} else {
 
 				$ada_submenu = 0;
-
 			}
 
 			$this->db->set('urutan', $j += 1);
@@ -93,11 +92,9 @@ class Menu_model extends CI_Model {
 			$this->db->set('submenu', 0);
 			$this->db->where('id_menu', $id_menu);
 			$this->db->update('menu');
-
 		}
 	}
-
 }
 
 /* End of file menu_model.php */
-/* Location: ./application/modules/menu/models/menu_model.php */ ?>
+/* Location: ./application/modules/menu/models/menu_model.php */
