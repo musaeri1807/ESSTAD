@@ -161,4 +161,34 @@ class Settings extends CI_Controller
             redirect(base_url(), 'refresh');
         }
     }
+
+    function add_ajax_kab($id_prov)
+    {
+        $query = $this->db->get_where('region_kabupaten', array('provinsi_id' => $id_prov));
+        $data = "<option value=''>- Pilih Kabupaten -</option>";
+        foreach ($query->result() as $value) {
+            $data .= "<option value='" . $value->id . "'>" . $value->nama . "</option>";
+        }
+        echo $data;
+    }
+
+    function add_ajax_kec($id_kab)
+    {
+        $query = $this->db->get_where('region_kecamatan', array('kabupaten_id' => $id_kab));
+        $data = "<option value=''> - Pilih Kecamatan - </option>";
+        foreach ($query->result() as $value) {
+            $data .= "<option value='" . $value->id . "'>" . $value->nama . "</option>";
+        }
+        echo $data;
+    }
+
+    function add_ajax_des($id_kec)
+    {
+        $query = $this->db->get_where('region_desa', array('kecamatan_id' => $id_kec));
+        $data = "<option value=''> - Pilih Desa - </option>";
+        foreach ($query->result() as $value) {
+            $data .= "<option value='" . $value->id . "'>" . $value->nama . "</option>";
+        }
+        echo $data;
+    }
 }

@@ -104,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="<?= base_url('login') ?>" role="button">
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </li>
@@ -145,7 +145,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- Widget: user widget style 1 -->
                             <div class="card card-widget widget-user">
                                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                                <div class="widget-user-header bg-info">
+                                <div class="widget-user-header bg-primary">
                                     <h2 class="widget-user-username">Alexander Pierce</h2>
                                     <h5 class="widget-user-desc">Founder & CEO</h5>
                                 </div>
@@ -154,21 +154,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <div class="card-footer">
                                     <div class="row">
-                                        <div class="col-sm-6 border-right">
-                                            <div class="description-block">
+                                        <!-- <div class="col-sm-6 border-right"> -->
+                                        <!-- <div class="description-block">
                                                 <h5 class="description-header">3,200</h5>
                                                 <span class="description-text">Harga Emas</span>
-                                            </div>
-                                            <!-- /.description-block -->
-                                        </div>
+                                            </div> -->
+                                        <!-- /.description-block -->
+                                        <!-- </div> -->
                                         <!-- /.col -->
-                                        <div class="col-sm-6 border-left">
-                                            <div class="description-block">
+                                        <!-- <div class="col-sm-6 border-left"> -->
+                                        <!-- <div class="description-block">
                                                 <h5 class="description-header">13,000</h5>
                                                 <span class="description-text">Harga Buyback</span>
-                                            </div>
-                                            <!-- /.description-block -->
-                                        </div>
+                                            </div> -->
+                                        <!-- /.description-block -->
+                                        <!-- </div> -->
                                         <!-- /.col -->
                                     </div>
                                     <!-- /.row -->
@@ -189,10 +189,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <a class="nav-link " id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link " id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
+                                            <a class="nav-link active " id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
+                                            <a class="nav-link " id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Settings</a>
@@ -207,88 +207,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <h3 class="card-title"><b>Home</b></h3>
                                             </div>
 
-                                            <!-- /.card-header -->
-                                            <div class="card-body p-0">
-                                                <div class="table-responsive">
-                                                    <table class="table m-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Order ID</th>
-                                                                <th>Item</th>
-                                                                <th>Status</th>
-                                                                <th>Popularity</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                                <td>Call of Duty IV</td>
-                                                                <td><span class="badge badge-success">Shipped</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                                <td>Samsung Smart TV</td>
-                                                                <td><span class="badge badge-warning">Pending</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                                <td>iPhone 6 Plus</td>
-                                                                <td><span class="badge badge-danger">Delivered</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                                <td>Samsung Smart TV</td>
-                                                                <td><span class="badge badge-info">Processing</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                                <td>Samsung Smart TV</td>
-                                                                <td><span class="badge badge-warning">Pending</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                                <td>iPhone 6 Plus</td>
-                                                                <td><span class="badge badge-danger">Delivered</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                                <td>Call of Duty IV</td>
-                                                                <td><span class="badge badge-success">Shipped</span></td>
-                                                                <td>
-                                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!-- /.table-responsive -->
-                                            </div>
+
                                         </div>
-                                        <div class="tab-pane fade " id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                                             <!-- Bts -->
                                             <div class="card-header">
                                                 <h3 class="card-title"><b>Profil</b></h3>
                                             </div>
                                             <div class="card-body">
-                                                <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+                                                <form action="<?= base_url('users/changepassword'); ?>" method="post">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -329,7 +256,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <h3 class="card-title"><b>Data</b></h3>
                                             </div>
                                             <div class="card-body">
-                                                <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+                                                <form action="<?= base_url('users/changeprofile'); ?>" method="post">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-address-card "></i></span>
@@ -363,40 +290,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-home"></i></span>
                                                         </div>
-                                                        <select class="form-control" name="provinsi" id="provinsi">
-                                                            <option value="">Pilih Provinsi</option>
-                                                            <option value="">A</option>
-                                                            <option value="">B</option>
+                                                        <select name="provinsi" class="form-control" id="provinsi">
+                                                            <option value="<?= ""; ?>">-Pilih Provinsi-</option>
+                                                            <?php
+                                                            foreach ($provinsi as $prov) {
+                                                                echo '<option value="' . $prov->id . '">' . $prov->nama . '</option>';
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-home"></i></span>
                                                         </div>
-                                                        <select class="form-control" name="kota" id="kota">
-                                                            <option value="">Pilih Kabupaten/Kota</option>
-                                                            <option value="">A</option>
-                                                            <option value="">B</option>
+                                                        <select name="kabupaten" class="form-control" id="kabupaten">
+                                                            <option value='<?= "ID"; ?>'><?= "database"; ?></option>
                                                         </select>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-home"></i></span>
                                                         </div>
-                                                        <select class="form-control" name="kecamatan" id="kecamata">
-                                                            <option value="">Pilih Kecamatan</option>
-                                                            <option value="">A</option>
-                                                            <option value="">B</option>
+                                                        <select name="kecamatan" class="form-control" id="kecamatan">
+                                                            <option value="<?= ""; ?>"><?= ""; ?></option>
                                                         </select>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-home"></i></span>
                                                         </div>
-                                                        <select class="form-control" name="desa" id="desa">
-                                                            <option value="">Pilih Kelurahan/Desa</option>
-                                                            <option value="">A</option>
-                                                            <option value="">B</option>
+                                                        <select name="desa" class="form-control" id="desa">
+                                                            <option value="<?= ""; ?>"><?= ""; ?></option>
                                                         </select>
                                                     </div>
 
@@ -410,7 +334,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- /.card-body -->
                                             <!-- Bts -->
                                         </div>
-                                        <div class="tab-pane fade show active" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                                        <div class="tab-pane fade " id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
                                             <div class="card-header">
                                                 <h3 class="card-title"><b>Mutasi</b></h3>
                                             </div>
@@ -440,7 +364,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </div>
                                             <div class="card-body">
 
-                                                <?php if (isset($mutasi) && !empty($mutasi)) { ?>
+                                                <?php if (isset($mutasi)) { ?>
 
                                                     <?php
                                                     // Grouping data berdasarkan tanggal
@@ -455,7 +379,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <thead class="thead-dark">
                                                             <tr>
                                                                 <!-- <th>Keterangan</th>
-            <th>Type</th> -->
+                                                                 <th>Type</th> -->
                                                                 <!-- <th>-Debit+Kredit</th> -->
                                                                 <!-- <th>+Kredit</th> -->
                                                                 <!-- <th>Saldo</th> -->
@@ -490,10 +414,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                             <?php endforeach; ?>
                                                         </tbody>
                                                     </table>
-
-
-
-
+                                                <?php } elseif (!empty($mutasi)) { ?>
+                                                    <div class="alert alert-info">Tidak ada data mutasi untuk rentang tanggal ini.</div>
                                                 <?php } else { ?>
                                                     <div class="alert alert-info">Tidak ada data mutasi untuk rentang tanggal ini.</div>
                                                 <?php } ?>
@@ -513,7 +435,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </div>
                                             <div class="card-body">
 
-                                                <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+                                                <form action="<?= base_url('users/changepassword'); ?>" method="post">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -560,6 +482,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </div>
                                             <!-- /.card-body -->
                                             <!-- Bts -->
+                                            <!-- Bts -->
+                                            <div class="card-header">
+                                                <h3 class="card-title"> <b>PIN Password</b></h3>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <form action="<?= base_url('users/pinpassword'); ?>" method="post">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                        </div>
+                                                        <input type="password" inputmode="numeric" name="pin1" class="form-control" id="pin" placeholder="PIN" required>
+                                                        <!-- show password -->
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" onclick="pin_show_hide();">
+                                                                <i class="fas fa-eye" id="pin_show_eye"></i>
+                                                                <i class="fas fa-eye-slash d-none" id="pin_hide_eye"></i>
+                                                            </span>
+                                                        </div>
+                                                        <!-- show password -->
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                        </div>
+                                                        <input type="password" inputmode="numeric" name="pin2" class="form-control" id="pin2" placeholder="Confirm PIN" required>
+                                                        <!-- show password -->
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" onclick="pin_show_hidee();">
+                                                                <i class="fas fa-eye" id="pin_show_eyee"></i>
+                                                                <i class="fas fa-eye-slash d-none" id="pin_hide_eyee"></i>
+                                                            </span>
+                                                        </div>
+                                                        <!-- show password -->
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary btn-block">Mengubah PIN</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                            <!-- /.card-body -->
+                                            <!-- Bts -->
                                         </div>
                                     </div>
                                 </div>
@@ -573,8 +541,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <div class="card card-primary card-outline">
                                 <div class="card-body">
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
+                                    <a href="#" class="card-link">Logout</a>
                                 </div>
                             </div><!-- /.card -->
                         </div>
@@ -634,7 +601,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- AdminLTE App -->
     <script src="<?= base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
+    <!-- wilayah -->
+    <script>
+        $(document).ready(function() {
+            $("#provinsi").change(function() {
+                var url = "<?php echo site_url('settings/add_ajax_kab'); ?>/" + $(this).val();
+                $('#kabupaten').load(url);
+                return false;
+            })
 
+            $("#kabupaten").change(function() {
+                var url = "<?php echo site_url('settings/add_ajax_kec'); ?>/" + $(this).val();
+                $('#kecamatan').load(url);
+                return false;
+            })
+
+            $("#kecamatan").change(function() {
+                var url = "<?php echo site_url('settings/add_ajax_des'); ?>/" + $(this).val();
+                $('#desa').load(url);
+                return false;
+            })
+        });
+    </script>
     <!-- Page specific script -->
     <script>
         $(function() {
@@ -680,6 +668,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
             hide.classList.remove("d-none");
             if (y.type === "password") {
                 y.type = "text";
+                show.style.display = "none";
+                hide.style.display = "block";
+            } else {
+                y.type = "password";
+                show.style.display = "block";
+                hide.style.display = "none";
+            }
+        }
+    </script>
+    <!-- PIN -->
+    <script>
+        function pin_show_hide() {
+            var x = document.getElementById("pin");
+            var show_eye = document.getElementById("pin_show_eye");
+            var hide_eye = document.getElementById("pin_hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (x.type === "password") {
+                x.type = "tel";
+                show_eye.style.display = "none";
+                hide_eye.style.display = "block";
+            } else {
+                x.type = "password";
+                show_eye.style.display = "block";
+                hide_eye.style.display = "none";
+            }
+        }
+
+        function pin_show_hidee() {
+            var y = document.getElementById("pin2");
+            var show = document.getElementById("pin_show_eyee");
+            var hide = document.getElementById("pin_hide_eyee");
+            hide.classList.remove("d-none");
+            if (y.type === "password") {
+                y.type = "tel";
                 show.style.display = "none";
                 hide.style.display = "block";
             } else {
