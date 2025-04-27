@@ -1,10 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require_once(APPPATH . 'core/AUTH_Controller.php'); // Menambahkan include
 //load email phpmailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class Authorization extends CI_Controller
+class Authorization extends AUTH_Controller
 {
 	public function __construct()
 	{
@@ -19,7 +20,6 @@ class Authorization extends CI_Controller
 		$this->load->helper('security');
 		$this->load->helper('nogenerate_helper');
 
-
 		require APPPATH . 'third_party/PHPMailer/Exception.php';
 		require APPPATH . 'third_party/PHPMailer/PHPMailer.php';
 		require APPPATH . 'third_party/PHPMailer/SMTP.php';
@@ -27,9 +27,9 @@ class Authorization extends CI_Controller
 
 	public function index()
 	{
-		// if ($this->session->userdata('email') and $this->session->userdata('user_id')) {
-		// 	redirect('Homepage');
-		// }
+		if ($this->session->userdata('login_state')) {
+			redirect('users');
+		}
 
 		// $this->session->sess_destroy();
 		// var_dump($this->session->all_userdata());
@@ -77,18 +77,24 @@ class Authorization extends CI_Controller
 				// cek password
 				if (password_verify($password, $user['password'])) {
 					$session = [
-						'user_id'       => $user['user_id'],
-						'email'         => $user['email'],
-						'phone'         => $user['phone'],
-						'account_id'    => $user['account_id'],
-						'role_id'		=> 6,
+						'userdata'		=> $user,
+						// 'user_id'       => $user['user_id'],
+						// 'email'         => $user['email'],
+						// 'phone'         => $user['phone'],
+						// 'account_id'    => $user['account_id'],
+						// 'role_id'		=> 6,
 						'login_state'   => TRUE,
+						'status' 		=> "Loged_in",
 						'lastlogin'     => time()
 					];
 					// update date
 					$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
 					if ($this->db->affected_rows() > 0) {
 						$this->session->set_userdata($session);
+						// $datauser = $this->session->userdata('userdata');
+
+						// var_dump($datauser['user_id']);
+						// die();
 						//Email
 						// $this->_sendEmail($user['name_users'], $user['email'], '', 'Login');
 						if (!empty($this->input->post('rememberMe'))) {
@@ -101,24 +107,23 @@ class Authorization extends CI_Controller
 							// Belum di centang!;
 						}
 						$this->session->set_flashdata('message_success', 'Congratulation!');
-						// $this->session->set_flashdata('message_success', '<span class="text-success "><p class="login-box-msg ">Congratulation!</p></span>');
-						redirect('authorization');
+						redirect('login');
 					}
 				} else {
 					// // Jika login gagal
 					$this->session->set_flashdata('message_error', 'Wrong password!');
-					// $this->session->set_flashdata('message_error', '<span class="text-danger  "><p class="login-box-msg ">Wrong password!</p></span>');
-					redirect('authorization');
+
+					redirect('login');
 				}
 			} else {
 				$this->session->set_flashdata('message_warning', 'This email has not been activated!');
-				// $this->session->set_flashdata('message', '<span class="text-warning  "><p class="login-box-msg ">This email has not been activated!</p></span>');
-				redirect('authorization');
+
+				redirect('login');
 			}
 		} else {
 			$this->session->set_flashdata('message_error', 'Akun tidak terdaftar!');
-			// $this->session->set_flashdata('message', '<span class="text-danger  "><p class="login-box-msg ">Tidak terdaftar!</p></span>');
-			redirect('authorization');
+
+			redirect('login');
 		}
 	}
 	public function signinOTP()
@@ -559,15 +564,21 @@ class Authorization extends CI_Controller
 					if (time() - $DateCreated <= 600) {
 						if ($this->session->userdata('button') == 'signin') {
 							$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
-							$session 	= [
-								'user_id'       => $user['user_id'],
-								'email' 		=> $user['email'],
-								'phone'         => $user['phone'],
-								'account_id'    => $user['account_id'],
-								// 'id_users'		=> $user['id_users'],
-								'role'			=> 6,
-								'login_state'	=> TRUE,
-								'lastlogin'		=> time()
+							// $session 	= [
+							// 	'user_id'       => $user['user_id'],
+							// 	'email' 		=> $user['email'],
+							// 	'phone'         => $user['phone'],
+							// 	'account_id'    => $user['account_id'],
+							// 	// 'id_users'		=> $user['id_users'],
+							// 	'role'			=> 6,
+							// 	'login_state'	=> TRUE,
+							// 	'lastlogin'		=> time()
+							// ];
+							$session = [
+								'userdata'		=> $user,
+								'login_state'   => TRUE,
+								'status' 		=> "Loged_in",
+								'lastlogin'     => time()
 							];
 							$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
 							if ($this->db->affected_rows() > 0) {
@@ -763,16 +774,17 @@ class Authorization extends CI_Controller
 
 	public function logout()
 	{
+
 		$this->logger
-			->user($this->session->userdata('email')) //Set UserID, who created this  Action
+			->user($this->user['email']) //Set UserID, who created this  Action
 			->type('Logout') //Entry type like, Post, Page, Entry, signin
 			->id(4) //Entry ID 1 login  2 logout 3 Reset
 			->token(md5(date('h:i:s'))) //Token identify Action
 			->comment($_SERVER['REMOTE_ADDR'] . "-" . $_SERVER['HTTP_USER_AGENT']) //Comment 
 			->log(); //Add Database Entry	
-		$this->session->unset_userdata('email');
 		$this->session->set_flashdata('message_info', 'Account have been logout!');
-		$this->session->sess_destroy();
+		$this->session->unset_userdata('login_state');
+		// $this->session->sess_destroy();
 		redirect('login');
 	}
 

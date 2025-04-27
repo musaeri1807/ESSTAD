@@ -33,8 +33,8 @@ class Usershome extends CI_Controller
 
 		// __construct
 		// Ambil ID User dari Session
-		$this->userId   = $this->session->userdata('user_id');
-		$this->accountId = $this->session->userdata('account_id');
+		$this->userId   	= $this->session->userdata('user_id');
+		$this->accountId 	= $this->session->userdata('account_id');
 	}
 	private function prepareData($viewTitle)
 	{

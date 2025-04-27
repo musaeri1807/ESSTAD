@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container">
                 <a href="<?= base_url('Users'); ?>" class="navbar-brand">
                     <img src="<?= base_url(); ?>/assets/images/users/icon_bspid.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">Bank Sampah Pintar</span>
+                    <span class="brand-text font-weight-light">BSP</span>
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,8 +123,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="info-box">
                                 <span class="info-box-icon bg-warning"><i class="far fa-user"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Saldo Emas</span>
-                                    <span class="info-box-number">13,648</span>
+                                    <span class="info-box-text">Saldo </span>
+                                    <span class="info-box-number"><?= $saldo['saldo'] ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -138,6 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.content-header -->
             <!-- Main content -->
+
             <div class="content">
                 <div class="container">
                     <div class="row">
@@ -146,8 +147,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="card card-widget widget-user">
                                 <!-- Add the bg color to the header using any of the bg-* classes -->
                                 <div class="widget-user-header bg-primary">
-                                    <h2 class="widget-user-username">Alexander Pierce</h2>
-                                    <h5 class="widget-user-desc">Founder & CEO</h5>
+                                    <h2 class="widget-user-username"> <?= $userlogin['name_users']; ?></h2>
+                                    <h5 class="widget-user-desc"><?= $saldo['account_id'] ?></h5>
                                 </div>
                                 <div class="widget-user-image">
                                     <img class="img-circle elevation-2" src="<?= base_url(); ?>/assets/images/users/users.png" alt="User Avatar">
@@ -175,6 +176,41 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             </div>
                             <!-- /.widget-user -->
+
+                            <div class="row">
+
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-warning">
+                                        <div class="inner">
+                                            <h3><?= number_format($gold['sell']); ?></h3>
+                                            <p>Harga Beli <br>update Tanggal <?= $gold['date'] ?></p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-person-add"></i>
+                                        </div>
+                                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-danger">
+                                        <div class="inner">
+                                            <h3><?= number_format($gold['buyback']); ?></h3>
+
+                                            <p>Harga Buyback <br>update Tanggal <?= $gold['date'] ?></p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-pie-graph"></i>
+                                        </div>
+                                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                            </div>
+
                         </div>
                         <!-- /.col -->
 
@@ -220,26 +256,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input type="text" name="name" class="form-control" id="name" placeholder="Nama" required>
+                                                        <input type="text" name="name" class="form-control" id="name" value="<?= $userlogin['name_users']; ?>" placeholder="Nama" required>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
                                                         </div>
-                                                        <input type="tel" inputmode="numeric" name="phone" class="form-control" id="phone" placeholder="Whatsapp" required disabled>
+                                                        <input type="tel" inputmode="numeric" name="phone" class="form-control" id="phone" value="<?= $userlogin['phone']; ?>" placeholder="Whatsapp" required disabled>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                                         </div>
-                                                        <input type="email" name="email" class="form-control" id="email" placeholder="Email" required disabled>
+                                                        <input type="email" name="email" class="form-control" id="email" value="<?= $userlogin['email']; ?>" placeholder="Email" required disabled>
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-university"></i></span>
                                                         </div>
-                                                        <input type="text" name="cabang" class="form-control" id="cabang" placeholder="Cabang" required disabled>
+                                                        <input type="text" name="cabang" class="form-control" id="cabang" value="<?= $userlogin['branch_id']; ?>" placeholder="Cabang" required disabled>
                                                     </div>
 
                                                     <div class="row">
@@ -370,7 +406,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     // Grouping data berdasarkan tanggal
                                                     $grouped = [];
                                                     foreach ($mutasi as $row) {
-                                                        $tanggal = date('d-m-Y', strtotime($row->field_tanggal_saldo));
+                                                        $tanggal = date('d-m-Y', strtotime($row->tanggal));
                                                         $grouped[$tanggal][] = $row;
                                                     }
                                                     ?>
@@ -395,20 +431,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                 <?php foreach ($transaksis as $row): ?>
                                                                     <tr>
                                                                         <td></td>
-                                                                        <td><?= $row->field_no_referensi ?></td>
+                                                                        <td><?= $row->noreferensi ?></td>
                                                                         <td>
-                                                                            <?php if ($row->field_type_saldo == '300') {
-                                                                                echo "<b>+ " . $row->field_kredit_saldo . "<br>" . "<small>" . $row->field_time . " WIB" . "<small>";
-                                                                            } elseif ($row->field_type_saldo == '200') {
-                                                                                echo "<b>- " . $row->field_debit_saldo . "<br>" . "<small> " . $row->field_time . " WIB" . "<small>";
-                                                                            } elseif ($row->field_type_saldo == '100') {
-                                                                                echo "<b>+ " . $row->field_kredit_saldo . "<br>" . "<small>" . $row->field_time . " WIB" . "<small>";
+                                                                            <?php if ($row->type == '300') {
+                                                                                echo "<b>+ " . $row->kredit . "<br>" . "<small>" . $row->time . " WIB" . "<small>";
+                                                                            } elseif ($row->type == '200') {
+                                                                                echo "<b>- " . $row->debit . "<br>" . "<small> " . $row->time . " WIB" . "<small>";
+                                                                            } elseif ($row->type == '100') {
+                                                                                echo "<b>+ " . $row->kredit . "<br>" . "<small>" . $row->time . " WIB" . "<small>";
                                                                             }
 
                                                                             ?>
                                                                         </td>
-                                                                        <!-- <td><?= $row->field_kredit_saldo ?></td> -->
-                                                                        <!-- <td><?= $row->field_total_saldo ?></td> -->
+
                                                                     </tr>
                                                                 <?php endforeach; ?>
                                                             <?php endforeach; ?>
@@ -541,7 +576,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <div class="card card-primary card-outline">
                                 <div class="card-body">
-                                    <a href="#" class="card-link">Logout</a>
+                                    <a href="<?php echo base_url('logout')  ?>" class="card-link">Logout</a>
                                 </div>
                             </div><!-- /.card -->
                         </div>

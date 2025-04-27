@@ -34,5 +34,5 @@ class Region_model extends CI_Model
 	public function get_rt()
 	{
 		return $this->db->get('region_rt')->result();
-	}
+	}	
 }
