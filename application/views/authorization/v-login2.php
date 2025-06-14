@@ -1,12 +1,5 @@
 <div class="card-body">
 
-  <!-- <?php if ($this->session->flashdata('message') == null) {
-    echo '<span class="text-primary"><p class="login-box-msg">Masuk ke BSP</p></span>';
-  } else {
-    echo  $this->session->flashdata('message');
-  }
-  ?> -->
-
   <form action="<?= base_url('login'); ?>" method="post">
     <div class="row mb-2">
       <div class="col-8">

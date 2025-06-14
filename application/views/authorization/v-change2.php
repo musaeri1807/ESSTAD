@@ -3,7 +3,7 @@
     <p class="login-box-msg">Change password new your to account</p>
   </span>
   <p class="login-box-msg"><b><?= $this->session->userdata('UserName'); ?></b></p>
-  <form action="<?= base_url('authorization/changepassword'); ?>" method="post">
+  <form action="<?= base_url('change-password'); ?>" method="post">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-lock"></i></span>

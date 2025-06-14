@@ -225,13 +225,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <a class="nav-link " id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active " id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
+                                            <a class="nav-link  " id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profile</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link " id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Mutasi</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Settings</a>
+                                            <a class="nav-link active" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Settings</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -245,7 +245,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
                                         </div>
-                                        <div class="tab-pane fade show active" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                        <div class="tab-pane fade " id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                                             <!-- Bts -->
                                             <div class="card-header">
                                                 <h3 class="card-title"><b>Profil</b></h3>
@@ -462,7 +462,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
                                         </div>
-                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
 
                                             <!-- Bts -->
                                             <div class="card-header">
@@ -636,6 +636,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?= base_url(); ?>/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- AdminLTE App -->
     <script src="<?= base_url(); ?>/assets/dist/js/adminlte.min.js"></script>
+    <!--load swal js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- wilayah -->
     <script>
         $(document).ready(function() {
@@ -746,6 +748,89 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         }
     </script>
+
+    <!-- Pesan Error -->
+    <?php if ($this->session->flashdata('message_error')): ?>
+        <script>
+            Swal.fire({
+                title: 'Error...!!!',
+                text: '<?= $this->session->flashdata('message_error'); ?>',
+                icon: 'error',
+                // showConfirmButton: false,
+                // confirmButtonText: 'Try Again',
+                // timer: 1500
+            });
+        </script>
+    <?php endif; ?>
+    <!-- Pesan warning -->
+    <?php if ($this->session->flashdata('message_warning')): ?>
+        <script>
+            Swal.fire({
+                title: 'Warning...!!!',
+                text: '<?= $this->session->flashdata('message_warning'); ?>',
+                icon: 'warning',
+                // showConfirmButton: false,
+                // confirmButtonText: 'Try Again',
+                // timer: 1500
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan info -->
+    <?php if ($this->session->flashdata('message_info')): ?>
+        <script>
+            Swal.fire({
+                title: 'Info...!!!',
+                text: '<?= $this->session->flashdata('message_info'); ?>',
+                icon: 'info'
+                // confirmButtonText: 'Lanjutkan'
+            });
+        </script>
+    <?php endif; ?>
+    <!-- Pesan success login -->
+    <?php if ($this->session->flashdata('message_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('message_success'); ?>',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500 // Durasi dalam milidetik
+            });
+            // Arahkan setelah timer selesai
+            setTimeout(() => {
+                window.location.href = '<?= site_url("login"); ?>'; // Arahkan ke Home Page
+            }, 1500); // Sesuaikan dengan timer SweetAlert
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan success -->
+    <?php if ($this->session->flashdata('msg_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('msg_success'); ?>',
+                icon: 'success',
+                // confirmButtonText: 'Lanjutkan'
+                // }).then((result) => {
+                //     if (result.isConfirmed) {
+                //         window.location.href = ''; // Arahkan ke Authorization
+                //     }
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan form validation -->
+    <?php if (validation_errors()): ?>
+        <script>
+            Swal.fire({
+                title: 'Error validation...!!!',
+                text: <?= json_encode(strip_tags(validation_errors())); ?>,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
 </body>
 
 </html>

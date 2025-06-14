@@ -5,7 +5,7 @@ require_once(APPPATH . 'core/AUTH_Controller.php'); // Menambahkan include
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class Authorization extends AUTH_Controller
+class Authorization_Users extends AUTH_Controller
 {
 	public function __construct()
 	{
@@ -27,25 +27,33 @@ class Authorization extends AUTH_Controller
 
 	public function index()
 	{
-		if ($this->session->userdata('login_state')) {
-			redirect('users');
-		}
+		// echo $login_state = $this->session->userdata('login_state');
+		// echo $status      = $this->session->userdata('status');
+
+		// if (!empty($login_state) OR $login_state === TRUE && $status === 'Loged_in') {
+		// 	redirect('usersa');
+		// } else {
+		// 	redirect('login');	
+		// }
+
 
 		// $this->session->sess_destroy();
 		// var_dump($this->session->all_userdata());
 		// $this->changePassword();
 		// die();
+
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$data = array(
-				'Title' => ' Login',
-				'widget' => $this->recaptcha->getWidget()
+				'Title' 	=>	' Log in',
+				'Subtitle' 	=>	'Nama Aplikasi',
+				'widget' 	=> 	$this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
 			$data = array_merge($data, $sett);
-			$this->template->viewsAuth('authorization/v-login2', $data);
+			$this->template->viewsMobile('appMobile/v-login2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response', TRUE);
@@ -55,12 +63,11 @@ class Authorization extends AUTH_Controller
 					$this->_signin();
 				} else {
 					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha!');
-					redirect('authorization');
+					redirect('login');
 				}
 			} else {
 				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha');
-				// $this->session->set_flashdata('message_error', '<span class="text-danger "><p class="login-box-msg">Checkbox is unchecked in Recaptcha</p></span>');
-				redirect('authorization');
+				redirect('login');
 			}
 		}
 	}
@@ -77,12 +84,12 @@ class Authorization extends AUTH_Controller
 				// cek password
 				if (password_verify($password, $user['password'])) {
 					$session = [
-						'userdata'		=> $user,
-						// 'user_id'       => $user['user_id'],
-						// 'email'         => $user['email'],
-						// 'phone'         => $user['phone'],
-						// 'account_id'    => $user['account_id'],
-						// 'role_id'		=> 6,
+						// 'userdata'		=> $user,
+						'user_id'       => $user['user_id'],
+						'email'         => $user['email'],
+						'phone'         => $user['phone'],
+						'account_id'    => $user['account_id'],
+						'role_id'		=> 6,
 						'login_state'   => TRUE,
 						'status' 		=> "Loged_in",
 						'lastlogin'     => time()
@@ -143,11 +150,12 @@ class Authorization extends AUTH_Controller
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
-				'Title' => ' OTP',
-				'widget' => $this->recaptcha->getWidget()
+				'Title' 		=> 	'One-Time Password',
+				'Subtitle' 		=>	'Nama Aplikasi',
+				'widget' 		=> $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewsAuth('authorization/v-otp2', $data);
+			$this->template->viewsMobile('appMobile/v-otp2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -213,6 +221,7 @@ class Authorization extends AUTH_Controller
 			$ting = array(
 				'token' 	=> $token,
 				'Title' 	=> ' Register',
+				'Subtitle'	=> 'Aplikasi Name',
 				'widget' 	=> $this->recaptcha->getWidget(),
 				'bspid'		=> $this->Organization_model->get_bspid()
 			);
@@ -232,7 +241,7 @@ class Authorization extends AUTH_Controller
 			// Misal: 24Reff000000123
 			// die();
 			$data = array_merge($sett, $ting);
-			$this->template->viewsAuth('authorization/v-register2', $data);
+			$this->template->viewsMobile('appMobile/v-register2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -395,7 +404,7 @@ class Authorization extends AUTH_Controller
 							$message	=	'Silakan cek Email terbaru anda di ' . $email . 'untuk aktivasi ulang';
 							$this->_sendOTP($nomor, $message);
 							$this->session->set_flashdata('message_info', 'Kami kirim tautan terbaru silakan periksa Email Anda...!!!');
-							redirect('authorization');
+							redirect('login');
 						} else {
 							// echo "Gagal Update Token.";
 							$this->session->set_flashdata('message_warning', 'Gagal Updated Token...!');
@@ -420,11 +429,12 @@ class Authorization extends AUTH_Controller
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
-				'Title' => ' Forgot',
-				'widget' => $this->recaptcha->getWidget()
+				'Title' 	=> ' Forgot',
+				'Subtitle' 	=> 'Type your Username to reset your password',
+				'widget' 	=> $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewsAuth('authorization/v-forgot2', $data);
+			$this->template->viewsMobile('appMobile/v-forgot2', $data);
 		} else {
 			// validasinya success
 			$recaptcha = $this->input->post('g-recaptcha-response');
@@ -438,12 +448,12 @@ class Authorization extends AUTH_Controller
 						if ($user['is_active'] == 1) {
 							if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
 
-								$this->db->where('id_users', $user['user_id']);
+								$this->db->where('id_users', $user['id_users']);
 								$this->db->delete('token_users');
 								// siapkan token
 								$token 		= base64_encode(random_bytes(32));
 								$user_token = [
-									'id_users' 		=> $user['user_id'],
+									'id_users' 		=> $user['id_users'],
 									'token' 		=> $token,
 									'date_created' 	=> date('Y-m-d H:i:s')
 								];
@@ -507,12 +517,13 @@ class Authorization extends AUTH_Controller
 		}
 		// $this->session->set_userdata('NumberPhone', '081210003701');
 
-		$this->form_validation->set_rules('1', 'Username', 'trim|required|numeric');
-		$this->form_validation->set_rules('2', 'Username', 'trim|required|numeric');
-		$this->form_validation->set_rules('3', 'Username', 'trim|required|numeric');
-		$this->form_validation->set_rules('4', 'Username', 'trim|required|numeric');
-		$this->form_validation->set_rules('5', 'Username', 'trim|required|numeric');
-		$this->form_validation->set_rules('6', 'Username', 'trim|required|numeric');
+		// $this->form_validation->set_rules('1', 'Username', 'trim|required|numeric');
+		// $this->form_validation->set_rules('2', 'Username', 'trim|required|numeric');
+		// $this->form_validation->set_rules('3', 'Username', 'trim|required|numeric');
+		// $this->form_validation->set_rules('4', 'Username', 'trim|required|numeric');
+		// $this->form_validation->set_rules('5', 'Username', 'trim|required|numeric');
+		// $this->form_validation->set_rules('6', 'Username', 'trim|required|numeric');
+		$this->form_validation->set_rules('smscode', 'Username', 'trim|required|numeric');
 		if ($this->form_validation->run() == false) {
 			// generate token tiap kali buka form
 			$token = bin2hex(random_bytes(32)); // 32 karakter
@@ -530,7 +541,7 @@ class Authorization extends AUTH_Controller
 					'widget' 	=> $this->recaptcha->getWidget()
 				);
 				$data = array_merge($sett, $ting);
-				$this->template->viewsAuth('authorization/v-verifyotp', $data);
+				$this->template->viewsMobile('appMobile/v-verifyotp', $data);
 			} else {
 				$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
 				$this->db->delete('otp_users');
@@ -549,13 +560,14 @@ class Authorization extends AUTH_Controller
 			// validasinya success
 			$token		= $this->input->post('token');
 			if ($token === $this->session->userdata('verify_token')) {
-				$satu 	= $this->input->post('1');
-				$dua 	= $this->input->post('2');
-				$tiga 	= $this->input->post('3');
-				$empat 	= $this->input->post('4');
-				$lima 	= $this->input->post('5');
-				$enam 	= $this->input->post('6');
-				$number = $satu . $dua . $tiga . $empat . $lima . $enam; // 123456					
+				// $satu 	= $this->input->post('1');
+				// $dua 	= $this->input->post('2');
+				// $tiga 	= $this->input->post('3');
+				// $empat 	= $this->input->post('4');
+				// $lima 	= $this->input->post('5');
+				// $enam 	= $this->input->post('6');
+				// $number = $satu . $dua . $tiga . $empat . $lima . $enam; // 123456	
+				$number	= $this->input->post('smscode');
 				$this->db->where('otp', $number);
 				$query = $this->db->get('otp_users');
 				$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
@@ -666,7 +678,7 @@ class Authorization extends AUTH_Controller
 				'widget' => $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
-			$this->template->viewsAuth('authorization/v-change2', $data);
+			$this->template->viewsMobile('appMobile/v-change2', $data);
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
 			$username = $this->session->userdata('UserName');
@@ -776,7 +788,7 @@ class Authorization extends AUTH_Controller
 	{
 
 		$this->logger
-			->user($this->user['email']) //Set UserID, who created this  Action
+			->user($this->session->userdata('email')) //Set UserID, who created this  Action
 			->type('Logout') //Entry type like, Post, Page, Entry, signin
 			->id(4) //Entry ID 1 login  2 logout 3 Reset
 			->token(md5(date('h:i:s'))) //Token identify Action
@@ -784,7 +796,8 @@ class Authorization extends AUTH_Controller
 			->log(); //Add Database Entry	
 		$this->session->set_flashdata('message_info', 'Account have been logout!');
 		$this->session->unset_userdata('login_state');
-		// $this->session->sess_destroy();
+		$this->session->unset_userdata('userdata');
+		$this->session->sess_destroy();
 		redirect('login');
 	}
 
@@ -814,10 +827,10 @@ class Authorization extends AUTH_Controller
 		$mail = new PHPMailer();
 		// ***---SMTP configuration---***
 		$mail->isSMTP();
-		$mail->Host       = 'mx.mailspace.id'; //sesuaikan sesuai nama domain hosting/server yang digunakan
+		$mail->Host       = 'mx.mailspace.id'; // sesuaikan sesuai nama domain hosting/server yang digunakan
 		$mail->SMTPAuth   = true;
-		$mail->Username   = 'no_reply@miga.co.id'; // user email
-		$mail->Password   = 'P@ssw0rdmiga.2022#'; // password email
+		$mail->Username   = 'no_reply@miga.co.id'; //  user email
+		$mail->Password   = 'P@ssw0rdmiga.2022#'; //  password email
 		$mail->SMTPSecure = 'ssl';
 		$mail->Port       = 465;
 		// ***---SMTP configuration---***

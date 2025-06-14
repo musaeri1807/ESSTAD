@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Users_model extends CI_Model
 {
-    public function userValid($username)
+    public function userValid($username) //Memvalidasi User
     {
         $sql = "SELECT 
                     users.field_user_id AS id_users,                    
@@ -20,7 +20,7 @@ class Users_model extends CI_Model
         return $data->row_array();
     }
 
-    public function userLogin($userid)
+    public function userLogin($userid) //menampilkan user yang login
     {
 
         $sql = "SELECT 

@@ -22,6 +22,20 @@ class Template
 		}
 	}
 
+	function viewsMobile($tempMobile = NULL, $data = NULL)
+	{
+		if ($tempMobile != NULL) {
+			// head
+			$data['_head'] 					= $this->_ci->load->view('appMobile/_frontend/_head', $data, TRUE);
+			//Content
+			$data['_content'] 				= $this->_ci->load->view($tempMobile, $data, TRUE);
+			//JS
+			$data['_jquery'] 				= $this->_ci->load->view('appMobile/_frontend/_jquery', $data, TRUE);
+
+			echo $data['_tempAuth'] 		= $this->_ci->load->view('appMobile/_frontend/_tempAuth', $data, TRUE);
+		}
+	}
+
 	function viewsMain($tempMain = NULL, $data = NULL)
 	{
 		if ($tempMain != NULL) {

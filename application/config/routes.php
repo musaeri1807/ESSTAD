@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 // $route['default_controller'] = 'Ztest/recaptcha'Authorization;replicateTablesWelcome
 // $route['default_controller'] = 'Replication/replicateTablesMasterSlave';
-$route['default_controller'] = 'Authorization';
+$route['default_controller'] = 'Authorization_Users';
 $route['404_override'] = 'Error404';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -59,15 +59,28 @@ $route['Email']     = 'Emailblast/sendEmail';
 $route['security']  = 'Homepage/securitySetting';
 
 // Authorization
-$route['login']     = 'Authorization';
-$route['register']  = 'Authorization/signup';
-$route['verify']    = 'Authorization/verify';
-$route['verify-otp'] = 'Authorization/verifyOTP';
-$route['forgot']    = 'Authorization/forgot';
-$route['reset']     = 'Authorization/reset';
-$route['otp']       = 'Authorization/signinotp';
-$route['terms']     = 'authorization/terms';
-$route['logout']    = 'authorization/logout';
+// $route['login']      = 'Authorization/login';
+// $route['register']   = 'Authorization/signup';
+// $route['verify']     = 'Authorization/verify';
+// $route['verify-otp'] = 'Authorization/verifyOTP';
+// $route['forgot']     = 'Authorization/forgot';
+// $route['reset']          = 'Authorization/reset';
+// $route['otp']            = 'Authorization/signinotp';
+// $route['change-password'] ='Authorization/changepassword';
+// $route['terms']          = 'authorization/terms';
+// $route['logout']         = 'authorization/logout';
+
+// Authorization_users
+$route['login']         = 'Authorization_Users';
+$route['register']      = 'Authorization_Users/signup';
+$route['verify']        = 'Authorization_Users/verify';
+$route['verify-otp']    = 'Authorization_Users/verifyOTP';
+$route['forgot']        = 'Authorization_Users/forgot';
+$route['reset']         = 'Authorization_Users/reset';
+$route['otp']           = 'Authorization_Users/signinotp';
+$route['change-password']='Authorization_Users/changepassword';
+$route['terms']         = 'Authorization_Users/terms';
+$route['logout']        = 'Authorization_Users/logout';
 //SEO 
 $route['sitemap.xml'] = 'sitemap';
 $route['robots.txt']  = 'sitemap/robots';

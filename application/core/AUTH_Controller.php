@@ -10,10 +10,5 @@ class AUTH_Controller extends CI_Controller
 		$this->load->model('Users_model');
 
 		$this->user = $this->session->userdata('userdata');
-
-		// // Cek status login
-		// if (!$this->session->userdata('login_state')) {
-		// 	redirect('login');
-		// }
 	}
 }
