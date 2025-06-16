@@ -326,7 +326,7 @@ class Authorization extends AUTH_Controller
 									$this->_sendEmail($name, $email, $token, 'Account Verification');
 									$nomor		=	$phone;
 									// $message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
-									$message	=	'Terima kasih banyak atas pendaftaran Anda! sebagai nasabah B S P (*Bank Sampah Pintar*) *' . $bspid->CABANG . '*, Segera untuk aktivasi dengan membuka email Anda di ' . $email . ' Kurang dari 30 Menit';
+									$message	=	'Terima kasih banyak atas pendaftaran Anda sebagai nasabah B S P (*Bank Sampah Pintar*) cabang *' . $bspid->CABANG . '*. Segera lakukan aktivasi dengan membuka email Anda di ' . $email . ' dalam waktu kurang dari 30 menit. Apabila tidak menerima email, silakan klik tombol *Activation* di bagian atas halaman pendaftaran.';
 									$this->_sendOTP($nomor, $message);
 								} else {
 									$this->session->set_flashdata('message_error', 'Token Error..!');
