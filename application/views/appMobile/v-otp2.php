@@ -10,7 +10,7 @@
     <!-- <a href="app-login.html" class="headerButton">
                 Register
             </a> -->
-    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-primary">Register</a>
+    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-success">Register</a>
   </div>
 </div>
 <!-- * App Header -->
@@ -45,7 +45,7 @@
       <div class="form-links mt-2">
       </div>
       <div class="form-button-group  transparent">
-        <button type="submit" name="OTP" class="btn btn-primary btn-block btn-lg" value="signin">Request Code OTP</button>
+        <button type="submit" name="OTP" class="btn btn-success btn-block btn-lg" value="signin">Request Code OTP</button>
       </div>
     </form>
   </div>

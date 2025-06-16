@@ -96,7 +96,7 @@ a:hover, a:active, a:focus {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  color: #6236FF;
+  color:  #1DCC70;
   position: relative;
 }
 
@@ -1159,7 +1159,7 @@ blockquote.blockquote .blockquote-footer {
   right: 0;
   bottom: 0;
   z-index: 99999;
-  background: #6236FF;
+  background: #1DCC70;
   display: flex;
   align-items: center;
   justify-content: center;

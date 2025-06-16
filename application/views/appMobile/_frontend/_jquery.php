@@ -105,6 +105,20 @@
         </script>
     <?php endif; ?>
 
+    <?php if ($this->session->flashdata('clear_all_session_msg_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('clear_all_session_msg_success'); ?>',
+                icon: 'success'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "<?= base_url('Authorization/clear_all_session') ?>";
+                }
+            });
+        </script>
+    <?php endif; ?>
+
     <!-- Pesan success -->
     <?php if ($this->session->flashdata('msg_success')): ?>
         <script>

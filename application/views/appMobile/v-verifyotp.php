@@ -24,7 +24,7 @@
       </div>
 
       <div class="form-button-group transparent">
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Verify</button>
+        <button type="submit" class="btn btn-success btn-block btn-lg">Verify</button>
       </div>
 
     </form>

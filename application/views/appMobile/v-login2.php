@@ -7,10 +7,7 @@
   </div>
   <div class="pageTitle"></div>
   <div class="right">
-    <!-- <a href="app-login.html" class="headerButton">
-                Register
-            </a> -->
-    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-primary">Register</a>
+    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-success">Register</a>
   </div>
 </div>
 <!-- * App Header -->
@@ -20,7 +17,7 @@
   <div class="section mt-1 text-center">
     <!-- <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo" height="70"> -->
     <h1><?= $Title; ?></h1>
-    <h3> <?= $Subtitle; ?> </h3>
+    <h3> <?= $Subtitle; ?> <?= $name_application  ?> </h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('login'); ?>" method="POST">
@@ -82,13 +79,13 @@
       <div class="form-links mt-2">
         <div>
           <!-- <a href="app-register.html">Log in OTP</a> -->
-          <a href="<?= base_url('otp'); ?>" type="submit" class="btn btn-block btn-outline-primary">Log in OTP</a>
+          <a href="<?= base_url('otp'); ?>" type="submit" class="btn btn-block btn-outline-success">Log in OTP</a>
         </div>
         <div><a href="<?= base_url('forgot'); ?>" class="text-muted">Forgot Password?</a></div>
         <!-- app-forgot-password.html -->
       </div>
       <div class="form-button-group  transparent">
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Log in</button>
+        <button type="submit" class="btn btn-success btn-block btn-lg">Log in</button>
       </div>
     </form>
   </div>

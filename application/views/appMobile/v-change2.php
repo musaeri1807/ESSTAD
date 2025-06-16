@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="form-button-group transparent">
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Save Password</button>
+        <button type="submit" class="btn btn-success btn-block btn-lg">Save Password</button>
       </div>
     </form>
   </div>

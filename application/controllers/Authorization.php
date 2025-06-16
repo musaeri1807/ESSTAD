@@ -4,8 +4,9 @@ require_once(APPPATH . 'core/AUTH_Controller.php'); // Menambahkan include
 //load email phpmailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PhpParser\Node\Stmt\ElseIf_;
 
-class Authorization_Users extends AUTH_Controller
+class Authorization extends AUTH_Controller
 {
 	public function __construct()
 	{
@@ -24,6 +25,14 @@ class Authorization_Users extends AUTH_Controller
 		require APPPATH . 'third_party/PHPMailer/PHPMailer.php';
 		require APPPATH . 'third_party/PHPMailer/SMTP.php';
 	}
+
+
+	public function clear_all_session()
+	{
+		$this->session->sess_destroy(); // Semua session dihapus total
+		redirect('login'); // Atau redirect ke halaman manapun
+	}
+
 
 	public function index()
 	{
@@ -347,16 +356,16 @@ class Authorization_Users extends AUTH_Controller
 					}
 				} else {
 					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha.!');
-					// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Wrong Error recaptcha.!</p></span>');
 					redirect('register');
 				}
 			} else {
 				$this->session->set_flashdata('message_warning', 'recaptcha');
-				// $this->session->set_flashdata('message', '<span class="text-danger "><p class="login-box-msg">Recaptcha Wrong!</p></span>');
 				redirect('register');
 			}
 		}
 	}
+
+	//melalui email
 	public function verify()
 	{
 		$email	= $this->input->get('email');
@@ -423,6 +432,79 @@ class Authorization_Users extends AUTH_Controller
 			redirect('login');
 		}
 	}
+
+	public function accountOTP()
+	{
+		$this->form_validation->set_rules(
+			'username',
+			'phone',
+			'trim|required|numeric|min_length[10]|max_length[12]',
+			[
+				'required'    => 'Kolom {field} wajib diisi.',
+				'min_length'  => 'Kolom {field} minimal harus berisi {param} karakter.',
+				'max_length'  => 'Kolom {field} minimal harus berisi {param} karakter.',
+				'numeric'	  => 'Kolom {field} harus berisi angka.'
+			]
+		);
+		if ($this->form_validation->run() == false) {
+			$sett = $this->db->get('settings')->row_array();
+			$ting = array(
+				'Title' 		=> 	'Account Verification',
+				'Subtitle' 		=>	'BSP',
+				'widget' 		=> $this->recaptcha->getWidget()
+			);
+			$data = array_merge($sett, $ting);
+			$this->template->viewsMobile('appMobile/v-account', $data);
+		} else {
+			// validasinya success
+			$recaptcha = $this->input->post('g-recaptcha-response');
+			if (!empty($recaptcha)) {
+				$response = $this->recaptcha->verifyResponse($recaptcha);
+				if (isset($response['success']) and $response['success'] === true) {
+					$username 	= $this->input->post('username');
+					$button 	= $this->input->post('OTP_account');
+					$user 		= $this->Users_model->userValid($username); //valid User
+					// var_dump($user);
+					// die();
+					if ($user) {
+						if ($user['is_active'] == 0) {
+							$nomor = $user['phone'];
+							$this->session->set_userdata('NumberPhone', $nomor);
+							$this->session->set_userdata('button', $button);
+							$this->db->where('phone_number', $nomor);
+							$this->db->delete('otp_users');
+							$rand 		= rand(100000, 999999);
+							$OTPUser 	= [
+								'phone_number' 	=> $nomor,
+								'otp' 			=> $rand,
+								'date_created' 	=> date('Y-m-d H:i:s')
+							];
+							$this->db->insert('otp_users', $OTPUser);
+							$message	= '*' . $rand . '*' . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
+							//OTP
+							$this->_SendOTP($nomor, $message);
+							$this->session->set_flashdata('message_info', 'Silakan periksa,kode OTP dikirim ke nomor WhatsApp...!!!');
+							redirect('verify-otp'); //private di pakai untuk login dan change password melalui whatsapp
+							// OTP							
+						} else {
+							$this->session->set_flashdata('message_info', 'Your account is active...!!!');
+							redirect('login');
+						}
+					} else {
+						$this->session->set_flashdata('message_info', 'Your are not registered...!!!');
+						redirect('register');
+					}
+				} else {
+					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
+					redirect('otp-account');
+				}
+			} else {
+				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha...!!!');
+				redirect('otp-account');
+			}
+		}
+	}
+
 	public function forgot()
 	{
 		$this->form_validation->set_rules('username', 'username', 'trim|required');
@@ -516,7 +598,6 @@ class Authorization_Users extends AUTH_Controller
 			redirect('login');
 		}
 		// $this->session->set_userdata('NumberPhone', '081210003701');
-
 		// $this->form_validation->set_rules('1', 'Username', 'trim|required|numeric');
 		// $this->form_validation->set_rules('2', 'Username', 'trim|required|numeric');
 		// $this->form_validation->set_rules('3', 'Username', 'trim|required|numeric');
@@ -528,7 +609,6 @@ class Authorization_Users extends AUTH_Controller
 			// generate token tiap kali buka form
 			$token = bin2hex(random_bytes(32)); // 32 karakter
 			$this->session->set_userdata('verify_token', $token);
-
 			$this->db->where('phone_number', $this->session->userdata('NumberPhone'));
 			$query = $this->db->get('otp_users');
 			$result = $query->row_array(); // Mengambil satu baris hasil sebagai array asosiatif
@@ -548,8 +628,12 @@ class Authorization_Users extends AUTH_Controller
 				$button = $this->session->userdata('button');
 				if ($button == 'signin') {
 					$this->session->unset_userdata('NumberPhone');
-					$this->session->set_flashdata('message_error', 'OTP expired...!!!');
+					$this->session->set_flashdata('message_error', 'OTP Log in expired...!!!');
 					redirect('otp');
+				} elseif ($button == 'account_verification') {
+					$this->session->unset_userdata('NumberPhone');
+					$this->session->set_flashdata('message_error', 'OTP Verification expired...!!!');
+					redirect('otp-account');
 				} else {
 					$this->session->unset_userdata('NumberPhone');
 					$this->session->set_flashdata('message_error', 'OTP Reset expired...!!!');
@@ -597,6 +681,21 @@ class Authorization_Users extends AUTH_Controller
 								$this->session->set_userdata($session);
 								// $this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
 								$this->session->set_flashdata('message_success', 'Congratulation...!!!');
+								redirect('login'); //Masuk ke halaman users
+							}
+						} else if ($this->session->userdata('button') == 'account_verification') {
+							$this->Users_model->userUpdated($this->session->userdata('NumberPhone'), ['field_status_aktif' => '1']);
+							if ($this->db->affected_rows() > 0) {
+								// Kirim email success dan kirim WA Success
+								// Berhasil memperbarui
+								$nomor		=	$this->session->userdata('NumberPhone');
+								$message	=	'Akun Anda sudah aktif. Selamat datang! Bank Sampah Pintar (B S P)';
+								$this->_sendOTP($nomor, $message);
+								$this->session->set_flashdata('clear_all_session_msg_success', 'Verification Account Success...!!!');
+								redirect('login');
+							} else {
+								// Tidak ada yang diperbarui
+								$this->session->set_flashdata('message_warning', 'Gagal Verification Updated ...!!!');
 								redirect('login');
 							}
 						} else {
@@ -604,8 +703,17 @@ class Authorization_Users extends AUTH_Controller
 							$this->changePassword();
 						}
 					} else {
-						$this->session->set_flashdata('message_error', 'OTP expired...!!!');
-						redirect('forgot');
+						if ($this->session->userdata('button') == 'signin') {
+							$this->session->set_flashdata('message_error', 'OTP expired...!!!');
+							redirect('otp');
+						} else if ($this->session->userdata('button') == 'account_verification') {
+							$this->session->set_flashdata('message_error', 'OTP expired...!!!');
+							redirect('otp-account');
+						} else {
+
+							$this->session->set_flashdata('message_error', 'OTP expired...!!!');
+							redirect('forgot');
+						}
 					}
 				} else {
 					$attempt = $this->session->userdata('attempt') ?? 0;
@@ -617,11 +725,16 @@ class Authorization_Users extends AUTH_Controller
 						$this->db->delete('otp_users');
 						$this->session->unset_userdata(['attempt', 'NumberPhone']);
 						$button = $this->session->userdata('button');
+						// var_dump($button);
+						// die();
 						if ($button == 'signin') {
-							$this->session->set_flashdata('message_error', 'OTP Salah...!!!' . $attempt . 'x');
+							$this->session->set_flashdata('message_error', 'OTP Log in Salah...!!!' . $attempt . 'x');
 							redirect('otp');
+						} elseif ($button == 'account_verification') {
+							$this->session->set_flashdata('message_error', 'OTP Verification Salah...!!!' . $attempt . 'x');
+							redirect('otp-account');
 						} else {
-							$this->session->set_flashdata('message_warning', 'OTP Salah..!!' . $attempt . 'x');
+							$this->session->set_flashdata('message_error', 'OTP Reset Salah...!!!' . $attempt . 'x');
 							redirect('forgot');
 						}
 					} else {
@@ -632,7 +745,7 @@ class Authorization_Users extends AUTH_Controller
 			} else {
 				$this->session->set_flashdata('message_error', 'Token OTP  Error..!');
 				// redirect('verify-otp');
-				redirect('forgot');
+				redirect('login');
 			}
 		}
 	}

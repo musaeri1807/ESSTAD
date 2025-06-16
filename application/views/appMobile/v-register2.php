@@ -10,7 +10,7 @@
     <!-- <a href="app-login.html" class="headerButton">
       Login
     </a> -->
-    <a href="<?= base_url('login'); ?>" type="submit" class="btn btn-block btn-outline-primary">Log in</a>
+    <a href="<?= base_url('otp-account'); ?>" type="submit" class="btn btn-block btn-outline-success">Activation</a>
   </div>
 </div>
 <!-- * App Header -->
@@ -99,7 +99,7 @@
       </div>
 
       <div class="form-button-group transparent">
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Register</button>
+        <button type="submit" class="btn btn-success btn-block btn-lg">Register</button>
       </div>
 
     </form>

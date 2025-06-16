@@ -22,7 +22,7 @@
             // $login_state = $this->session->userdata('login_state');
             // $status      = $this->session->userdata('status');
             $status = $this->session->all_userdata();
-            // var_dump($status);
+            var_dump($status);
 
             // if (!empty($login_state) && $login_state === TRUE && $status === 'Loged_in') {
             //     redirect('users');
