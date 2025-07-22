@@ -17,7 +17,7 @@
   <div class="section mt-2 text-center">
     <h1>Forgot password</h1>
     <h4></h4>
-    <h3> <?= $Subtitle; ?> </h3>
+    <h3> <?= $name_application  ?></h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('forgot'); ?>" method="POST">
@@ -26,8 +26,8 @@
 
           <div class="form-group basic">
             <div class="input-wrapper">
-              <label class="label" for="email1">Username</label>
-              <input type="text" name="username" class="form-control" id="email1" placeholder="Your e-mail or WhatApp (08)" required>
+              <label class="label" for="email1">Pengguna</label>
+              <input type="text" name="username" class="form-control" id="email1" placeholder="Masukan e-mail atau WhatApp (08)" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>

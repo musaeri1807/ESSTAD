@@ -36,14 +36,12 @@ class Authorization extends AUTH_Controller
 
 	public function index()
 	{
-		// echo $login_state = $this->session->userdata('login_state');
-		// echo $status      = $this->session->userdata('status');
+		// $status = $this->session->userdata('status');
 
-		// if (!empty($login_state) OR $login_state === TRUE && $status === 'Loged_in') {
-		// 	redirect('usersa');
-		// } else {
-		// 	redirect('login');	
+		// if (!empty($status) && $status === 'Logged_in') {
+		// 	redirect('Users');
 		// }
+
 
 
 		// $this->session->sess_destroy();
@@ -57,7 +55,7 @@ class Authorization extends AUTH_Controller
 			$sett = $this->db->get('settings')->row_array();
 			$data = array(
 				'Title' 	=>	' Log in',
-				'Subtitle' 	=>	'Nama Aplikasi',
+				'Subtitle' 	=>	'BSP',
 				'widget' 	=> 	$this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
 			);
@@ -71,11 +69,11 @@ class Authorization extends AUTH_Controller
 				if (isset($response['success']) and $response['success'] === true) {
 					$this->_signin();
 				} else {
-					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha!');
+					$this->session->set_flashdata('message_error', 'Terjadi kesalahan pada verifikasi reCAPTCHA');
 					redirect('login');
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha');
+				$this->session->set_flashdata('message_error', 'Silakan centang kotak reCAPTCHA untuk melanjutkan');
 				redirect('login');
 			}
 		}
@@ -86,6 +84,8 @@ class Authorization extends AUTH_Controller
 		$username 	= $this->input->post('username', TRUE);
 		$password 	= $this->input->post('password', TRUE);
 		$user 		= $this->Users_model->userValid($username);
+		// var_dump($user);
+		// die();
 		// jika usernya ada
 		if ($user) {
 			// jika usernya aktif
@@ -99,8 +99,8 @@ class Authorization extends AUTH_Controller
 						'phone'         => $user['phone'],
 						'account_id'    => $user['account_id'],
 						'role_id'		=> 6,
-						'login_state'   => TRUE,
-						'status' 		=> "Loged_in",
+						'login_state'   => "TRUE",
+						'status' 		=> "Logged_in",
 						'lastlogin'     => time()
 					];
 					// update date
@@ -127,17 +127,17 @@ class Authorization extends AUTH_Controller
 					}
 				} else {
 					// // Jika login gagal
-					$this->session->set_flashdata('message_error', 'Wrong password!');
+					$this->session->set_flashdata('message_error', 'Kata sandi yang Anda masukkan tidak sesuai. Silakan coba lagi');
 
 					redirect('login');
 				}
 			} else {
-				$this->session->set_flashdata('message_warning', 'This email has not been activated!');
+				$this->session->set_flashdata('message_warning', 'Akun Anda belum aktif. Yuk, cek email atau whatsapp Anda dan ikuti langkah aktivasinya!');
 
 				redirect('login');
 			}
 		} else {
-			$this->session->set_flashdata('message_error', 'Akun tidak terdaftar!');
+			$this->session->set_flashdata('message_error', 'Anda belum terdaftar. Silakan lakukan pendaftaran terlebih dahulu.!');
 
 			redirect('login');
 		}
@@ -197,19 +197,19 @@ class Authorization extends AUTH_Controller
 							redirect('verify-otp'); //private di pakai untuk login dan change password melalui whatsapp
 							// OTP							
 						} else {
-							$this->session->set_flashdata('message_error', 'Belum aktif...!!!');
+							$this->session->set_flashdata('message_error', 'Akun Anda belum aktif. Silakan periksa kotak masuk email untuk aktivasi....!!!');
 							redirect('otp');
 						}
 					} else {
-						$this->session->set_flashdata('message_error', 'Nomor tidak terdaftar...!!!');
+						$this->session->set_flashdata('message_error', 'Nomor Anda belum terdaftar. Silakan lakukan pendaftaran terlebih dahulu...!!!');
 						redirect('otp');
 					}
 				} else {
-					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
+					$this->session->set_flashdata('message_error', 'Terjadi kesalahan pada verifikasi reCAPTCHA');
 					redirect('otp');
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha...!!!');
+				$this->session->set_flashdata('message_error', 'Silakan centang kotak reCAPTCHA untuk melanjutkan');
 				redirect('otp');
 			}
 		}
@@ -326,7 +326,7 @@ class Authorization extends AUTH_Controller
 									$this->_sendEmail($name, $email, $token, 'Account Verification');
 									$nomor		=	$phone;
 									// $message	=	base_url() . 'authorization/verify?email=' . $email . '&token=' . urlencode($token);
-									$message	=	'Terima kasih banyak atas pendaftaran Anda sebagai nasabah B S P (*Bank Sampah Pintar*) cabang *' . $bspid->CABANG . '*. Segera lakukan aktivasi dengan membuka email Anda di ' . $email . ' dalam waktu kurang dari 30 menit. Apabila tidak menerima email, silakan klik tombol *Activation* di bagian atas halaman pendaftaran.';
+									$message	=	'Terima kasih banyak atas pendaftaran Anda sebagai nasabah B S P (*Bank Sampah Pintar*) cabang *' . $bspid->CABANG . '*. Segera lakukan aktivasi dengan membuka email Anda di *' . $email . '* dalam waktu kurang dari 30 menit. Apabila Anda tidak menerima email, silakan klik tautan berikut: *' . base_url() . 'otp-account*.';
 									$this->_sendOTP($nomor, $message);
 								} else {
 									$this->session->set_flashdata('message_error', 'Token Error..!');
@@ -359,7 +359,7 @@ class Authorization extends AUTH_Controller
 					redirect('register');
 				}
 			} else {
-				$this->session->set_flashdata('message_warning', 'recaptcha');
+				$this->session->set_flashdata('message_warning', 'Silakan centang kotak reCAPTCHA untuk melanjutkan');
 				redirect('register');
 			}
 		}
@@ -378,13 +378,44 @@ class Authorization extends AUTH_Controller
 					if ($user['is_active'] == 0) {
 						$this->Users_model->userUpdated($email, ['field_status_aktif' => '1']);
 						if ($this->db->affected_rows() > 0) {
-							// Kirim email success dan kirim WA Success
-							// Berhasil memperbarui
-							$nomor		=	$user['phone'];
-							$message	=	'Akun Anda sudah aktif. Selamat datang! Bank Sampah Pintar (B S P)';
-							$this->_sendOTP($nomor, $message);
-							$this->session->set_flashdata('message_success', 'Verification Account Success...!!!');
-							redirect('login');
+							//cari data nasabah dengan where id login
+							$akun = $this->db->get_where('tblnasabah', ['id_UserLogin' => $user['user_id']])->row_array();
+							$saldoAwal = [
+								'field_member_id' 		=> $user['account_id'],
+								'field_trx_id'			=> generate_no_transaksi($user['company']),
+								'field_no_referensi'   	=> generate_no_referensi('Reff'),
+								'field_rekening'    	=> $akun['No_Rekening'],
+								'field_tanggal_saldo'   => date('Y-m-d'),
+								'field_time'  			=> date('H:i:s'),
+								'field_status' 			=> 'S',
+								'field_comments' 		=> "Saldo Awal"
+							];
+							// Lakukan insert ke tabel transaksi saldo
+							$insert = $this->db->insert('tbltrxmutasisaldo', $saldoAwal);
+							if ($insert) {
+								// Update 
+								$this->db->where('id_UserLogin', $user['user_id']);
+								$this->db->update('tblnasabah', ['Konfirmasi' => 'Y']);
+								// Bisa tambahkan pengecekan jika diperlukan
+								if ($this->db->affected_rows() > 0) {
+									// Update berhasil
+									// Kirim email success dan kirim WA Success
+									// Berhasil memperbarui
+									$nomor		=	$user['phone'];
+									$message	=	'Akun Anda sudah aktif. Selamat datang! Bank Sampah Pintar (B S P)';
+									$this->_sendOTP($nomor, $message);
+									$this->session->set_flashdata('message_success', 'Verification Account Success...!!!');
+									redirect('login');
+								} else {
+									// Tidak ada baris yang terpengaruh (mungkin ID tidak ditemukan)
+									$this->session->set_flashdata('message_warning', 'Gagal Updated Nasabah Y ...!!!');
+									redirect('login');
+								}
+							} else {
+								// Insert gagal
+								$this->session->set_flashdata('message_warning', 'Gagal Insert Mutasi Tabel...!!!');
+								redirect('login');
+							}
 						} else {
 							// Tidak ada yang diperbarui
 							$this->session->set_flashdata('message_warning', 'Gagal Verification Updated ...!!!');
@@ -424,11 +455,11 @@ class Authorization extends AUTH_Controller
 					}
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Verification Account failed! Token Salah...!!!');
+				$this->session->set_flashdata('message_error', 'Verifikasi akun gagal. Token yang Anda gunakan tidak sesuai atau sudah kadaluarsa.');
 				redirect('login');
 			}
 		} else {
-			$this->session->set_flashdata('message_error', 'Verification Account failed! Email Salah...!!!');
+			$this->session->set_flashdata('message_error', 'Verifikasi akun gagal. Email yang Anda gunakan tidak sesuai atau sudah kadaluarsa.');
 			redirect('login');
 		}
 	}
@@ -491,15 +522,15 @@ class Authorization extends AUTH_Controller
 							redirect('login');
 						}
 					} else {
-						$this->session->set_flashdata('message_info', 'Your are not registered...!!!');
+						$this->session->set_flashdata('message_error', 'Anda belum terdaftar. Silakan lakukan pendaftaran terlebih dahulu.!');
 						redirect('register');
 					}
 				} else {
-					$this->session->set_flashdata('message_error', 'Wrong Error recaptcha...!!!');
+					$this->session->set_flashdata('message_error', 'Wrong Error reCAPTCHA...!!!');
 					redirect('otp-account');
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha...!!!');
+				$this->session->set_flashdata('message_error', 'Silakan centang kotak reCAPTCHA untuk melanjutkan....!!!');
 				redirect('otp-account');
 			}
 		}
@@ -578,7 +609,7 @@ class Authorization extends AUTH_Controller
 							redirect('forgot');
 						}
 					} else {
-						$this->session->set_flashdata('message_warning', 'is not registered...!!!');
+						$this->session->set_flashdata('message_error', 'Anda belum terdaftar. Silakan lakukan pendaftaran terlebih dahulu.!');
 						redirect('forgot');
 					}
 				} else {
@@ -586,7 +617,7 @@ class Authorization extends AUTH_Controller
 					redirect('forgot');
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Checkbox is unchecked in Recaptcha');
+				$this->session->set_flashdata('message_error', 'Silakan centang kotak reCAPTCHA untuk melanjutkan.');
 				redirect('forgot');
 			}
 		}
@@ -660,22 +691,18 @@ class Authorization extends AUTH_Controller
 					if (time() - $DateCreated <= 600) {
 						if ($this->session->userdata('button') == 'signin') {
 							$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
-							// $session 	= [
-							// 	'user_id'       => $user['user_id'],
-							// 	'email' 		=> $user['email'],
-							// 	'phone'         => $user['phone'],
-							// 	'account_id'    => $user['account_id'],
-							// 	// 'id_users'		=> $user['id_users'],
-							// 	'role'			=> 6,
-							// 	'login_state'	=> TRUE,
-							// 	'lastlogin'		=> time()
-							// ];
 							$session = [
-								'userdata'		=> $user,
+								// 'userdata'		=> $user,
+								'user_id'       => $user['id_users'],
+								'email'         => $user['email'],
+								'phone'         => $user['phone'],
+								'account_id'    => $user['account_id'],
+								'role_id'		=> 6,
 								'login_state'   => TRUE,
-								'status' 		=> "Loged_in",
+								'status' 		=> "Logged_in",
 								'lastlogin'     => time()
 							];
+
 							$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
 							if ($this->db->affected_rows() > 0) {
 								$this->session->set_userdata($session);
@@ -686,13 +713,44 @@ class Authorization extends AUTH_Controller
 						} else if ($this->session->userdata('button') == 'account_verification') {
 							$this->Users_model->userUpdated($this->session->userdata('NumberPhone'), ['field_status_aktif' => '1']);
 							if ($this->db->affected_rows() > 0) {
-								// Kirim email success dan kirim WA Success
-								// Berhasil memperbarui
-								$nomor		=	$this->session->userdata('NumberPhone');
-								$message	=	'Akun Anda sudah aktif. Selamat datang! Bank Sampah Pintar (B S P)';
-								$this->_sendOTP($nomor, $message);
-								$this->session->set_flashdata('clear_all_session_msg_success', 'Verification Account Success...!!!');
-								redirect('login');
+								$user = $this->db->get_where('users', ['phone' => $this->session->userdata('NumberPhone')])->row_array();
+								$akun = $this->db->get_where('tblnasabah', ['id_UserLogin' => $user['user_id']])->row_array();
+								$saldoAwal = [
+									'field_member_id' 		=> $user['account_id'],
+									'field_trx_id'			=> generate_no_transaksi($user['company']),
+									'field_no_referensi'   	=> generate_no_referensi('Reff'),
+									'field_rekening'    	=> $akun['No_Rekening'],
+									'field_tanggal_saldo'   => date('Y-m-d'),
+									'field_time'  			=> date('H:i:s'),
+									'field_status' 			=> 'S',
+									'field_comments' 		=> "Saldo Awal"
+								];							
+
+								$insert = $this->db->insert('tbltrxmutasisaldo', $saldoAwal);
+								if ($insert) {
+									// Update 
+									$this->db->where('id_UserLogin', $user['user_id']);
+									$this->db->update('tblnasabah', ['Konfirmasi' => 'Y']);
+									// Bisa tambahkan pengecekan jika diperlukan
+									if ($this->db->affected_rows() > 0) {
+										// Update berhasil
+										// Kirim email success dan kirim WA Success
+										// Berhasil memperbarui
+										$nomor		=	$this->session->userdata('NumberPhone');
+										$message	=	'Akun Anda sudah aktif. Selamat datang! Bank Sampah Pintar (B S P)';
+										$this->_sendOTP($nomor, $message);
+										$this->session->set_flashdata('clear_all_session_msg_success', 'Verification Account Success...!!!');
+										redirect('login');
+									} else {
+										// Tidak ada baris yang terpengaruh (mungkin ID tidak ditemukan)
+										$this->session->set_flashdata('message_warning', 'Gagal Updated Nasabah Y ...!!!');
+										redirect('login');
+									}
+								} else {
+									// Insert gagal
+									$this->session->set_flashdata('message_warning', 'Gagal Insert Mutasi Tabel...!!!');
+									redirect('login');
+								}
 							} else {
 								// Tidak ada yang diperbarui
 								$this->session->set_flashdata('message_warning', 'Gagal Verification Updated ...!!!');

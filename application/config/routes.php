@@ -71,6 +71,7 @@ $route['change-password']   = 'Authorization/changepassword';
 $route['terms']             = 'authorization/terms';
 $route['logout']            = 'authorization/logout';
 
+$route['clear']            = 'authorization/clear_all_session';
 // // Authorization_users
 // $route['login']         = 'Authorization_Users';
 // $route['register']      = 'Authorization_Users/signup';

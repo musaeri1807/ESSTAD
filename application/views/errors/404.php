@@ -1,96 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | 404 Page not found</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url(); ?>assets/dist/css/adminlte.min.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>Finapp</title>
+  <meta name="description" content="Finapp HTML Mobile Template">
+  <meta name="keywords" content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+  <link rel="icon" type="image/png" href="<?= base_url() ?>assets/appmobile/assets/img/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url() ?>assets/appmobile/assets/img/icon/192x192.png">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/appmobile/assets/css/style.css">
+  <link rel="manifest" href="__manifest.json">
 </head>
 
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="<?= base_url(); ?>assets/index3.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
-      </ul>
-    </nav>
-    <!-- /.navbar -->
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
+<body class="bg-white">
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="error-page">
-          <h2 class="headline text-warning"> 404</h2>
-
-          <div class="error-content">
-            <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
-
-            <p>
-              We could not find the page you were looking for.
-              Meanwhile, you may <a href="<?= base_url('authorization'); ?>">return to dashboard</a> or try using the search form.
-            </p>
-
-            <form class="search-form" action="<?= base_url('authorization'); ?>">
-              <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" name="submit" class="btn btn-warning"><i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.input-group -->
-            </form>
-          </div>
-          <!-- /.error-content -->
-        </div>
-        <!-- /.error-page -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-      <div class="float-right d-none d-sm-block">
-        <b>Version</b> 3.2.0
-      </div>
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+  <!-- loader -->
+  <div id="loader">
+    <img src="<?= base_url() ?>assets/appmobile/assets/img/loading-icon.png" alt="icon" class="loading-icon">
   </div>
-  <!-- ./wrapper -->
+  <!-- * loader -->
 
-  <!-- jQuery -->
-  <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="<?= base_url(); ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="<?= base_url(); ?>assets/dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="<?= base_url(); ?>assets/dist/js/demo.js"></script>
+  <!-- App Header -->
+  <div class="appHeader no-border">
+    <div class="left">
+      <a href="#" class="headerButton goBack">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </a>
+    </div>
+    <div class="pageTitle">
+      404 Page
+    </div>
+    <div class="right">
+    </div>
+  </div>
+  <!-- * App Header -->
+
+  <!-- App Capsule -->
+  <div id="appCapsule">
+
+    <div class="section">
+      <div class="splash-page mt-5 mb-5">
+        <h1>404</h1>
+        <h2 class="mb-2">Page not found!</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquam.
+        </p>
+      </div>
+    </div>
+
+    <div class="fixed-bar">
+      <div class="row">
+        <div class="col-6">
+          <a href="#" class="btn btn-lg btn-outline-secondary btn-block goBack">Go Back</a>
+        </div>
+        <div class="col-6">
+          <a href="app-pages.html" class="btn btn-lg btn-primary btn-block">Try Again</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- * App Capsule -->
+
+
+  <!-- ========= JS Files =========  -->
+  <!-- Bootstrap -->
+  <script src="<?= base_url() ?>assets/appmobile/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <!-- Splide -->
+  <script src="<?= base_url() ?>assets/appmobile/assets/js/plugins/splide/splide.min.js"></script>
+  <!-- Base Js File -->
+  <script src="<?= base_url() ?>assets/appmobile/assets/js/base.js"></script>
+
+
 </body>
 
 </html>

@@ -10,7 +10,7 @@
     <!-- <a href="app-login.html" class="headerButton">
                 Register
             </a> -->
-    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-success">Register</a>
+    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-success">Daftar</a>
   </div>
 </div>
 <!-- * App Header -->
@@ -19,7 +19,7 @@
 <div id="appCapsule">
   <div class="section mt-1 text-center">
     <h1><?= $Title; ?></h1>
-    <h3> <?= $Subtitle; ?> </h3>
+    <h3> <?= $name_application  ?></h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('otp'); ?>" method="POST">
@@ -27,8 +27,8 @@
         <div class="card-body pb-1">
           <div class="form-group basic">
             <div class="input-wrapper">
-              <label class="label" for="email1">Username</label>
-              <input type="tel" inputmode="numeric" name="username" class="form-control" placeholder="Your number WhatApp (08)" required>
+              <label class="label" for="email1">Pengguna</label>
+              <input type="tel" inputmode="numeric" name="username" class="form-control" placeholder="Masukan Nomor WhatApp (08)" required>
 
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
@@ -45,7 +45,7 @@
       <div class="form-links mt-2">
       </div>
       <div class="form-button-group  transparent">
-        <button type="submit" name="OTP" class="btn btn-success btn-block btn-lg" value="signin">Request Code OTP</button>
+        <button type="submit" name="OTP" class="btn btn-success btn-block btn-lg" value="signin">Minta Kode OTP</button>
       </div>
     </form>
   </div>

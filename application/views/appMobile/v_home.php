@@ -357,103 +357,57 @@
                 ?>
                 <?php foreach ($grouped as $tanggal => $transaksis): ?>
                     <!-- item -->
-                    <a href="app-transaction-detail.html" class="item">
+                    <div class="item">
                         <div class="detail">
-                            <div>                                
-                                <p><?= format_tanggal( $tanggal) ?></p>
+                            <div>
+                                <p><?= format_tanggal($tanggal) ?></p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                     <!-- * item -->
 
-                    <!-- item -->
-                    <a href="app-transaction-detail.html" class="item">
-                        <?php foreach ($transaksis as $row): ?>
+                    <?php foreach ($transaksis as $row): ?>
+                        <!-- item -->
+                        <a href="#" class="item">
                             <div class="detail">
                                 <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/brand/2.jpg" alt="img" class="image-block imaged w48">
                                 <div>
                                     <strong><?= $row->noreferensi ?></strong>
-                                    <p>Appstore Purchase</p>
+                                    <!-- <p>Appstore Purchase</p> -->
+                                    <?php if ($row->type == '300'): ?>
+                                        <p class="price text-warning">saldo Awal</p>
+                                    <?php elseif ($row->type == '200'): ?>
+                                        <p class="price text-danger">Debit</p>
+                                    <?php elseif ($row->type == '100'): ?>
+                                        <p class="price text-success">Kredit</p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="price text-success">- $ 29
-                                    <?php if ($row->type == '300') {
-                                        echo "+ " . $row->kredit . "<br>" . $row->time . " WIB";
-                                    } elseif ($row->type == '200') {
-                                        echo "- " . $row->debit . "<br>" . $row->time . " WIB";
-                                    } elseif ($row->type == '100') {
-                                        echo "+ " . $row->kredit . "<br>" . $row->time . " WIB";
-                                    }
+                                <!-- <div class="price text-success"> $ 29 </div> -->
+                                <?php if ($row->type == '300'): ?>
+                                    <div class="price text-warning">
+                                        <?= $row->kredit ?><br><?= $row->time ?> WIB
+                                    </div>
+                                <?php elseif ($row->type == '200'): ?>
+                                    <div class="price text-danger">
+                                        -<?= $row->debit ?><br><?= $row->time ?> WIB
+                                    </div>
+                                <?php elseif ($row->type == '100'): ?>
+                                    <div class="price text-success">
+                                        +<?= $row->kredit ?><br><?= $row->time ?> WIB
+                                    </div>
+                                <?php endif; ?>
 
-                                    ?>
-                                </div>
                             </div>
-                        <?php endforeach; ?>
-                    </a>
+                        </a>
+                    <?php endforeach; ?>
                     <!-- * item -->
                 <?php endforeach; ?>
 
-
-
-
-                <!-- item -->
-                <a href="app-transaction-detail.html" class="item">
-                    <div class="detail">
-                        <div>
-                            <p>Shopping</p>
-                        </div>
-                    </div>
-                </a>
-                <!-- * item -->
-
-                <!-- item -->
-                <a href="app-transaction-detail.html" class="item">
-                    <div class="detail">
-                        <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/brand/2.jpg" alt="img" class="image-block imaged w48">
-                        <div>
-                            <strong>Apple</strong>
-                            <p>Appstore Purchase</p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="price text-danger">- $ 29</div>
-                    </div>
-                </a>
-                <!-- * item -->
-
-                <!-- item -->
-                <a href="app-transaction-detail.html" class="item">
-                    <div class="detail">
-                        <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/avatar3.jpg" alt="img" class="image-block imaged w48">
-                        <div>
-                            <strong>Alex Ljung</strong>
-                            <p>Transfer</p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="price">+ $ 1,000</div>
-                    </div>
-                </a>
-                <!-- * item -->
-                <!-- item -->
-                <a href="app-transaction-detail.html" class="item">
-                    <div class="detail">
-                        <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/avatar4.jpg" alt="img" class="image-block imaged w48">
-                        <div>
-                            <strong>Beatriz Brito</strong>
-                            <p>Transfer</p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="price text-danger">- $ 186</div>
-                    </div>
-                </a>
-                <!-- * item -->
             </div>
         </div>
         <!-- * Transactions -->
-
 
         <!-- Send Money -->
         <div class="section full mt-2">
@@ -477,36 +431,36 @@
 
     <!-- App Bottom Menu -->
     <div class="appBottomMenu">
-        <a href="index.html" class="item ">
+        <!-- <a href="index.html" class="item ">
             <div class="col">
                 <ion-icon name="pie-chart-outline"></ion-icon>
                 <strong>Overview</strong>
             </div>
-        </a>
-        <a href="app-pages.html" class="item">
+        </a> -->
+        <!-- <a href="app-pages.html" class="item">
             <div class="col">
                 <ion-icon name="document-text-outline"></ion-icon>
                 <strong>Pages</strong>
             </div>
-        </a>
+        </a> -->
         <a href="app-components.html" class="item active">
             <div class="col">
                 <ion-icon name="apps-outline"></ion-icon>
-                <strong>Components</strong>
+                <strong>Menu</strong>
             </div>
         </a>
-        <a href="app-cards.html" class="item">
+        <!-- <a href="app-cards.html" class="item">
             <div class="col">
                 <ion-icon name="card-outline"></ion-icon>
                 <strong>My Cards</strong>
             </div>
-        </a>
-        <a href="app-settings.html" class="item">
+        </a> -->
+        <!-- <a href="app-settings.html" class="item">
             <div class="col">
                 <ion-icon name="settings-outline"></ion-icon>
                 <strong>Settings</strong>
             </div>
-        </a>
+        </a> -->
     </div>
     <!-- * App Bottom Menu -->
 

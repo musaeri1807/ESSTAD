@@ -7,7 +7,7 @@
   </div>
   <div class="pageTitle"></div>
   <div class="right">
-    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-success">Register</a>
+    <a href="<?= base_url('register'); ?>" type="submit" class="btn btn-block btn-outline-success">Daftar</a>
   </div>
 </div>
 <!-- * App Header -->
@@ -17,7 +17,7 @@
   <div class="section mt-1 text-center">
     <!-- <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo" height="70"> -->
     <h1><?= $Title; ?></h1>
-    <h3> <?= $Subtitle; ?> <?= $name_application  ?> </h3>
+    <h3><?= $name_application  ?> </h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('login'); ?>" method="POST">
@@ -25,8 +25,8 @@
         <div class="card-body pb-1">
           <div class="form-group basic">
             <div class="input-wrapper">
-              <label class="label" for="email1">Username</label>
-              <input type="text" name="username" class="form-control" placeholder="Your e-mail or WhatApp (08)" value="<?php if (isset($_COOKIE['loginUsername'])) {
+              <label class="label" for="email1">Pengguna</label>
+              <input type="text" name="username" class="form-control" placeholder="Masukan e-mail atau WhatApp (08)" value="<?php if (isset($_COOKIE['loginUsername'])) {
                                                                                                                           echo $_COOKIE['loginUsername'];
                                                                                                                         } else {
                                                                                                                           echo set_value('username');
@@ -39,10 +39,10 @@
           </div>
           <div class="form-group basic">
             <div class="input-wrapper">
-              <label class="label" for="password1" onclick="password_show_hide();">Password</label>
+              <label class="label" for="password1" onclick="password_show_hide();">Kata Sandi</label>
               <!-- <input type="password" class="form-control" id="password1" autocomplete="off"
                 placeholder="Your password"> -->
-              <input type="password" name="password" class="form-control" id="password" placeholder="Your password" value="<?php if (isset($_COOKIE['loginPassword'])) {
+              <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Kata sandi Anda" value="<?php if (isset($_COOKIE['loginPassword'])) {
                                                                                                                               echo $_COOKIE['loginPassword'];
                                                                                                                             } else {
                                                                                                                               echo set_value('password');
@@ -70,7 +70,7 @@
                                                                                                     }
                                                                                                     ?>>
               <label class="form-check-label" for="customCheckb1">
-                Remember Me
+                Ingat Saya
               </label>
             </div>
           </div>
@@ -79,13 +79,13 @@
       <div class="form-links mt-2">
         <div>
           <!-- <a href="app-register.html">Log in OTP</a> -->
-          <a href="<?= base_url('otp'); ?>" type="submit" class="btn btn-block btn-outline-success">Log in OTP</a>
+          <a href="<?= base_url('otp'); ?>" type="submit" class="btn btn-block btn-outline-success">Masuk OTP</a>
         </div>
-        <div><a href="<?= base_url('forgot'); ?>" class="text-muted">Forgot Password?</a></div>
+        <div><a href="<?= base_url('forgot'); ?>" class="text-muted">Lupa Kata Sandi?</a></div>
         <!-- app-forgot-password.html -->
       </div>
       <div class="form-button-group  transparent">
-        <button type="submit" class="btn btn-success btn-block btn-lg">Log in</button>
+        <button type="submit" class="btn btn-success btn-block btn-lg">Masuk</button>
       </div>
     </form>
   </div>

@@ -14,25 +14,21 @@
             $this->load->model('Settings_model');
             $this->load->model('Region_model');
             $this->load->model('Organization_model');
+
+            $status = $this->session->userdata('status');
+            if ($status !== 'Logged_in') {
+                redirect('login');
+            }
         }
 
         public function index()
         {
-            // // Cek status login
-            // $login_state = $this->session->userdata('login_state');
-            // $status      = $this->session->userdata('status');
+
             $status = $this->session->all_userdata();
             var_dump($status);
 
-            // if (!empty($login_state) && $login_state === TRUE && $status === 'Loged_in') {
-            //     redirect('users');
-            // } else {
-            //     redirect('login');
-            // }
+            // die();
 
-            // Mengakses user_id dari data sesi dengan benar
-            // $userdata = $this->session->userdata();
-            // var_dump($userdata);
 
             // Mendapatkan input GET dan POST
             $dari   = $this->input->get('dari');
@@ -52,13 +48,14 @@
 
             $data['user']       = $this->Users_model->userLogin('081210003701'); // Gunakan email dari userdata
             $data['saldo']      = $this->Users_model->sumSaldo('081210003701');
+            $data['mutasi']     = $this->Users_model->histroiMutasi('3172090013081210003701');
 
-            if ($dari && $sampai) {
-                $data['mutasi'] = $this->Mutasi_model->get_mutasi_by_date($dari, $sampai, $nomor);
-            } else {
-                // $data['mutasi'] = $this->Mutasi_model->get_all_mutasi();
-                $data['mutasi']     = $this->Users_model->histroiMutasi('081210003701');
-            }
+            // if ($dari && $sampai) {
+            //     $data['mutasi'] = $this->Mutasi_model->get_mutasi_by_date($dari, $sampai, $nomor);
+            // } else {
+            //     // $data['mutasi'] = $this->Mutasi_model->get_all_mutasi();
+            //     $data['mutasi']     = $this->Users_model->histroiMutasi('3172090013081210003701');
+            // }
 
 
             // var_dump($data['gold']);
@@ -75,27 +72,32 @@
         private function prepareData($viewTitle)
         {
 
-            return [
-                'header' => [
-                    'header1' => $this->uri->segment(1),
-                    'header2' => $this->uri->segment(2)
-                ],
-                'judul'    => $viewTitle,
-                'sampah'   => $this->Product_model->getTrash(),
-                'gold'     => $this->Product_model->getGold(),
-                'user'     => $this->Users_model->userLogin($this->user['email']),
-                'mutasi'   => $this->Users_model->histroiMutasi($this->accountId),
-                'saldo'    => $this->Users_model->sumSaldo($this->accountId),
-                'provinsi' => $this->Region_model->get_provinsi(),
-                'RW'       => $this->Region_model->get_rw(),
-                'RT'       => $this->Region_model->get_rt(),
-                'bspid'    => $this->Organization_model->get_bspid()
-            ];
+            echo "dasdsadas";
+
+            // return [
+            //     'header' => [
+            //         'header1' => $this->uri->segment(1),
+            //         'header2' => $this->uri->segment(2)
+            //     ],
+            //     'judul'    => $viewTitle,
+            //     'sampah'   => $this->Product_model->getTrash(),
+            //     'gold'     => $this->Product_model->getGold(),
+            //     'user'     => $this->Users_model->userLogin($this->user['email']),
+            //     'mutasi'   => $this->Users_model->histroiMutasi($this->accountId),
+            //     'saldo'    => $this->Users_model->sumSaldo($this->accountId),
+            //     'provinsi' => $this->Region_model->get_provinsi(),
+            //     'RW'       => $this->Region_model->get_rw(),
+            //     'RT'       => $this->Region_model->get_rt(),
+            //     'bspid'    => $this->Organization_model->get_bspid()
+            // ];
         }
 
 
 
-        // public function home() {}
+        public function home()
+        {
+            echo "dasdsadas";
+        }
         // public function profile() {}
         // public function mutasi() {}
         // public function changePassword()

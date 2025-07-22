@@ -62,7 +62,6 @@ if (!function_exists('generate_no_referensi')) {
         $thn = substr(date('Y'), -2);
         // $reff = "Reff";
         $reff = $cabang;
-
         if (empty($nomor) || empty($nomor['field_no_referensi'])) {
             $no = 1;
         } else {
@@ -78,5 +77,36 @@ if (!function_exists('generate_no_referensi')) {
             }
         }
         return $thn . $reff . sprintf("%09s", $no);
+    }
+}
+
+//tabel mutasi
+if (!function_exists('generate_no_transaksi')) {
+    function generate_no_transaksi($cabang)
+    {
+        $CI = &get_instance();
+        $CI->load->database();
+
+        $tanggal = date('ymd'); // YYMMDD
+        $prefix = "TRX-{$tanggal}-{$cabang}";
+
+        // Cari nomor urut terakhir di hari ini & cabang ini
+        $last = $CI->db->like('field_trx_id', $prefix, 'after')
+            ->order_by('field_trx_id', 'DESC')
+            ->limit(1)
+            ->get('tbltrxmutasisaldo')
+            ->row_array();
+
+        if ($last) {
+            $lastId = (int)substr($last['field_trx_id'], -5); // Ambil 5 digit terakhir
+            $nextId = $lastId + 1;
+        } else {
+            $nextId = 1;
+        }
+
+        $random = strtoupper(substr(md5(uniqid()), 0, 4)); // 4 karakter acak
+        $noUrut = sprintf("%05d", $nextId); // 5 digit angka urut
+
+        return "{$prefix}-{$random}-{$noUrut}";
     }
 }

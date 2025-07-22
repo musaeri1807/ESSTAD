@@ -81,7 +81,7 @@ class Users_model extends CI_Model
         field_total_saldo AS saldo,
         field_status AS status,
         field_comments AS keterangan       
-        FROM tbltrxmutasisaldo S WHERE S.field_member_id=? and S.field_status='S' ORDER BY S.field_id_saldo DESC";
+        FROM tbltrxmutasisaldo S WHERE S.field_member_id=? and S.field_status='S' ORDER BY S.field_id_saldo DESC LIMIT 5";
         $data   = $this->db->query($sql, [$id]);
         return $data->result();
     }

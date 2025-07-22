@@ -12,8 +12,8 @@
 <div id="appCapsule">
 
   <div class="section mt-2 text-center">
-    <h1>Enter WhatsApp Code</h1>
-    <h4>Enter 6 digit WhatsApp <?= $this->session->userdata('NumberPhone'); ?> verification code</h4>
+    <h1>Masukkan Kode WhatsApp</h1>
+    <h4>Masukkan 6 digit WhatsApp <?= $this->session->userdata('NumberPhone'); ?> Kode Verifikasi</h4>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('verify-otp'); ?>" method="POST">

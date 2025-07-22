@@ -54,7 +54,7 @@
     <?php if ($this->session->flashdata('message_error')): ?>
         <script>
             Swal.fire({
-                title: 'Error...!!!',
+                title: 'Kesalahan...!!!',
                 text: '<?= $this->session->flashdata('message_error'); ?>',
                 icon: 'error',
                 // showConfirmButton: false,
@@ -67,7 +67,7 @@
     <?php if ($this->session->flashdata('message_warning')): ?>
         <script>
             Swal.fire({
-                title: 'Warning...!!!',
+                title: 'Peringatan...!!!',
                 text: '<?= $this->session->flashdata('message_warning'); ?>',
                 icon: 'warning',
                 // showConfirmButton: false,
@@ -81,7 +81,7 @@
     <?php if ($this->session->flashdata('message_info')): ?>
         <script>
             Swal.fire({
-                title: 'Info...!!!',
+                title: 'Informasi...!!!',
                 text: '<?= $this->session->flashdata('message_info'); ?>',
                 icon: 'info'
                 // confirmButtonText: 'Lanjutkan'

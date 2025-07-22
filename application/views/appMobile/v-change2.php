@@ -12,8 +12,8 @@
 <div id="appCapsule">
 
   <div class="section mt-2 text-center">
-    <h1>Change Password now</h1>
-    <h4>your to account <b><?= $this->session->userdata('UserName'); ?></b></h4>
+    <h1>Ubah Kata Sandi </h1>
+    <h4>Akun Anda<b><?= $this->session->userdata('UserName'); ?></b></h4>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('change-password'); ?>" method="post">

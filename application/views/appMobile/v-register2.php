@@ -10,7 +10,7 @@
     <!-- <a href="app-login.html" class="headerButton">
       Login
     </a> -->
-    <a href="<?= base_url('otp-account'); ?>" type="submit" class="btn btn-block btn-outline-success">Activation</a>
+    <a href="<?= base_url('otp-account'); ?>" type="submit" class="btn btn-block btn-outline-success">Pengaktifan</a>
   </div>
 </div>
 <!-- * App Header -->
@@ -19,8 +19,8 @@
 <div id="appCapsule">
 
   <div class="section mt-1 text-center">
-    <h1>Register now</h1>
-    <h3> <?= $Subtitle; ?> </h3>
+    <h1>Daftar Baru</h1>
+    <h3> <?= $name_application  ?> </h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('register'); ?>" method="post" onsubmit="this.submit.disabled = true;">
@@ -28,9 +28,9 @@
         <div class="card-body">
           <div class="form-group basic">
             <div class="input-wrapper">
-              <label class="label" for="password2">Branch</label>
+              <label class="label" for="password2">Cabang</label>
               <select name="bspid" id="bspid" class="form-control">
-                <option value="">- Pilih B S P -</option>
+                <option value="">- Pilih cabang B S P -</option>
                 <?php foreach ($bspid as $bsp) { ?>
                   <option value="<?= $bsp->ID ?>"><?= 'B S P - ' . $bsp->CABANG; ?></option>
                 <?php } ?>
@@ -41,8 +41,8 @@
 
           <div class="form-group basic">
             <div class="input-wrapper">
-              <label class="label" for="email1">Name User</label>
-              <input type="text" name="name" class="form-control" placeholder="Your Name" value="<?= set_value('name'); ?>" required>
+              <label class="label" for="email1">Nama Pengguna</label>
+              <input type="text" name="name" class="form-control" placeholder="Masukan Nama" value="<?= set_value('name'); ?>" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
@@ -51,7 +51,7 @@
           <div class="form-group basic">
             <div class="input-wrapper">
               <label class="label" for="email1">WhatApp <span class="text-danger small"><?= form_error('phone'); ?></span></label>
-              <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="Your 08 xxx " value="<?= set_value('phone'); ?>" required>
+              <input type="tel" inputmode="numeric" name="phone" id="phone" class="form-control" placeholder="Masukan WhatApp 08 xxx " value="<?= set_value('phone'); ?>" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
@@ -60,7 +60,7 @@
           <div class="form-group basic">
             <div class="input-wrapper">
               <label class="label" for="email1">E-mail <span class="text-danger small"><?= form_error('email'); ?></span></label>
-              <input type="email" name="email" class="form-control" placeholder="Your E-mail" value="<?= set_value('email'); ?>" required>
+              <input type="email" name="email" class="form-control" placeholder="Masukan E-mail" value="<?= set_value('email'); ?>" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
@@ -70,7 +70,7 @@
           <div class="form-group basic">
             <div class="input-wrapper">
               <label class="label" for="password1" onclick="password_show_hide();">Password <span class="text-danger small"><?= form_error('password'); ?></span></label>
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="<?= set_value('password'); ?>" required>
+              <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Kata Sandi" value="<?= set_value('password'); ?>" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
@@ -90,8 +90,8 @@
               <input type="checkbox" class="form-check-input" id="customCheckb1" name="terms" value="agree">
 
               <label class="form-check-label" for="customCheckb1">
-                I agree <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">terms and
-                  conditions</a>
+                Saya setuju <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">syarat dan
+                  ketentuan</a>
               </label>
             </div>
           </div>
