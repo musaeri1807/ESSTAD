@@ -6,7 +6,7 @@ class Users_model extends CI_Model
     public function userValid($username) //Memvalidasi User
     {
         $sql = "SELECT 
-                    users.field_user_id AS id_users,                    
+                    users.field_user_id AS user_id,                    
                     users.field_nama AS name_users,
                     users.field_email AS email,
                     users.field_handphone AS phone,
@@ -24,8 +24,8 @@ class Users_model extends CI_Model
     {
 
         $sql = "SELECT 
-                    users.field_user_id AS id_users,
-                    users.field_member_id AS account_member,
+                    users.field_user_id AS user_id,
+                    users.field_member_id AS account_id,
                     users.field_nama AS name_users,
                     users.field_email AS email,
                     users.field_handphone AS phone,
@@ -87,7 +87,7 @@ class Users_model extends CI_Model
     }
     public function sumSaldo($id)
     {
-        $sql = "SELECT field_rekening AS account_id ,field_total_saldo AS saldo				
+        $sql = "SELECT field_member_id AS account_id, field_rekening AS rekening ,field_total_saldo AS saldo				
 		FROM tbltrxmutasisaldo S 		
 		WHERE S.field_member_id=? ORDER BY S.field_id_saldo DESC LIMIT 1";
         $data = $this->db->query($sql, [$id]);

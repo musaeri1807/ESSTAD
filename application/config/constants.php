@@ -98,15 +98,20 @@ if ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
     define('DATABASE', 'u1733358_develop');
 } else {
     // locahost
-    define('HOSTNAME', 'localhost');
-    define('USERNAME', 'root');
-    define('PASSWORD', '');
-    define('DATABASE', 'local_vpsbsp');
+    // define('HOSTNAME', 'localhost');
+    // define('USERNAME', 'root');
+    // define('PASSWORD', '');
+    // define('DATABASE', 'local_vpsbsp');
+    // Online
+    define('HOSTNAME', 'srv1867.hstgr.io');
+    define('USERNAME', 'u602049557_BSP4dmiN');
+    define('PASSWORD', 'A5]yk2*]Zg5');
+    define('DATABASE', 'u602049557_BSPpr0d');
 }
 
 
 // Replication Database
-define('HOSTNAME_Replication', 'sql3.freesqldatabase.com');
-define('USERNAME_Replication', 'sql3733077');
-define('PASSWORD_Replication', 'JPw221a1Fv');
-define('DATABASE_Replication', 'sql3733077');
+define('HOSTNAME_Replication', 'srv1867.hstgr.io');
+define('USERNAME_Replication', 'u602049557_BSP4dmiN');
+define('PASSWORD_Replication', 'A5]yk2*]Zg5');
+define('DATABASE_Replication', 'u602049557_BSPpr0d');

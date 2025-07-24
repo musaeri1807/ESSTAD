@@ -21,6 +21,7 @@
 <body>
 
     <!-- loader -->
+
     <div id="loader">
         <img src="<?= base_url() ?>/assets/appmobile/assets/img/loading-icon.png" alt="icon" class="loading-icon">
     </div>
@@ -34,16 +35,16 @@
             </a>
         </div>
         <div class="pageTitle">
-            <img src="<?= base_url() ?>/assets/appmobile/assets/img/logo.png" alt="logo" class="logo">
+            <!-- <img src="<?= base_url() ?>/assets/appmobile/assets/img/logo.png" alt="logo" class="logo"> -->
         </div>
         <div class="right">
-            <a href="app-notifications.html" class="headerButton">
+            <!-- <a href="app-notifications.html" class="headerButton">
                 <ion-icon class="icon" name="notifications-outline"></ion-icon>
                 <span class="badge badge-danger">4</span>
-            </a>
-            <a href="app-settings.html" class="headerButton">
-                <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged w32">
-                <span class="badge badge-danger">6</span>
+            </a> -->
+            <a href="#" class="headerButton">
+                <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/default.svg" alt="image" class="imaged w32">
+                <span class="badge badge-danger"><?= strtoupper(substr($user['name_users'], 0, 1)) ?></span>
             </a>
         </div>
     </div>
@@ -59,8 +60,8 @@
                 <!-- Balance -->
                 <div class="balance">
                     <div class="left">
-                        <span class="title">Total Balance</span>
-                        <h1 class="total"><?= $saldo['saldo'] ?></h1>
+                        <span class="title">Total Saldo</span>
+                        <h1 class="total"><?= $saldo['saldo'] ?> gram</h1>
                     </div>
                     <div class="right">
                         <a href="#" class="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
@@ -70,7 +71,8 @@
                 </div>
                 <!-- * Balance -->
                 <!-- Wallet Footer -->
-                <div class="wallet-footer">
+
+                <!-- <div class="wallet-footer">
                     <div class="item">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#withdrawActionSheet">
                             <div class="icon-wrapper bg-danger">
@@ -104,7 +106,8 @@
                         </a>
                     </div>
 
-                </div>
+                </div> -->
+
                 <!-- * Wallet Footer -->
             </div>
         </div>
@@ -124,9 +127,9 @@
                                     <div class="input-wrapper">
                                         <label class="label" for="account1">From</label>
                                         <select class="form-control custom-select" id="account1">
-                                            <option value="0">Savings (*** 5019)</option>
-                                            <option value="1">Investment (*** 6212)</option>
-                                            <option value="2">Mortgage (*** 5021)</option>
+                                            <option value="0"></option>
+                                            <option value="1"></option>
+                                            <option value="2"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -134,16 +137,14 @@
                                 <div class="form-group basic">
                                     <label class="label">Enter Amount</label>
                                     <div class="input-group mb-2">
-                                        <span class="input-group-text" id="basic-addona1">$</span>
+                                        <span class="input-group-text" id="basic-addona1">Rp</span>
                                         <input type="text" class="form-control" placeholder="Enter an amount"
-                                            value="100">
+                                            value="">
                                     </div>
                                 </div>
-
-
                                 <div class="form-group basic">
                                     <button type="button" class="btn btn-primary btn-block btn-lg"
-                                        data-bs-dismiss="modal">Deposit</button>
+                                        data-bs-dismiss="modal"></button>
                                 </div>
                             </form>
                         </div>
@@ -343,8 +344,8 @@
         <!-- Transactions -->
         <div class="section mt-2">
             <div class="section-heading">
-                <h2 class="title">Transactions</h2>
-                <a href="app-transactions.html" class="link">View All</a>
+                <h2 class="title">Transaksi</h2>
+                <a href="#" class="link">View All</a>
             </div>
             <div class="transactions">
                 <?php
@@ -375,7 +376,7 @@
                                     <strong><?= $row->noreferensi ?></strong>
                                     <!-- <p>Appstore Purchase</p> -->
                                     <?php if ($row->type == '300'): ?>
-                                        <p class="price text-warning">saldo Awal</p>
+                                        <p class="price text-warning">Saldo Awal</p>
                                     <?php elseif ($row->type == '200'): ?>
                                         <p class="price text-danger">Debit</p>
                                     <?php elseif ($row->type == '100'): ?>
@@ -431,36 +432,14 @@
 
     <!-- App Bottom Menu -->
     <div class="appBottomMenu">
-        <!-- <a href="index.html" class="item ">
-            <div class="col">
-                <ion-icon name="pie-chart-outline"></ion-icon>
-                <strong>Overview</strong>
-            </div>
-        </a> -->
-        <!-- <a href="app-pages.html" class="item">
-            <div class="col">
-                <ion-icon name="document-text-outline"></ion-icon>
-                <strong>Pages</strong>
-            </div>
-        </a> -->
-        <a href="app-components.html" class="item active">
+
+        <a href="<?= base_url() ?>" class="item active">
             <div class="col">
                 <ion-icon name="apps-outline"></ion-icon>
                 <strong>Menu</strong>
             </div>
         </a>
-        <!-- <a href="app-cards.html" class="item">
-            <div class="col">
-                <ion-icon name="card-outline"></ion-icon>
-                <strong>My Cards</strong>
-            </div>
-        </a> -->
-        <!-- <a href="app-settings.html" class="item">
-            <div class="col">
-                <ion-icon name="settings-outline"></ion-icon>
-                <strong>Settings</strong>
-            </div>
-        </a> -->
+
     </div>
     <!-- * App Bottom Menu -->
 
@@ -472,10 +451,10 @@
                     <!-- profile box -->
                     <div class="profileBox pt-2 pb-2">
                         <div class="image-wrapper">
-                            <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged  w36">
+                            <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/default.svg" alt="image" class="imaged  w36">
                         </div>
                         <div class="in">
-                            <strong>Masih belum login</strong>
+                            <strong><?= html_escape($user['name_users']) ?></strong>
                             <div class="text-muted"><?= $saldo['account_id'] ?></div>
                         </div>
                         <a href="#" class="btn btn-link btn-icon sidebar-close" data-bs-dismiss="modal">
@@ -485,7 +464,7 @@
                     <!-- * profile box -->
                     <!-- balance -->
                     <div class="sidebar-balance">
-                        <div class="listview-title">Balance</div>
+                        <div class="listview-title">Saldo</div>
                         <div class="in">
                             <h1 class="amount"><?= $saldo['saldo'] ?></h1>
                         </div>
@@ -493,7 +472,8 @@
                     <!-- * balance -->
 
                     <!-- action group -->
-                    <div class="action-group">
+
+                    <!-- <div class="action-group">
                         <a href="index.html" class="action-button">
                             <div class="in">
                                 <div class="iconbox">
@@ -526,12 +506,13 @@
                                 My Cards
                             </div>
                         </a>
-                    </div>
+                    </div> -->
+
                     <!-- * action group -->
 
                     <!-- menu -->
-                    <div class="listview-title mt-1">Menu</div>
-                    <ul class="listview flush transparent no-line image-listview">
+                    <!-- <div class="listview-title mt-1">Menu</div> -->
+                    <!-- <ul class="listview flush transparent no-line image-listview">
                         <li>
                             <a href="index.html" class="item">
                                 <div class="icon-box bg-primary">
@@ -573,13 +554,13 @@
                                 </div>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                     <!-- * menu -->
 
                     <!-- others -->
-                    <div class="listview-title mt-1">Others</div>
+                    <div class="listview-title mt-1">Menu</div>
                     <ul class="listview flush transparent no-line image-listview">
-                        <li>
+                        <!-- <li>
                             <a href="app-settings.html" class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="settings-outline"></ion-icon>
@@ -588,8 +569,8 @@
                                     Settings
                                 </div>
                             </a>
-                        </li>
-                        <li>
+                        </li> -->
+                        <!-- <li>
                             <a href="component-messages.html" class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="chatbubble-outline"></ion-icon>
@@ -598,9 +579,9 @@
                                     Support
                                 </div>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
-                            <a href="app-login.html" class="item">
+                            <a href="<?= base_url('logout'); ?>" class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="log-out-outline"></ion-icon>
                                 </div>

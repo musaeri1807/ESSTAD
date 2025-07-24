@@ -24,16 +24,12 @@
         public function index()
         {
 
-            $status = $this->session->all_userdata();
-            var_dump($status);
-
-            // die();
-
+            // $status = $this->session->all_userdata();
 
             // Mendapatkan input GET dan POST
-            $dari   = $this->input->get('dari');
-            $sampai = $this->input->get('sampai');
-            $nomor  = $this->input->post('nomor');
+            // $dari   = $this->input->get('dari');
+            // $sampai = $this->input->get('sampai');
+            // $nomor  = $this->input->post('nomor');
 
             // Mengambil data dari database
 
@@ -45,10 +41,15 @@
             $data['sampah']     = $this->Product_model->getTrash();
             $data['gold']       = $this->Product_model->getGold();
             $data['bspid']      = $this->Organization_model->get_bspid();
+            $data['user']       = $this->Users_model->userLogin($this->session->userdata('user_id')); // Gunakan email dari userdata
+            if (!$data['user']) {
+                show_error('User tidak ditemukan atau tidak valid', 403);
+                return;
+            }
 
-            $data['user']       = $this->Users_model->userLogin('081210003701'); // Gunakan email dari userdata
-            $data['saldo']      = $this->Users_model->sumSaldo('081210003701');
-            $data['mutasi']     = $this->Users_model->histroiMutasi('3172090013081210003701');
+            $data['saldo']      = $this->Users_model->sumSaldo($data['user']['account_id']);
+            // var_dump($data['saldo']);
+            $data['mutasi']     = $this->Users_model->histroiMutasi($data['user']['account_id']);
 
             // if ($dari && $sampai) {
             //     $data['mutasi'] = $this->Mutasi_model->get_mutasi_by_date($dari, $sampai, $nomor);
@@ -58,75 +59,14 @@
             // }
 
 
-            // var_dump($data['gold']);
-            // var_dump($data['mutasi']);
-
 
             // Memuat tampilan dengan data yang telah disiapkan
 
             $this->load->view('appMobile/v_home', $data);
         }
 
-
-
-        private function prepareData($viewTitle)
+        public function settings()
         {
-
-            echo "dasdsadas";
-
-            // return [
-            //     'header' => [
-            //         'header1' => $this->uri->segment(1),
-            //         'header2' => $this->uri->segment(2)
-            //     ],
-            //     'judul'    => $viewTitle,
-            //     'sampah'   => $this->Product_model->getTrash(),
-            //     'gold'     => $this->Product_model->getGold(),
-            //     'user'     => $this->Users_model->userLogin($this->user['email']),
-            //     'mutasi'   => $this->Users_model->histroiMutasi($this->accountId),
-            //     'saldo'    => $this->Users_model->sumSaldo($this->accountId),
-            //     'provinsi' => $this->Region_model->get_provinsi(),
-            //     'RW'       => $this->Region_model->get_rw(),
-            //     'RT'       => $this->Region_model->get_rt(),
-            //     'bspid'    => $this->Organization_model->get_bspid()
-            // ];
+            $this->load->view('appMobile/v_home_settings');
         }
-
-
-
-        public function home()
-        {
-            echo "dasdsadas";
-        }
-        // public function profile() {}
-        // public function mutasi() {}
-        // public function changePassword()
-        // {
-
-        //     $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
-        //     $this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
-
-        //     if ($this->form_validation->run() == false) {
-        //         $this->index();
-        //     } else {
-        //         $password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
-        //         // Mengakses user_id dari data sesi dengan benar
-        //         $userdata = $this->session->userdata('userdata');
-        //         $username = $userdata['email'];
-        //         // var_dump($username);
-        //         // die();
-        //         if ($username) {
-        //             // echo "ISI";
-        //             $in = $this->Users_model->userUpdated($username, ['field_password' => $password]);
-        //             if ($in) {
-        //                 $this->session->set_flashdata('msg_success', 'Password has been changed! Please login...!!!');
-        //                 $this->session->unset_userdata('userdata');
-        //                 redirect('login');
-        //             }
-        //         } else {
-        //             $this->session->set_flashdata('message_error', 'Password gagal Update, Wrong Insert...!!!');
-        //             redirect('Users/changePassword');
-        //         }
-        //     }
-        // }
     }

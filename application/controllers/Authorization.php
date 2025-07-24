@@ -36,25 +36,20 @@ class Authorization extends AUTH_Controller
 
 	public function index()
 	{
-		// $status = $this->session->userdata('status');
-
-		// if (!empty($status) && $status === 'Logged_in') {
-		// 	redirect('Users');
-		// }
-
+		$status = $this->session->userdata('status');
+		if (!empty($status) && $status === 'Logged_in') {
+			redirect('Users');
+		}
 
 
-		// $this->session->sess_destroy();
-		// var_dump($this->session->all_userdata());
-		// $this->changePassword();
-		// die();
+
 
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$data = array(
-				'Title' 	=>	' Log in',
+				'Title' 	=>	'Log in',
 				'Subtitle' 	=>	'BSP',
 				'widget' 	=> 	$this->recaptcha->getWidget()
 				// 'script' => $this->recaptcha->getScriptTag()
@@ -97,7 +92,7 @@ class Authorization extends AUTH_Controller
 						'user_id'       => $user['user_id'],
 						'email'         => $user['email'],
 						'phone'         => $user['phone'],
-						'account_id'    => $user['account_id'],
+						// 'account_id'    => $user['account_id'],
 						'role_id'		=> 6,
 						'login_state'   => "TRUE",
 						'status' 		=> "Logged_in",
@@ -160,7 +155,7 @@ class Authorization extends AUTH_Controller
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
 				'Title' 		=> 	'One-Time Password',
-				'Subtitle' 		=>	'Nama Aplikasi',
+				'Subtitle' 		=>	'BSP',
 				'widget' 		=> $this->recaptcha->getWidget()
 			);
 			$data = array_merge($sett, $ting);
@@ -229,8 +224,8 @@ class Authorization extends AUTH_Controller
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
 				'token' 	=> $token,
-				'Title' 	=> ' Register',
-				'Subtitle'	=> 'Aplikasi Name',
+				'Title' 	=> 'Daftar Baru',
+				'Subtitle'	=> 'BSP',
 				'widget' 	=> $this->recaptcha->getWidget(),
 				'bspid'		=> $this->Organization_model->get_bspid()
 			);
@@ -480,7 +475,7 @@ class Authorization extends AUTH_Controller
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
-				'Title' 		=> 	'Account Verification',
+				'Title' 		=> 	'Verifikasi Akun',
 				'Subtitle' 		=>	'BSP',
 				'widget' 		=> $this->recaptcha->getWidget()
 			);
@@ -542,7 +537,7 @@ class Authorization extends AUTH_Controller
 		if ($this->form_validation->run() == false) {
 			$sett = $this->db->get('settings')->row_array();
 			$ting = array(
-				'Title' 	=> ' Forgot',
+				'Title' 	=> 'Forgot Password',
 				'Subtitle' 	=> 'Type your Username to reset your password',
 				'widget' 	=> $this->recaptcha->getWidget()
 			);
@@ -693,10 +688,10 @@ class Authorization extends AUTH_Controller
 							$user 		= $this->Users_model->userValid($this->session->userdata('NumberPhone'));
 							$session = [
 								// 'userdata'		=> $user,
-								'user_id'       => $user['id_users'],
+								'user_id'       => $user['user_id'],
 								'email'         => $user['email'],
 								'phone'         => $user['phone'],
-								'account_id'    => $user['account_id'],
+								// 'account_id'    => $user['account_id'],
 								'role_id'		=> 6,
 								'login_state'   => TRUE,
 								'status' 		=> "Logged_in",
@@ -724,8 +719,7 @@ class Authorization extends AUTH_Controller
 									'field_time'  			=> date('H:i:s'),
 									'field_status' 			=> 'S',
 									'field_comments' 		=> "Saldo Awal"
-								];							
-
+								];
 								$insert = $this->db->insert('tbltrxmutasisaldo', $saldoAwal);
 								if ($insert) {
 									// Update 

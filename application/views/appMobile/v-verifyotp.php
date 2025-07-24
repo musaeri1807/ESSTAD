@@ -22,7 +22,6 @@
           maxlength="6" required>
         <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
       </div>
-
       <div class="form-button-group transparent">
         <button type="submit" class="btn btn-success btn-block btn-lg">Verify</button>
       </div>

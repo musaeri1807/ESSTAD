@@ -114,32 +114,39 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Terms and Conditions</h5>
-        <a href="#" data-bs-dismiss="modal">Close</a>
+        <h5 class="modal-title">Syarat dan Ketentuan</h5>
+        <a href="#" data-bs-dismiss="modal">Tutup</a>
       </div>
-      <div class="modal-body">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fermentum, urna eget finibus
-          fermentum, velit metus maximus erat, nec sodales elit justo vitae sapien. Sed fermentum
-          varius erat, et dictum lorem. Cras pulvinar vestibulum purus sed hendrerit. Praesent et
-          auctor dolor. Ut sed ultrices justo. Fusce tortor erat, scelerisque sit amet diam rhoncus,
-          cursus dictum lorem. Ut vitae arcu egestas, congue nulla at, gravida purus.
-        </p>
-        <p>
-          Donec in justo urna. Fusce pretium quam sed viverra blandit. Vivamus a facilisis lectus.
-          Nunc non aliquet nulla. Aenean arcu metus, dictum tincidunt lacinia quis, efficitur vitae
-          dui. Integer id nisi sit amet leo rutrum placerat in ac tortor. Duis sed fermentum mi, ut
-          vulputate ligula.
-        </p>
-        <p>
-          Vivamus eget sodales elit, cursus scelerisque leo. Suspendisse lorem leo, sollicitudin
-          egestas interdum sit amet, sollicitudin tristique ex. Class aptent taciti sociosqu ad litora
-          torquent per conubia nostra, per inceptos himenaeos. Phasellus id ultricies eros. Praesent
-          vulputate interdum dapibus. Duis varius faucibus metus, eget sagittis purus consectetur in.
-          Praesent fringilla tristique sapien, et maximus tellus dapibus a. Quisque nec magna dapibus
-          sapien iaculis consectetur. Fusce in vehicula arcu. Aliquam erat volutpat. Class aptent
-          taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-        </p>
+      <div class="modal-body" style="text-align: justify;">
+        <p><strong>Harap membaca Syarat dan Ketentuan ini dengan saksama sebelum menggunakan layanan kami.</strong> Dengan mendaftar, mengakses, atau menggunakan layanan kami, Anda menyatakan bahwa Anda telah membaca, memahami, dan menyetujui semua ketentuan di bawah ini.</p>
+
+        <p><strong>1. Pendaftaran Akun</strong><br>
+          - Pengguna wajib memberikan data pribadi yang benar, lengkap, dan terbaru.<br>
+          - Setiap pengguna hanya diperbolehkan memiliki satu akun aktif.<br>
+          - Pengguna bertanggung jawab atas keamanan dan kerahasiaan akun miliknya.</p>
+
+        <p><strong>2. Penggunaan Layanan</strong><br>
+          - Layanan ini hanya digunakan untuk keperluan yang sah dan sesuai hukum.<br>
+          - Pengguna dilarang menyalahgunakan layanan, termasuk tetapi tidak terbatas pada manipulasi data, spam, atau aktivitas ilegal lainnya.</p>
+
+        <p><strong>3. Keamanan dan Privasi</strong><br>
+          - Kami menjaga dan melindungi informasi pribadi Anda sesuai dengan kebijakan privasi kami.<br>
+          - Pengguna wajib menjaga kerahasiaan password dan kode OTP yang diterima.</p>
+
+        <p><strong>4. Kepemilikan dan Hak Cipta</strong><br>
+          - Seluruh konten, fitur, dan layanan dalam platform ini adalah milik penyedia layanan dan dilindungi oleh hak cipta.<br>
+          - Pengguna tidak diperbolehkan menggandakan, mendistribusikan, atau menggunakan tanpa izin tertulis.</p>
+
+        <p><strong>5. Pembatasan Tanggung Jawab</strong><br>
+          - Kami tidak bertanggung jawab atas kehilangan atau kerusakan akibat kelalaian pengguna atau penggunaan yang tidak sah.<br>
+          - Kami berhak menghentikan layanan sementara atau permanen atas pelanggaran terhadap syarat ini.</p>
+
+        <p><strong>6. Perubahan Syarat dan Ketentuan</strong><br>
+          - Kami berhak mengubah Syarat dan Ketentuan ini sewaktu-waktu.<br>
+          - Perubahan akan diinformasikan melalui platform dan berlaku sejak tanggal yang ditentukan.</p>
+
+        <p><strong>7. Penerimaan</strong><br>
+          Dengan mengakses atau menggunakan layanan kami, Anda dianggap telah menerima dan menyetujui seluruh isi dari Syarat dan Ketentuan ini.</p>
       </div>
     </div>
   </div>

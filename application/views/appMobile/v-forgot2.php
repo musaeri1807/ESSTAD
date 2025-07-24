@@ -15,8 +15,7 @@
 <div id="appCapsule">
 
   <div class="section mt-2 text-center">
-    <h1>Forgot password</h1>
-    <h4></h4>
+    <h1><?= $Title; ?></h1>    
     <h3> <?= $name_application  ?></h3>
   </div>
   <div class="section mb-5 p-2">

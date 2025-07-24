@@ -23,7 +23,7 @@ class Replication extends CI_Controller
         ];
         $this->session->set_userdata($session);
         // Authorization
-
+        // die();
         // Contruct
         $userId = $this->session->userdata('id_users');
         // echo $userId;
@@ -79,10 +79,10 @@ class Replication extends CI_Controller
     private function replicateTablesMasterSlave()
     {
         // Konfigurasi database server lokal
-        $local_db = $this->load->database('default', TRUE); // 'local' adalah nama konfigurasi koneksi database lokal di file database.php
+        $local_db = $this->load->database('remote', TRUE); // 'local' adalah nama konfigurasi koneksi database lokal di file database.php
 
         // Konfigurasi database server hosting
-        $remote_db = $this->load->database('remote', TRUE); // 'remote' adalah nama konfigurasi koneksi database hosting di file database.php
+        $remote_db = $this->load->database('default', TRUE); // 'remote' adalah nama konfigurasi koneksi database hosting di file database.php
 
         // Daftar tabel yang akan direplikasi  **$tables = array("users", "settings");      
         $tables = $local_db->list_tables();
@@ -97,6 +97,41 @@ class Replication extends CI_Controller
             }
         }
     }
+
+    // private function replicateTablesMasterSlave()
+    // {
+    //     // Koneksi ke DB lokal (master)
+    //     $local_db = $this->load->database('default', TRUE);
+
+    //     // Koneksi ke DB remote (slave/hosting)
+    //     $remote_db = $this->load->database('remote', TRUE);
+
+    //     // Ambil hanya tabel yang sama di kedua DB
+    //     $tables_local  = $local_db->list_tables();
+    //     $tables_remote = $remote_db->list_tables();
+
+    //     var_dump($tables_local);
+    //     die();
+    //     $same_tables = array_intersect($tables_local, $tables_remote);
+
+    //     foreach ($same_tables as $table) {
+    //         echo "Replikasi tabel: {$table}<br>";
+
+    //         // Ambil semua data dari lokal
+    //         $rows = $local_db->get($table)->result_array();
+
+    //         if (!empty($rows)) {
+    //             // Kosongkan tabel di server hosting (opsional, jika replace total)
+    //             $remote_db->truncate($table);
+
+    //             // Insert batch (lebih efisien)
+    //             $remote_db->insert_batch($table, $rows);
+    //         }
+    //     }
+
+    //     echo "Replikasi selesai.";
+    // }
+
 
     public function backupDbDelete($id)
     {
@@ -164,5 +199,71 @@ class Replication extends CI_Controller
                 $remote_db->delete($table, $row);
             }
         }
+    }
+
+    public function replicateMissingTables()
+    {
+        set_time_limit(0); // ⏱️ unlimited waktu proses
+        $local_db = $this->load->database('default', TRUE); // local_data (sumber)
+        $prod_db  = $this->load->database('remote', TRUE);  // prod_data (tujuan)
+
+        $tables_local = $local_db->list_tables();
+        $tables_prod  = $prod_db->list_tables();
+
+        // Cari tabel yang hanya ada di local
+        $missing_tables = array_diff($tables_local, $tables_prod);
+
+        if (empty($missing_tables)) {
+            echo "✅ Semua tabel dari local_data sudah ada di remote.";
+            return;
+        }
+
+        foreach ($missing_tables as $table_name) {
+            echo "🔄 Menyalin tabel: <strong>$table_name</strong> ke remote<br>";
+
+            // Step 1: Salin struktur dari local ke remote
+            $create_query = $local_db->query("SHOW CREATE TABLE `$table_name`")->row_array();
+            // $create_sql   = $create_query['Create Table'];
+            $create_sql   = array_values($create_query)[1];
+            $prod_db->query($create_sql);
+            echo "✅ Struktur tabel '$table_name' berhasil dibuat di remote.<br>";
+
+            // Step 2: Ambil primary key dari local
+            $pk_result = $local_db->query("SHOW KEYS FROM `$table_name` WHERE Key_name = 'PRIMARY'")->result();
+            $primary_keys = array();
+            foreach ($pk_result as $pk) {
+                $primary_keys[] = $pk->Column_name;
+            }
+
+            // Step 3: Ambil data dari local
+            $data = $local_db->get($table_name)->result_array();
+            $inserted = 0;
+            $skipped  = 0;
+
+            foreach ($data as $row) {
+                $exists = false;
+
+                if (!empty($primary_keys)) {
+                    $prod_db->from($table_name);
+                    foreach ($primary_keys as $pk) {
+                        if (!isset($row[$pk])) continue;
+                        $prod_db->where($pk, $row[$pk]);
+                    }
+                    $exists = $prod_db->get()->num_rows() > 0;
+                }
+
+                if (!$exists) {
+                    $prod_db->insert($table_name, $row);
+                    $inserted++;
+                } else {
+                    $skipped++;
+                }
+            }
+
+            echo "✅ Disalin ke remote: $inserted baris, dilewati (duplikat): $skipped baris.<br>";
+            echo "<hr>";
+        }
+
+        echo "🎉 Proses replikasi dari local ke remote selesai.";
     }
 }
