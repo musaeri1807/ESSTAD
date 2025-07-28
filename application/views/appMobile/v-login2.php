@@ -17,7 +17,7 @@
   <div class="section mt-1 text-center">
     <!-- <img src="<?= base_url('/assets/images/' . $sitelogo); ?>" alt="Logo" height="70"> -->
     <h1><?= $Title; ?></h1>
-    <h3><?= $name_application  ?> </h3>
+    <h3><?= $description; ?></h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('login'); ?>" method="POST">
@@ -27,11 +27,11 @@
             <div class="input-wrapper">
               <label class="label" for="email1">Pengguna</label>
               <input type="text" name="username" class="form-control" placeholder="Masukan e-mail atau WhatApp (08)" value="<?php if (isset($_COOKIE['loginUsername'])) {
-                                                                                                                          echo $_COOKIE['loginUsername'];
-                                                                                                                        } else {
-                                                                                                                          echo set_value('username');
-                                                                                                                        }
-                                                                                                                        ?>" required>
+                                                                                                                              echo $_COOKIE['loginUsername'];
+                                                                                                                            } else {
+                                                                                                                              echo set_value('username');
+                                                                                                                            }
+                                                                                                                            ?>" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
@@ -43,11 +43,11 @@
               <!-- <input type="password" class="form-control" id="password1" autocomplete="off"
                 placeholder="Your password"> -->
               <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Kata sandi Anda" value="<?php if (isset($_COOKIE['loginPassword'])) {
-                                                                                                                              echo $_COOKIE['loginPassword'];
-                                                                                                                            } else {
-                                                                                                                              echo set_value('password');
-                                                                                                                            }
-                                                                                                                            ?>" required>
+                                                                                                                                        echo $_COOKIE['loginPassword'];
+                                                                                                                                      } else {
+                                                                                                                                        echo set_value('password');
+                                                                                                                                      }
+                                                                                                                                      ?>" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>

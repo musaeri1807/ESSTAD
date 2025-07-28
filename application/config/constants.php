@@ -98,15 +98,15 @@ if ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
     define('DATABASE', 'u1733358_develop');
 } else {
     // locahost
-    define('HOSTNAME', 'localhost');
-    define('USERNAME', 'root');
-    define('PASSWORD', '');
-    define('DATABASE', 'local_vpsbsp');
+    // define('HOSTNAME', 'localhost');
+    // define('USERNAME', 'root');
+    // define('PASSWORD', '');
+    // define('DATABASE', 'local_vpsbsp');
     // Online
-    // define('HOSTNAME', 'srv1867.hstgr.io');
-    // define('USERNAME', 'u602049557_BSP4dmiN');
-    // define('PASSWORD', 'A5]yk2*]Zg5');
-    // define('DATABASE', 'u602049557_BSPpr0d');
+    define('HOSTNAME', 'srv1867.hstgr.io');
+    define('USERNAME', 'u602049557_BSP4dmiN');
+    define('PASSWORD', 'A5]yk2*]Zg5');
+    define('DATABASE', 'u602049557_BSPpr0d');
 }
 
 

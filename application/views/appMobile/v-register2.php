@@ -19,8 +19,8 @@
 <div id="appCapsule">
 
   <div class="section mt-1 text-center">
-    <h1>Daftar Baru</h1>
-    <h3> <?= $name_application  ?> </h3>
+    <h1><?= $Title; ?></h1>
+    <h3><?= $description; ?></h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('register'); ?>" method="post" onsubmit="this.submit.disabled = true;">

@@ -16,7 +16,7 @@
 
   <div class="section mt-2 text-center">
     <h1><?= $Title; ?></h1>    
-    <h3> <?= $name_application  ?></h3>
+    <h3><?= $description; ?></h3>
   </div>
   <div class="section mb-5 p-2">
     <form action="<?= base_url('forgot'); ?>" method="POST">

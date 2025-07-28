@@ -333,7 +333,7 @@ class Authorization extends AUTH_Controller
 							if ($this->db->trans_status() === TRUE) {
 								// echo "Berhasil menyimpan data.";
 								$this->session->unset_userdata('register_token');
-								$this->session->set_flashdata('message_success', 'Congratulation.!');
+								$this->session->set_flashdata('message_success', 'Selamat pendaftaran Anda telah berhasil. Silakan cek email atau pesan whatsApp Anda untuk aktivasi.');
 								redirect('register');
 							} else {
 								// gagal, bisa tampilkan error atau rollback
@@ -346,7 +346,7 @@ class Authorization extends AUTH_Controller
 							redirect('register');
 						}
 					} else {
-						$this->session->set_flashdata('message_warning', 'Wrong ! agree');
+						$this->session->set_flashdata('message_warning', 'Silakan centang kotak persetujuan terlebih dahulu!');
 						redirect('register');
 					}
 				} else {
