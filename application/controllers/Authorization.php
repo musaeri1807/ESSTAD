@@ -556,12 +556,12 @@ class Authorization extends AUTH_Controller
 						if ($user['is_active'] == 1) {
 							if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
 
-								$this->db->where('id_users', $user['id_users']);
+								$this->db->where('id_users', $user['user_id']);
 								$this->db->delete('token_users');
 								// siapkan token
 								$token 		= base64_encode(random_bytes(32));
 								$user_token = [
-									'id_users' 		=> $user['id_users'],
+									'id_users' 		=> $user['user_id'],
 									'token' 		=> $token,
 									'date_created' 	=> date('Y-m-d H:i:s')
 								];
@@ -854,7 +854,7 @@ class Authorization extends AUTH_Controller
 				$this->session->unset_userdata('NumberPhone');
 				// $this->session->sess_destroy();
 				if ($in) {
-					$this->session->set_flashdata('msg_success', 'Password has been changed! Please login...!!!');
+					$this->session->set_flashdata('msg_success', 'Kata sandi Anda telah berhasil diubah! Silakan login...!!!');
 					redirect('login');
 				}
 			} else {

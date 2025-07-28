@@ -42,7 +42,6 @@ class Organization_model extends CI_Model
     $this->db->where('B.field_branch_id', $id_branch);
     $this->db->where('B.Is_Active', 'Y'); // Filter hanya yang aktif
     $this->db->order_by('D.organisasi', 'ASC');
-
     $query = $this->db->get();
     return $query->row(); // Mengambil satu baris data
   }
