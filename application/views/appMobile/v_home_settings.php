@@ -53,7 +53,7 @@
         <div class="section mt-3 text-center">
             <div class="avatar-section">
                 <a href="#">
-                    <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w100 rounded">
+                    <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/avatar/default.svg" alt="avatar" class="imaged w100 rounded">
                     <span class="button">
                         <ion-icon name="camera-outline"></ion-icon>
                     </span>
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="listview-title mt-1">Theme</div>
+        <!-- <div class="listview-title mt-1">Theme</div>
         <ul class="listview image-listview text inset no-line">
             <li>
                 <div class="item">
@@ -76,9 +76,9 @@
                     </div>
                 </div>
             </li>
-        </ul>
+        </ul> -->
 
-        <div class="listview-title mt-1">Notifications</div>
+        <!-- <div class="listview-title mt-1">Notifications</div>
         <ul class="listview image-listview text inset">
             <li>
                 <div class="item">
@@ -104,14 +104,14 @@
                     </div>
                 </a>
             </li>
-        </ul>
+        </ul> -->
 
         <div class="listview-title mt-1">Profile Settings</div>
         <ul class="listview image-listview text inset">
             <li>
                 <a href="#" class="item">
                     <div class="in">
-                        <div>Change Username</div>
+                        <div>Update WhatsApp</div>
                     </div>
                 </a>
             </li>
@@ -122,15 +122,15 @@
                     </div>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="#" class="item">
                     <div class="in">
                         <div>Address</div>
                         <span class="text-primary">Edit</span>
                     </div>
                 </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <div class="item">
                     <div class="in">
                         <div>
@@ -142,19 +142,26 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> -->
         </ul>
 
         <div class="listview-title mt-1">Security</div>
         <ul class="listview image-listview text mb-2 inset">
             <li>
-                <a href="#" class="item">
+                <a href="<?= base_url('users/updatePassword'); ?>" class="item">
                     <div class="in">
                         <div>Update Password</div>
                     </div>
                 </a>
             </li>
             <li>
+                <a href="<?= base_url('users/updatePIN'); ?>" class="item">
+                    <div class="in">
+                        <div>PIN</div>
+                    </div>
+                </a>
+            </li>
+            <!-- <li>
                 <div class="item">
                     <div class="in">
                         <div>
@@ -166,14 +173,14 @@
                         </div>
                     </div>
                 </div>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="#" class="item">
                     <div class="in">
                         <div>Log out all devices</div>
                     </div>
                 </a>
-            </li>
+            </li> -->
         </ul>
 
 
@@ -195,7 +202,8 @@
     </div>
     <!-- * App Bottom Menu -->
 
-
+    <!--load swal js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- ========= JS Files =========  -->
     <!-- Bootstrap -->
     <script src="<?= base_url() ?>/assets/appmobile/assets/js/lib/bootstrap.bundle.min.js"></script>
@@ -210,6 +218,103 @@
         // Add to Home with 2 seconds delay.
         AddtoHome("2000", "once");
     </script>
+
+    <!-- Pesan Error -->
+    <?php if ($this->session->flashdata('message_error')): ?>
+        <script>
+            Swal.fire({
+                title: 'Kesalahan...!!!',
+                text: '<?= $this->session->flashdata('message_error'); ?>',
+                icon: 'error',
+                // showConfirmButton: false,
+                // confirmButtonText: 'Try Again',
+                // timer: 1500
+            });
+        </script>
+    <?php endif; ?>
+    <!-- Pesan warning -->
+    <?php if ($this->session->flashdata('message_warning')): ?>
+        <script>
+            Swal.fire({
+                title: 'Peringatan...!!!',
+                text: '<?= $this->session->flashdata('message_warning'); ?>',
+                icon: 'warning',
+                // showConfirmButton: false,
+                // confirmButtonText: 'Try Again',
+                // timer: 1500
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan info -->
+    <?php if ($this->session->flashdata('message_info')): ?>
+        <script>
+            Swal.fire({
+                title: 'Informasi...!!!',
+                text: '<?= $this->session->flashdata('message_info'); ?>',
+                icon: 'info'
+                // confirmButtonText: 'Lanjutkan'
+            });
+        </script>
+    <?php endif; ?>
+    <!-- Pesan success login -->
+    <?php if ($this->session->flashdata('message_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('message_success'); ?>',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500 // Durasi dalam milidetik
+            });
+            // Arahkan setelah timer selesai
+            setTimeout(() => {
+                window.location.href = '<?= site_url("login"); ?>'; // Arahkan ke Home Page
+            }, 1500); // Sesuaikan dengan timer SweetAlert
+        </script>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('clear_all_session_msg_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('clear_all_session_msg_success'); ?>',
+                icon: 'success'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "<?= base_url('Authorization/clear_all_session') ?>";
+                }
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan success -->
+    <?php if ($this->session->flashdata('msg_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('msg_success'); ?>',
+                icon: 'success',
+                // confirmButtonText: 'Lanjutkan'
+                // }).then((result) => {
+                //     if (result.isConfirmed) {
+                //         window.location.href = ''; // Arahkan ke Authorization
+                //     }
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan form validation -->
+    <?php if (validation_errors()): ?>
+        <script>
+            Swal.fire({
+                title: 'Error validation...!!!',
+                text: <?= json_encode(strip_tags(validation_errors())); ?>,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
 
 
 </body>

@@ -560,8 +560,8 @@
                     <!-- others -->
                     <div class="listview-title mt-1">Menu</div>
                     <ul class="listview flush transparent no-line image-listview">
-                        <!-- <li>
-                            <a href="app-settings.html" class="item">
+                        <li>
+                            <a href="<?= base_url('users/settings'); ?>" class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="settings-outline"></ion-icon>
                                 </div>
@@ -569,7 +569,7 @@
                                     Settings
                                 </div>
                             </a>
-                        </li> -->
+                        </li>
                         <!-- <li>
                             <a href="component-messages.html" class="item">
                                 <div class="icon-box bg-primary">

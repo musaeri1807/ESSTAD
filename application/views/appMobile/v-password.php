@@ -1,0 +1,78 @@
+<!-- App Header -->
+<div class="appHeader">
+  <div class="left">
+    <a href="<?= base_url('Users/settings'); ?>" class="headerButton goBack">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </a>
+  </div>
+  <div class="pageTitle">
+    Settings
+  </div>
+  <div class="right">
+    <!-- <a href="app-notifications.html" class="headerButton">
+                <ion-icon class="icon" name="notifications-outline"></ion-icon>
+                <span class="badge badge-danger">4</span>
+            </a> -->
+  </div>
+</div>
+<!-- * App Header -->
+
+<!-- App Capsule -->
+<div id="appCapsule">
+
+  <div class="section mt-2 text-center">
+    <h1><?= $Title; ?></h1>
+    <h4></h4>
+  </div>
+  <div class="section mb-5 p-2">
+    <form action="<?= base_url('users/updatePassword'); ?>" method="post">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group basic">
+            <div class=" input-wrapper">
+              <label class="label" for="password1" onclick="password_show_hide();">Password</label>
+              <input type="password" name="password1" class="form-control" id="password" placeholder="Password"  required>
+              <!-- show password -->
+              <i class="fas fa-eye" id="show_eye"></i>
+              <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+
+              <!-- show password -->
+
+              <i class="clear-input">
+                <ion-icon name="close-circle"></ion-icon>
+              </i>
+
+            </div>
+          </div>
+          <div class="form-group basic">
+            <div class="input-wrapper">
+              <label class="label" for="password2" onclick="password_show_hidee();">Password Again</label>
+              <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirm Password"  required>
+              <!-- show password -->
+
+              <i class="fas fa-eye" id="show_eyee"></i>
+              <i class="fas fa-eye-slash d-none" id="hide_eyee"></i>
+
+              <!-- show password -->
+
+              <i class="clear-input">
+                <ion-icon name="close-circle"></ion-icon>
+              </i>
+            </div>
+          </div>
+          <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
+          <div class="custom-control custom-checkbox mt-2 mb-1">
+            <span class="text-danger ">
+              <p class="login-box-msg small">Minimum password length of 7 characters.</p>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-button-group transparent">
+        <button type="submit" class="btn btn-success btn-block btn-lg">Simpan</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+<!-- * App Capsule -->
