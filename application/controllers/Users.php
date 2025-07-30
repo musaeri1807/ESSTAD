@@ -49,6 +49,7 @@
 
             $data['saldo']      = $this->Users_model->sumSaldo($data['user']['account_id']);
             // var_dump($data['saldo']);
+            // die();
             $data['mutasi']     = $this->Users_model->histroiMutasi($data['user']['account_id']);
 
             // if ($dari && $sampai) {

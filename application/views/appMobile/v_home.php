@@ -61,7 +61,7 @@
                 <div class="balance">
                     <div class="left">
                         <span class="title">Total Saldo</span>
-                        <h1 class="total"><?= $saldo['saldo'] ?> gram</h1>
+                        <h1 class="total"><?= number_format($saldo['saldo'], 6, ',', '.'); ?> gr</h1>
                     </div>
                     <div class="right">
                         <a href="#" class="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
@@ -125,9 +125,9 @@
                             <form action="" method="post">
                                 <div class="form-group basic">
                                     <div class="input-wrapper">
-                                        <label class="label" for="account1">From</label>
+                                        <label class="label" for="account1">Jenis Transaksi</label>
                                         <select class="form-control custom-select" id="account1">
-                                            <option value="0">Pembelian</option>
+                                            <!-- <option value="0">Pembelian</option> -->
                                             <option value="1">Buyback</option>
                                             <option value="2">Cetak Fisik</option>
                                         </select>
@@ -306,8 +306,6 @@
                                     </div>
                                 </div>
 
-
-
                                 <div class="form-group basic">
                                     <button type="button" class="btn btn-primary btn-block btn-lg"
                                         data-bs-dismiss="modal">Exchange</button>
@@ -322,18 +320,22 @@
 
         <!-- Stats -->
         <div class="section">
-            Terakhir Diperbarui <?= format_tanggal_waktu($gold['date']) ?>
+
+            Diperbarui <?= format_tanggal_waktu($gold['date']); ?>
+
             <div class="row mt-20">
                 <div class="col-6">
                     <div class="stat-box">
                         <div class="title">Beli</div>
-                        <div class="value text-success"><?= 'Rp' . number_format($gold['sell']); ?></div>
+                        <p class="value text-success"><?= 'Rp' . number_format($gold['sell'], 0, ',', '.'); ?></p>
+                        <!-- <div class="value text-success"></div> -->
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="stat-box">
                         <div class="title">Buyback</div>
-                        <div class="value text-danger"><?= 'Rp' . number_format($gold['buyback']); ?></div>
+                        <p class="value text-danger"><?= 'Rp' . number_format($gold['buyback'], 0, ',', '.'); ?></p>
+                        <!-- <div class="value text-danger"></div> -->
                     </div>
                 </div>
             </div>
@@ -387,15 +389,18 @@
                                 <!-- <div class="price text-success"> $ 29 </div> -->
                                 <?php if ($row->type == '300'): ?>
                                     <div class="price text-warning">
-                                        <?= $row->kredit ?><br><?= $row->time ?> WIB
+                                        <?= $row->kredit ?><br>
+                                        <p><?= $row->time ?> WIB</p>
                                     </div>
                                 <?php elseif ($row->type == '200'): ?>
                                     <div class="price text-danger">
-                                        -<?= $row->debit ?><br><?= $row->time ?> WIB
+                                        - <?= $row->debit ?><br>
+                                        <p><?= $row->time ?> WIB</p>
                                     </div>
                                 <?php elseif ($row->type == '100'): ?>
                                     <div class="price text-success">
-                                        +<?= $row->kredit ?><br><?= $row->time ?> WIB
+                                        + <?= $row->kredit ?><br>
+                                        <p><?= $row->time ?> WIB</p>
                                     </div>
                                 <?php endif; ?>
 
@@ -454,7 +459,7 @@
                         </div>
                         <div class="in">
                             <strong><?= html_escape($user['name_users']) ?></strong>
-                            <div class="text-muted"><?= $saldo['account_id'] ?></div>
+                            <div class="text-muted"><?= $saldo['rekening'] ?></div>
                         </div>
                         <a href="#" class="btn btn-link btn-icon sidebar-close" data-bs-dismiss="modal">
                             <ion-icon name="close-outline"></ion-icon>
@@ -465,7 +470,7 @@
                     <div class="sidebar-balance">
                         <div class="listview-title">Saldo</div>
                         <div class="in">
-                            <h1 class="amount"><?= $saldo['saldo'] ?></h1>
+                            <h1 class="amount"><?= "Rp  " . number_format($saldo['saldo'] * $gold['buyback'], 0, ',', '.'); ?></h1>
                         </div>
                     </div>
                     <!-- * balance -->
