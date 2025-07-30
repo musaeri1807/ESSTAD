@@ -345,8 +345,8 @@
         <!-- Transactions -->
         <div class="section mt-2">
             <div class="section-heading">
-                <h2 class="title">Transaksi</h2>
-                <a href="#" class="link">View All</a>
+                <h2 class="title">Transaksi Terakhir</h2>
+                <!-- <a href="#" class="link">View All</a> -->
             </div>
             <div class="transactions">
                 <?php
