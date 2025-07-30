@@ -66,24 +66,67 @@
 
         public function settings()
         {
-            $this->load->view('appMobile/v_home_settings');
+            $data['user']       = $this->Users_model->userLogin($this->session->userdata('user_id')); // Gunakan email dari userdata
+
+            $this->load->view('appMobile/v_home_settings', $data);
         }
+
 
         public function nomorWatsApp()
         {
-            $token = bin2hex(random_bytes(32)); // 32 karakter
-            $this->session->set_userdata('verify_token', $token);
-            $data = array(
-                'token'     => $token,
-                'Title'     => 'WhatsApp'
+            $this->form_validation->set_rules(
+                'nomor',
+                'phone',
+                'trim|required|numeric|min_length[10]|max_length[12]',
+                [
+                    'required'    => 'Kolom {field} wajib diisi.',
+                    'min_length'  => 'Kolom {field} minimal harus berisi {param} karakter.',
+                    'max_length'  => 'Kolom {field} minimal harus berisi {param} karakter.',
+                    'numeric'     => 'Kolom {field} harus berisi angka.'
+                ]
             );
-            $this->template->viewsMobile('appMobile/v-whatsapp', $data);
+
+            if ($this->form_validation->run() == false) {
+                $token = bin2hex(random_bytes(32)); // 32 karakter
+                $this->session->set_userdata('verify_token', $token);
+                $data = array(
+                    'token'     => $token,
+                    'Title'     => 'WhatsApp'
+                );
+                $this->template->viewsMobile('appMobile/v-whatsapp', $data);
+            } else {
+                $token          = $this->input->post('token');
+                if ($token === $this->session->userdata('verify_token')) {
+                    $nomor      = $this->input->post('nomor');
+                    $id         = $this->session->userdata('user_id');
+                    $user       = $this->Users_model->userValid($nomor); //valid User
+
+                    if ($user) {
+                        $this->session->set_flashdata('message_error', 'Nomor yang anda masukan sudah ada');
+                        redirect('settings');
+                    } else {
+                        // $this->session->set_flashdata('msg_success', 'Update!');
+                        // redirect('settings');
+                        $username = $this->Users_model->userLogin($id);
+                        $update = $this->Users_model->userUpdated($username['email'], ['field_handphone' => $nomor]);
+                        if ($update) {
+                            $this->session->set_flashdata('msg_success', 'Nomor Anda telah berhasil diubah..!');
+                            redirect('settings');
+                        } else {
+                            $this->session->set_flashdata('message_error', 'Nomor gagal diubah...!!!');
+                            redirect('settings');
+                        }
+                    }
+                } else {
+                    $this->session->set_flashdata('message_error', 'Token Error..!');
+                    redirect('settings');
+                }
+            }
         }
 
         public function updateEmail()
         {
             $this->form_validation->set_rules('email', 'email', 'required|valid_email');
-            // $this->form_validation->set_rules('username', 'Email', 'required|valid_email|callback_username_check');
 
             if ($this->form_validation->run() == false) {
                 $token = bin2hex(random_bytes(32)); // 32 karakter
@@ -94,42 +137,65 @@
                 );
                 $this->template->viewsMobile('appMobile/v-email', $data);
             } else {
-                echo "HHHHHH";
-            }
-        }
-        public function updateUsername()
-        {
-            $this->form_validation->set_rules('username', 'username', 'trim|required');
-            if ($this->form_validation->run() == false) {
-                $token = bin2hex(random_bytes(32)); // 32 karakter
-                $this->session->set_userdata('verify_token', $token);
-                $data = array(
-                    'token'     => $token,
-                    'Title'     => 'E-mail'
-                );
-                $this->template->viewsMobile('appMobile/v-email', $data);
-            } else {
-                $username       = $this->input->post('username');
-                $button         = $this->input->post('OTP');
-                $user           = $this->Users_model->userValid($username); //valid User					
-                if ($user) {
-                    if ($user['is_active'] == 1) {
-                        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                        } elseif (ctype_digit($username) && strlen($username) >= 10) {
-                        } else {
-                            $this->session->set_flashdata('message_info', 'Value ini bukan email atau nomor telepon yang valid.!!!');
-                            redirect('forgot');
-                        }
+                $token        = $this->input->post('token');
+                if ($token === $this->session->userdata('verify_token')) {
+                    $email      = $this->input->post('email');
+                    $id         = $this->session->userdata('user_id');
+                    $user      = $this->Users_model->userValid($email); //valid User
+
+                    if ($user) {
+                        $this->session->set_flashdata('message_error', 'E-mail yang anda masukan sudah ada');
+                        redirect('settings');
                     } else {
-                        $this->session->set_flashdata('message_warning', 'it not activated yet...!!!');
-                        redirect('forgot');
+                        $username = $this->Users_model->userLogin($id);
+                        $update = $this->Users_model->userUpdated($username['phone'], ['field_email' => $email]);
+                        if ($update) {
+                            $this->session->set_flashdata('msg_success', 'E-mail Anda telah berhasil diubah..!');
+                            redirect('settings');
+                        } else {
+                            $this->session->set_flashdata('message_error', 'E-mail gagal diubah...!!!');
+                            redirect('settings');
+                        }
                     }
                 } else {
-                    $this->session->set_flashdata('message_error', 'Anda belum terdaftar. Silakan lakukan pendaftaran terlebih dahulu.!');
-                    redirect('forgot');
+                    $this->session->set_flashdata('message_error', 'Token Error..!');
+                    redirect('settings');
                 }
             }
         }
+        // public function updateUsername()
+        // {
+        //     $this->form_validation->set_rules('username', 'username', 'trim|required');
+        //     if ($this->form_validation->run() == false) {
+        //         $token = bin2hex(random_bytes(32)); // 32 karakter
+        //         $this->session->set_userdata('verify_token', $token);
+        //         $data = array(
+        //             'token'     => $token,
+        //             'Title'     => 'E-mail'
+        //         );
+        //         $this->template->viewsMobile('appMobile/v-email', $data);
+        //     } else {
+        //         $username       = $this->input->post('username');
+        //         $button         = $this->input->post('OTP');
+        //         $user           = $this->Users_model->userValid($username); //valid User					
+        //         if ($user) {
+        //             if ($user['is_active'] == 1) {
+        //                 if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        //                 } elseif (ctype_digit($username) && strlen($username) >= 10) {
+        //                 } else {
+        //                     $this->session->set_flashdata('message_info', 'Value ini bukan email atau nomor telepon yang valid.!!!');
+        //                     redirect('forgot');
+        //                 }
+        //             } else {
+        //                 $this->session->set_flashdata('message_warning', 'it not activated yet...!!!');
+        //                 redirect('forgot');
+        //             }
+        //         } else {
+        //             $this->session->set_flashdata('message_error', 'Anda belum terdaftar. Silakan lakukan pendaftaran terlebih dahulu.!');
+        //             redirect('forgot');
+        //         }
+        //     }
+        // }
         public function updatePassword()
         {
             $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
@@ -147,22 +213,23 @@
                 $token        = $this->input->post('token');
                 if ($token === $this->session->userdata('verify_token')) {
                     $password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
-                    $username = $this->session->userdata('email');
-                    if ($username) {
-                        $update = $this->Users_model->userUpdated($username, ['field_password' => $password]);
+                    $id         = $this->session->userdata('user_id');
+                    if ($id) {
+                        $username = $this->Users_model->userLogin($id);
+                        $update = $this->Users_model->userUpdated($username['email'], ['field_password' => $password]);
                         if ($update) {
                             $this->session->set_flashdata('msg_success', 'Kata sandi Anda telah berhasil diubah..!');
-                            redirect('users/settings');
+                            redirect('settings');
                         } else {
                             $this->session->set_flashdata('message_error', 'Password gagal Update, Wrong Insert...!!!');
                         }
                     } else {
                         $this->session->set_flashdata('message_error', 'Username tidak ditemukan');
-                        redirect('users/settings');
+                        redirect('settings');
                     }
                 } else {
                     $this->session->set_flashdata('message_error', 'Token OTP  Error..!');
-                    redirect('users/settings');
+                    redirect('settings');
                 }
             }
         }
@@ -181,22 +248,23 @@
                 $token        = $this->input->post('token');
                 if ($token === $this->session->userdata('verify_token')) {
                     $password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
-                    $username = $this->session->userdata('email');
-                    if ($username) {
-                        $update = $this->Users_model->userUpdated($username, ['Password' => $password]);
+                    $id         = $this->session->userdata('user_id');
+                    if ($id) {
+                        $username = $this->Users_model->userLogin($id);
+                        $update = $this->Users_model->userUpdated($username['email'], ['Password' => $password]);
                         if ($update) {
                             $this->session->set_flashdata('msg_success', 'PIN Anda telah berhasil diubah..!');
-                            redirect('users/settings');
+                            redirect('settings');
                         } else {
                             $this->session->set_flashdata('message_error', 'PIN gagal Update, Wrong Insert...!!!');
                         }
                     } else {
                         $this->session->set_flashdata('message_error', 'Username tidak ditemukan');
-                        redirect('users/settings');
+                        redirect('settings');
                     }
                 } else {
                     $this->session->set_flashdata('message_error', 'Token OTP  Error..!');
-                    redirect('users/settings');
+                    redirect('settings');
                 }
             }
         }

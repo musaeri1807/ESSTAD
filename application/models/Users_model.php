@@ -22,7 +22,6 @@ class Users_model extends CI_Model
 
     public function userLogin($userid) //menampilkan user yang login
     {
-
         $sql = "SELECT 
                     users.field_user_id AS user_id,
                     users.field_member_id AS account_id,

@@ -118,33 +118,32 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Balance</h5>
+                        <h5 class="modal-title">Transaksi Baru</h5>
                     </div>
                     <div class="modal-body">
                         <div class="action-sheet-content">
-                            <form>
+                            <form action="" method="post">
                                 <div class="form-group basic">
                                     <div class="input-wrapper">
                                         <label class="label" for="account1">From</label>
                                         <select class="form-control custom-select" id="account1">
-                                            <option value="0"></option>
-                                            <option value="1"></option>
-                                            <option value="2"></option>
+                                            <option value="0">Pembelian</option>
+                                            <option value="1">Buyback</option>
+                                            <option value="2">Cetak Fisik</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group basic">
-                                    <label class="label">Enter Amount</label>
+                                    <label class="label">Masukkan Jumlah</label>
                                     <div class="input-group mb-2">
                                         <span class="input-group-text" id="basic-addona1">Rp</span>
-                                        <input type="text" class="form-control" placeholder="Enter an amount"
-                                            value="">
+                                        <input type="text" class="form-control" placeholder="Masukan Jumlah" value="">
                                     </div>
                                 </div>
                                 <div class="form-group basic">
-                                    <button type="button" class="btn btn-primary btn-block btn-lg"
-                                        data-bs-dismiss="modal"></button>
+                                    <button type="button" class="btn btn-success btn-block btn-lg"
+                                        data-bs-dismiss="modal">Simpan</button>
                                 </div>
                             </form>
                         </div>
@@ -561,7 +560,7 @@
                     <div class="listview-title mt-1">Menu</div>
                     <ul class="listview flush transparent no-line image-listview">
                         <li>
-                            <a href="<?= base_url('users/settings'); ?>" class="item">
+                            <a href="<?= base_url('settings'); ?>" class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="settings-outline"></ion-icon>
                                 </div>

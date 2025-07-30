@@ -109,16 +109,18 @@
         <div class="listview-title mt-1">Profile Settings</div>
         <ul class="listview image-listview text inset">
             <li>
-                <a href="#" class="item">
+                <a href="<?= base_url('change-nomor'); ?>" class="item">
                     <div class="in">
-                        <div>Update WhatsApp</div>
+                        <div>WhatsApp</div>
+                        <span class="listview-title mt-1"><?= $user['phone']; ?></span>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="#" class="item">
+                <a href="<?= base_url('change-email'); ?>" class="item">
                     <div class="in">
-                        <div>Update E-mail</div>
+                        <div>E-mail</div>
+                        <span class="listview-title mt-1"><?= $user['email']; ?></span>
                     </div>
                 </a>
             </li>
@@ -148,14 +150,14 @@
         <div class="listview-title mt-1">Security</div>
         <ul class="listview image-listview text mb-2 inset">
             <li>
-                <a href="<?= base_url('users/updatePassword'); ?>" class="item">
+                <a href="<?= base_url('change-password'); ?>" class="item">
                     <div class="in">
                         <div>Update Password</div>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?= base_url('users/updatePIN'); ?>" class="item">
+                <a href="<?= base_url('change-pin'); ?>" class="item">
                     <div class="in">
                         <div>PIN</div>
                     </div>

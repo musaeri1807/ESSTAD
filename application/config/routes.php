@@ -95,3 +95,10 @@ $route['tonase']            = 'Welcome/tonase';
 $route['service-nasabah']   = 'Welcome/layanannasabah';
 $route['service-bsp']       = 'Welcome/layananunit';
 $route['register-bsp']      = 'Welcome/unit';
+
+// Users
+$route['settings']          = 'Users/settings';
+$route['change-pin']        = 'Users/updatePIN';
+$route['change-password']   = 'Users/updatePassword';
+$route['change-email']      = 'Users/updateEmail';
+$route['change-nomor']      = 'Users/nomorWatsApp';

@@ -1,7 +1,7 @@
 <!-- App Header -->
 <div class="appHeader">
   <div class="left">
-    <a href="<?= base_url('Users/settings'); ?>" class="headerButton goBack">
+    <a href="<?= base_url('settings'); ?>" class="headerButton goBack">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </a>
   </div>
@@ -24,17 +24,18 @@
     <h3></h3>
   </div>
   <div class="section mb-5 p-2">
-    <form action="<?= base_url('otp-account'); ?>" method="POST">
+    <form action="<?= base_url('change-nomor'); ?>" method="POST">
       <div class="card">
         <div class="card-body pb-1">
           <div class="form-group basic">
             <div class="input-wrapper">
               <label class="label" for="email1">Nomor</label>
-              <input type="tel" inputmode="numeric" name="username" class="form-control" placeholder="Masukan Nomor WhatApp (08)" required>
+              <input type="tel" inputmode="numeric" name="nomor" class="form-control" placeholder="Masukan Nomor WhatApp (08)" required>
 
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
+              <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
             </div>
           </div>
         </div>

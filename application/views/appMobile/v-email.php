@@ -1,7 +1,7 @@
 <!-- App Header -->
 <div class="appHeader">
   <div class="left">
-    <a href="<?= base_url('Users/settings'); ?>" class="headerButton goBack">
+    <a href="<?= base_url('settings'); ?>" class="headerButton goBack">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </a>
   </div>
@@ -25,18 +25,18 @@
     <h3></h3>
   </div>
   <div class="section mb-5 p-2">
-    <form action="<?= base_url('users/updateEmail'); ?>" method="POST">
+    <form action="<?= base_url('change-email'); ?>" method="POST">
       <div class="card">
         <div class="card-body pb-1">
 
           <div class="form-group basic">
             <div class="input-wrapper">
               <label class="label" for="email1">E-mail</label>
-              <input type="email" name="email" class="form-control" id="email1" placeholder="Masukan e-mail" value="musaeri999@gmail.com" required>
+              <input type="email" name="email" class="form-control" id="email1" placeholder="Masukan e-mail" required>
               <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
               </i>
-              <input type="text" name="token" class="form-control" value="<?= $token; ?>" required>
+              <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
             </div>
           </div>
         </div>

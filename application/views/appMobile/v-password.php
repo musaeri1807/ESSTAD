@@ -1,7 +1,7 @@
 <!-- App Header -->
 <div class="appHeader">
   <div class="left">
-    <a href="<?= base_url('Users/settings'); ?>" class="headerButton goBack">
+    <a href="<?= base_url('settings'); ?>" class="headerButton goBack">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </a>
   </div>
