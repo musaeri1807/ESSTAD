@@ -570,7 +570,7 @@ class Authorization extends AUTH_Controller
 								if ($this->db->affected_rows() > 0) {
 									//Email
 									$this->_sendEmail($user['name_users'], $user['email'], $token, 'Reset Password');
-									$this->session->set_flashdata('message_info', 'Please check your email to reset password...!!!');
+									$this->session->set_flashdata('message_info', 'Silakan periksa email Anda untuk mereset kata sandi...!!!');
 									redirect('forgot');
 								} else {
 									$this->session->set_flashdata('message_error', 'Token failed to save...!!!');

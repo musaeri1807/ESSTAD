@@ -122,28 +122,53 @@
                     </div>
                     <div class="modal-body">
                         <div class="action-sheet-content">
-                            <form action="" method="post">
+
+                            <form action="<?= base_url('users'); ?>" method="post">
                                 <div class="form-group basic">
                                     <div class="input-wrapper">
-                                        <label class="label" for="account1">Jenis Transaksi</label>
-                                        <select class="form-control custom-select" id="account1">
-                                            <!-- <option value="0">Pembelian</option> -->
-                                            <option value="1">Buyback</option>
-                                            <option value="2">Cetak Fisik</option>
+                                        <label class="label" for="tipeTransaksi">Jenis Transaksi</label>
+                                        <select name="tipe" class="form-control custom-select" id="tipeTransaksi">
+                                            <!-- <option value="1">Pembelian</option> -->
+                                            <!-- <option value="201">Cetak Fisik</option> -->
+                                            <option value="202">Buyback</option>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="token" class="form-control" value="<?= $token['token']; ?>" required>
+                                </div>
+
+                                <!-- Input Jumlah dalam Rupiah -->
+                                <div class="form-group basic" id="inputRupiah">
+                                    <label class="label">Masukkan Jumlah</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">Rp</span>
+                                        <select name="rupiah" class="form-control">
+                                            <option value="0">--Pilih--</option>
+                                            <option value="10000">10.000</option>
+                                            <option value="20000">20.000</option>
+                                            <option value="50000">50.000</option>
+                                            <option value="100000">100.000</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Input Jumlah dalam Gram -->
+                                <div class="form-group basic" id="inputGram">
+                                    <label class="label">Masukkan Jumlah</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">Gr</span>
+                                        <select name="gram" class="form-control">
+                                            <option value="0">--Pilih--</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group basic">
-                                    <label class="label">Masukkan Jumlah</label>
-                                    <div class="input-group mb-2">
-                                        <span class="input-group-text" id="basic-addona1">Rp</span>
-                                        <input type="text" class="form-control" placeholder="Masukan Jumlah" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group basic">
-                                    <button type="button" class="btn btn-success btn-block btn-lg"
-                                        data-bs-dismiss="modal">Simpan</button>
+                                    <button id="btnProses" type="submit" class="btn btn-success btn-block btn-lg">Simpan</button>
                                 </div>
                             </form>
                         </div>
@@ -154,7 +179,8 @@
         <!-- * Deposit Action Sheet -->
 
         <!-- Withdraw Action Sheet -->
-        <div class="modal fade action-sheet" id="withdrawActionSheet" tabindex="-1" role="dialog">
+
+        <!-- <div class="modal fade action-sheet" id="withdrawActionSheet" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -202,11 +228,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- * Withdraw Action Sheet -->
 
         <!-- Send Action Sheet -->
-        <div class="modal fade action-sheet" id="sendActionSheet" tabindex="-1" role="dialog">
+
+        <!-- <div class="modal fade action-sheet" id="sendActionSheet" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -255,11 +282,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- * Send Action Sheet -->
 
         <!-- Exchange Action Sheet -->
-        <div class="modal fade action-sheet" id="exchangeActionSheet" tabindex="-1" role="dialog">
+
+        <!-- <div class="modal fade action-sheet" id="exchangeActionSheet" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -315,7 +343,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+
         <!-- * Exchange Action Sheet -->
 
         <!-- Stats -->
@@ -370,7 +399,7 @@
 
                     <?php foreach ($transaksis as $row): ?>
                         <!-- item -->
-                        <a href="#" class="item">
+                        <a href="<?= base_url('users/userTransaction?transaksi=' . $row->noreferensi); ?>" class="item">
                             <div class="detail">
                                 <img src="<?= base_url() ?>/assets/appmobile/assets/img/sample/brand/2.jpg" alt="img" class="image-block imaged w48">
                                 <div>
@@ -389,17 +418,17 @@
                                 <!-- <div class="price text-success"> $ 29 </div> -->
                                 <?php if ($row->type == '300'): ?>
                                     <div class="price text-warning">
-                                        <?= $row->kredit ?><br>
+                                        <?= number_format($row->kredit, 6, ',', '.'); ?><br>
                                         <p><?= $row->time ?> WIB</p>
                                     </div>
                                 <?php elseif ($row->type == '200'): ?>
                                     <div class="price text-danger">
-                                        - <?= $row->debit ?><br>
+                                        - <?= number_format($row->debit, 6, ',', '.'); ?><br>
                                         <p><?= $row->time ?> WIB</p>
                                     </div>
                                 <?php elseif ($row->type == '100'): ?>
                                     <div class="price text-success">
-                                        + <?= $row->kredit ?><br>
+                                        + <?= number_format($row->kredit, 6, ',', '.'); ?><br>
                                         <p><?= $row->time ?> WIB</p>
                                     </div>
                                 <?php endif; ?>
@@ -426,7 +455,6 @@
             <div class="footer-title">
                 Copyright © <?= date('Y') ?>. All Rights Reserved.
             </div>
-
         </div>
         <!-- * app footer -->
 
@@ -606,7 +634,7 @@
 
 
     <!-- iOS Add to Home Action Sheet -->
-    <div class="modal inset fade action-sheet ios-add-to-home" id="ios-add-to-home-screen" tabindex="-1" role="dialog">
+    <!-- <div class="modal inset fade action-sheet ios-add-to-home" id="ios-add-to-home-screen" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -620,7 +648,7 @@
                         <div class="mb-1"><img src="<?= base_url() ?>/assets/appmobile/assets/img/icon/192x192.png" alt="image" class="imaged w64 mb-2">
                         </div>
                         <div>
-                            Install <strong>Finapp</strong> on your iPhone's home screen.
+                            Install <strong>BSP</strong> on your iPhone's home screen.
                         </div>
                         <div>
                             Tap <ion-icon name="share-outline"></ion-icon> and Add to homescreen.
@@ -633,12 +661,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- * iOS Add to Home Action Sheet -->
 
 
     <!-- Android Add to Home Action Sheet -->
-    <div class="modal inset fade action-sheet android-add-to-home" id="android-add-to-home-screen" tabindex="-1"
+    <!-- <div class="modal inset fade action-sheet android-add-to-home" id="android-add-to-home-screen" tabindex="-1"
         role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -654,7 +682,7 @@
                             <img src="<?= base_url() ?>/assets/appmobile/assets/img/icon/192x192.png" alt="image" class="imaged w64 mb-2">
                         </div>
                         <div>
-                            Install <strong>Finapp</strong> on your Android's home screen.
+                            Install <strong>BSP</strong> on your Android's home screen.
                         </div>
                         <div>
                             Tap <ion-icon name="ellipsis-vertical"></ion-icon> and Add to homescreen.
@@ -666,12 +694,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- * Android Add to Home Action Sheet -->
 
 
 
-    <div id="cookiesbox" class="offcanvas offcanvas-bottom cookies-box" tabindex="-1" data-bs-scroll="true"
+    <!-- <div id="cookiesbox" class="offcanvas offcanvas-bottom cookies-box" tabindex="-1" data-bs-scroll="true"
         data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">We use cookies</h5>
@@ -685,8 +713,10 @@
                 <a href="#" class="btn btn-primary btn-block" data-bs-dismiss="offcanvas">I understand</a>
             </div>
         </div>
-    </div>
+    </div> -->
 
+    <!--load swal js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- ========= JS Files =========  -->
     <!-- Bootstrap -->
     <script src="<?= base_url() ?>/assets/appmobile/assets/js/lib/bootstrap.bundle.min.js"></script>
@@ -701,6 +731,157 @@
         // Add to Home with 2 seconds delay.
         AddtoHome("2000", "once");
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tipeSelect = document.getElementById('tipeTransaksi');
+            const inputRupiah = document.getElementById('inputRupiah');
+            const inputGram = document.getElementById('inputGram');
+
+            function toggleInput() {
+                const tipe = tipeSelect.value;
+
+                if (tipe === "202") { // Buyback
+                    inputRupiah.style.display = "block";
+                    inputGram.style.display = "none";
+                } else if (tipe === "1") { // Pembelian
+                    inputRupiah.style.display = "block";
+                    inputGram.style.display = "none";
+                } else if (tipe === "201") { // Cetak Fisik
+                    inputRupiah.style.display = "none";
+                    inputGram.style.display = "block";
+                } else {
+                    // Default jika tidak dikenali
+                    inputRupiah.style.display = "none";
+                    inputGram.style.display = "none";
+                }
+            }
+
+            tipeSelect.addEventListener('change', toggleInput);
+            toggleInput(); // Panggil saat halaman pertama kali load
+        });
+    </script>
+
+
+    <!-- Pesan Error -->
+    <?php if ($this->session->flashdata('message_error')): ?>
+        <script>
+            Swal.fire({
+                title: 'Kesalahan...!!!',
+                text: '<?= $this->session->flashdata('message_error'); ?>',
+                icon: 'error',
+                // showConfirmButton: false,
+                // confirmButtonText: 'Try Again',
+                // timer: 1500
+            });
+        </script>
+    <?php endif; ?>
+    <!-- Pesan warning -->
+    <?php if ($this->session->flashdata('message_warning')): ?>
+        <script>
+            Swal.fire({
+                title: 'Peringatan...!!!',
+                text: '<?= $this->session->flashdata('message_warning'); ?>',
+                icon: 'warning',
+                // showConfirmButton: false,
+                // confirmButtonText: 'Try Again',
+                // timer: 1500
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan info -->
+    <?php if ($this->session->flashdata('message_info')): ?>
+        <script>
+            Swal.fire({
+                title: 'Informasi...!!!',
+                text: '<?= $this->session->flashdata('message_info'); ?>',
+                icon: 'info'
+                // confirmButtonText: 'Lanjutkan'
+            });
+        </script>
+    <?php endif; ?>
+    <!-- Pesan success login -->
+    <?php if ($this->session->flashdata('message_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('message_success'); ?>',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500 // Durasi dalam milidetik
+            });
+            // Arahkan setelah timer selesai
+            setTimeout(() => {
+                window.location.href = '<?= site_url("login"); ?>'; // Arahkan ke Home Page
+            }, 1500); // Sesuaikan dengan timer SweetAlert
+        </script>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('clear_all_session_msg_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('clear_all_session_msg_success'); ?>',
+                icon: 'success'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "<?= base_url('Authorization/clear_all_session') ?>";
+                }
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan success -->
+    <?php if ($this->session->flashdata('msg_success')): ?>
+        <script>
+            Swal.fire({
+                title: 'Success...!!!',
+                text: '<?= $this->session->flashdata('msg_success'); ?>',
+                icon: 'success',
+                // confirmButtonText: 'Lanjutkan'
+                // }).then((result) => {
+                //     if (result.isConfirmed) {
+                //         window.location.href = ''; // Arahkan ke Authorization
+                //     }
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Pesan form validation -->
+    <?php if (validation_errors()): ?>
+        <script>
+            Swal.fire({
+                title: 'Error validation...!!!',
+                text: <?= json_encode(strip_tags(validation_errors())); ?>,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- <script>
+        document.getElementById('btnProses').addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin memproses transaksi?',
+                text: "Data akan disimpan secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, proses',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url("users") ?>';
+                }
+            });
+        });
+    </script> -->
+    <!-- <style>
+        .swal2-container {
+            z-index: 99999 !important;
+        }
+    </style> -->
+
 
 </body>
 

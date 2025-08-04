@@ -36,42 +36,20 @@ class Product_model extends CI_Model
                     field_rasio AS rasio,
                     field_fluktuasi AS fluktuasi,
                     field_datetime_gold AS date
-            FROM tblgoldprice ORDER BY field_gold_id DESC LIMIT 1 ";
+            FROM tblgoldprice WHERE field_status='A' ORDER BY field_gold_id DESC LIMIT 1 ";
     $data = $this->db->query($sql);
     return $data->row_array();
   }
 
-  // public function Add_Department($data)
-  // {
-  //   $this->db->insert('department', $data);
-  // }
 
-  // public function department_delete($dep_id)
-  // {
-  //   $this->db->delete('department', array('id' => $dep_id));
-  // }
-
-  // public function department_edit($dep)
-  // {
-  //   $sql    = "SELECT * FROM `department` WHERE `id`='$dep'";
-  //   $query  = $this->db->query($sql);
-  //   $result = $query->row();
-  //   return $result;
-  // }
-  // public function Update_Department($id, $data)
-  // {
-  //   $this->db->where('id', $id);
-  //   $this->db->update('department', $data);
-  // }
-
-
-
-
-
-  // public function desselect()
-  // {
-  //   $query = $this->db->get('designation');
-  //   $result = $query->result();
-  //   return $result;
-  // }
+  public function dayGold()
+  {
+    $today = date('Y-m-d');
+    $this->db->where('DATE(field_datetime_gold)', $today);
+    $this->db->where('field_status', 'A');
+    $this->db->order_by('field_datetime_gold', 'DESC');
+    $this->db->limit(1);
+    $query = $this->db->get('tblgoldprice');
+    return $query->row(); // Ambil 1 data paling baru
+  }
 }

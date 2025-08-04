@@ -38,6 +38,7 @@ class Users_model extends CI_Model
         $data = $this->db->query($sql, [$userid]);
         return $data->row_array();
     }
+
     public function userUpdated($username, $data)
     {
         $this->db->set($data);
@@ -46,6 +47,33 @@ class Users_model extends CI_Model
         $updated = $this->db->update('tbluserlogin');
         return $updated;
     }
+
+    public function userNasabah($userid)
+    {
+        $sql = "SELECT 
+                users.field_user_id AS user_id,
+                users.field_member_id AS account_id,
+                users.field_nama AS name_users,                             
+                users.field_branch AS branch_id,                
+
+                nasabah.No_Rekening AS rekening,               
+
+                pewaris.id_Pewaris AS ID_pewaris,
+                pewaris.id_UserLogin AS ID_user
+                
+
+            FROM tbluserlogin users
+            LEFT JOIN tblnasabah nasabah 
+                ON users.field_user_id = nasabah.id_UserLogin
+            LEFT JOIN tblpewaris pewaris 
+                ON users.field_user_id = pewaris.id_UserLogin
+            WHERE users.field_user_id = ?";
+
+        $data = $this->db->query($sql, [$userid]);
+        return $data->row_array();
+    }
+
+
     public function logActivity()
     {
         $sql = "SELECT *, SUBSTRING_INDEX(comment, '-', 1) AS IP , U.email As Email 
@@ -91,5 +119,13 @@ class Users_model extends CI_Model
 		WHERE S.field_member_id=? ORDER BY S.field_id_saldo DESC LIMIT 1";
         $data = $this->db->query($sql, [$id]);
         return $data->row_array();
+    }
+
+    public function getSaldo($user_id)
+    {
+        $this->db->select('field_total_saldo');
+        $this->db->where('field_id_saldo', $user_id);
+        $query = $this->db->get('tbltrxmutasisaldo');
+        return $query->row()->saldo;
     }
 }
