@@ -18,7 +18,7 @@
   <div class="section mb-5 p-2">
     <form action="<?= base_url('verify-otp'); ?>" method="POST">
       <div class="form-group basic">
-        <input type="tel" inputmode="numeric" name="smscode" class="form-control verification-input" id="smscode" placeholder="•••••"
+        <input type="tel" inputmode="numeric" name="smscode" class="form-control verification-input" id="smscode" placeholder="••••••"
           maxlength="6" required>
         <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
       </div>

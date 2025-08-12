@@ -67,7 +67,7 @@ $route['forgot']            = 'Authorization/forgot';
 $route['reset']             = 'Authorization/reset';
 $route['otp']               = 'Authorization/signinotp';
 $route['otp-account']       = 'Authorization/accountOTP';
-$route['change-password']   = 'Authorization/changepassword';
+$route['change-password']   = 'Authorization/changePassword';
 $route['terms']             = 'authorization/terms';
 $route['logout']            = 'authorization/logout';
 
@@ -97,8 +97,9 @@ $route['service-bsp']       = 'Welcome/layananunit';
 $route['register-bsp']      = 'Welcome/unit';
 
 // Users
-$route['settings']          = 'Users/settings';
-$route['change-pin']        = 'Users/updatePIN';
-$route['change-password']   = 'Users/updatePassword';
-$route['change-email']      = 'Users/updateEmail';
-$route['change-nomor']      = 'Users/nomorWatsApp';
+$route['user-settings']     = 'Users/settings';
+$route['update-pin']        = 'Users/updatePIN';
+$route['user-password']     = 'Users/updatePassword';
+$route['user-email']        = 'Users/updateEmail';
+$route['user-nomor']        = 'Users/nomorWatsApp';
+$route['verify-pin']        = 'users/triggerPIN';

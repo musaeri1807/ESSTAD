@@ -90,12 +90,14 @@ if ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
     define('USERNAME', 'u602049557_BSP4dmiN');
     define('PASSWORD', 'A5]yk2*]Zg5');
     define('DATABASE', 'u602049557_BSPpr0d');
+    define('KEY_API_WA', '7Xb5CgpCxzxBcwgsuRkE'); // API Key WhatsApp
 } elseif ($_SERVER['SERVER_NAME'] == 'my.bspid.id') {
     // Online
     define('HOSTNAME', 'localhost');
     define('USERNAME', 'u1733358_development');
     define('PASSWORD', '-%6HLTRHrBA2');
     define('DATABASE', 'u1733358_develop');
+    define('KEY_API_WA', '7Xb5CgpCxzxBcwgsuRkE'); // API Key WhatsApp
 } else {
     // locahost
     define('HOSTNAME', 'localhost');
@@ -107,6 +109,7 @@ if ($_SERVER['SERVER_NAME'] == 'bsp.my.id') {
     // define('USERNAME', 'u602049557_BSP4dmiN');
     // define('PASSWORD', 'A5]yk2*]Zg5');
     // define('DATABASE', 'u602049557_BSPpr0d');
+    define('KEY_API_WA', '2hVG4S66WEpcwqB2kYL8'); // API Key WhatsApp
 }
 
 

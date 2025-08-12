@@ -1,7 +1,7 @@
 <!-- App Header -->
 <div class="appHeader">
   <div class="left">
-    <a href="<?= base_url('settings'); ?>" class="headerButton goBack">
+    <a href="<?= base_url('user-settings'); ?>" class="headerButton goBack">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </a>
   </div>
@@ -25,7 +25,7 @@
     <h4></h4>
   </div>
   <div class="section mb-5 p-2">
-    <form action="<?= base_url('users/updatePassword'); ?>" method="post">
+    <form action="<?= base_url('user-password'); ?>" method="post">
       <div class="card">
         <div class="card-body">
           <div class="form-group basic">

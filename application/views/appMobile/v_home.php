@@ -147,6 +147,7 @@
                                             <option value="20000">20.000</option>
                                             <option value="50000">50.000</option>
                                             <option value="100000">100.000</option>
+                                            <option value="1000000">1.000.000</option>
                                         </select>
                                     </div>
                                 </div>
@@ -593,7 +594,7 @@
                     <div class="listview-title mt-1">Menu</div>
                     <ul class="listview flush transparent no-line image-listview">
                         <li>
-                            <a href="<?= base_url('settings'); ?>" class="item">
+                            <a href="<?= base_url('user-settings'); ?>" class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="settings-outline"></ion-icon>
                                 </div>
@@ -881,6 +882,48 @@
             z-index: 99999 !important;
         }
     </style> -->
+
+    <?php if ($this->session->flashdata('trigger_pin')): ?>
+        <script>
+            Swal.fire({
+                title: 'Saldo mencukupi',
+                text: "Masukkan PIN Anda untuk melanjutkan transaksi.",
+                input: 'password',
+                inputLabel: 'PIN',
+                inputAttributes: {
+                    maxlength: 6,
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Lanjutkan',
+                cancelButtonText: 'Batal',
+                preConfirm: (pin) => {
+                    if (!pin) {
+                        Swal.showValidationMessage('PIN tidak boleh kosong');
+                    }
+                    return pin;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim PIN ke server pakai hidden form atau AJAX
+                    let form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '<?= base_url("users"); ?>';
+
+                    let inputPin = document.createElement('input');
+                    inputPin.type = 'hidden';
+                    inputPin.name = 'pin';
+                    inputPin.value = result.value;
+
+                    form.appendChild(inputPin);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        </script>
+    <?php endif; ?>
+
 
 
 </body>

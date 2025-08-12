@@ -22,24 +22,14 @@
 
   <div class="section mt-2 text-center">
     <h1><?= $Title; ?></h1>
-    <h3></h3>
+    <h4>Masukkan 6 digit PIN Baru <?= $this->session->userdata('NumberPhone'); ?></h4>
   </div>
   <div class="section mb-5 p-2">
-    <form action="<?= base_url('user-email'); ?>" method="POST">
-      <div class="card">
-        <div class="card-body pb-1">
-
-          <div class="form-group basic">
-            <div class="input-wrapper">
-              <label class="label" for="email1">E-mail</label>
-              <input type="email" name="email" class="form-control" id="email1" placeholder="Masukan e-mail" required>
-              <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-              </i>
-              <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
-            </div>
-          </div>
-        </div>
+    <form action="<?= base_url('update-pin'); ?>" method="POST">
+      <div class="form-group basic">
+        <input type="tel" inputmode="numeric" name="pincode" class="form-control verification-input" id="pincode" placeholder="••••••"
+          maxlength="6" required>
+        <input type="hidden" name="token" class="form-control" value="<?= $token; ?>" required>
       </div>
       <div class="form-button-group transparent">
         <button type="submit" class="btn btn-success btn-block btn-lg">Simpan</button>

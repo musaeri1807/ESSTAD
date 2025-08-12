@@ -29,6 +29,7 @@ class Users_model extends CI_Model
                     users.field_email AS email,
                     users.field_handphone AS phone,
                     users.field_password AS password,
+                    users.password AS PIN,
                     users.field_branch AS branch_id,
                     users.last_login AS last_login,
                     created_on,

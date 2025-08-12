@@ -1,7 +1,7 @@
 <!-- App Header -->
 <div class="appHeader">
   <div class="left">
-    <a href="<?= base_url('settings'); ?>" class="headerButton goBack">
+    <a href="<?= base_url('user-settings'); ?>" class="headerButton goBack">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </a>
   </div>
@@ -24,7 +24,7 @@
     <h3></h3>
   </div>
   <div class="section mb-5 p-2">
-    <form action="<?= base_url('change-nomor'); ?>" method="POST">
+    <form action="<?= base_url('user-nomor'); ?>" method="POST">
       <div class="card">
         <div class="card-body pb-1">
           <div class="form-group basic">

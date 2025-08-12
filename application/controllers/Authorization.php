@@ -188,7 +188,7 @@ class Authorization extends AUTH_Controller
 							$message	= '*' . $rand . '*' . " adalah kode verifikasi Anda. Demi keamanan, jangan bagikan kode ini.";
 							//OTP
 							$this->_SendOTP($nomor, $message);
-							$this->session->set_flashdata('message_info', 'Silakan periksa,kode OTP dikirim ke nomor WhatsApp...!!!');
+							$this->session->set_flashdata('message_info', 'Kode OTP dikirim ke nomor WhatsApp...!!!');
 							redirect('verify-otp'); //private di pakai untuk login dan change password melalui whatsapp
 							// OTP							
 						} else {
@@ -762,7 +762,6 @@ class Authorization extends AUTH_Controller
 							$this->session->set_flashdata('message_error', 'OTP expired...!!!');
 							redirect('otp-account');
 						} else {
-
 							$this->session->set_flashdata('message_error', 'OTP expired...!!!');
 							redirect('forgot');
 						}
@@ -832,36 +831,61 @@ class Authorization extends AUTH_Controller
 		if (!$this->session->userdata('UserName')) {
 			redirect('login');
 		}
+		// $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
+		// $this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
+		$this->form_validation->set_rules(
+			'password1',
+			'Kata Sandi',
+			'trim|required|min_length[8]|matches[password2]',
+			array(
+				'required'   => '%s wajib diisi.',
+				'min_length' => '%s minimal 8 karakter.',
+				'matches'    => '%s harus sama dengan Ulangi Kata Sandi.'
+			)
+		);
 
-		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]');
-		$this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[8]|matches[password1]');
-
+		$this->form_validation->set_rules(
+			'password2',
+			'Ulangi Kata Sandi',
+			'trim|required|min_length[8]|matches[password1]',
+			array(
+				'required'   => '%s wajib diisi.',
+				'min_length' => '%s minimal 8 karakter.',
+				'matches'    => '%s harus sama dengan Kata Sandi.'
+			)
+		);
 		if ($this->form_validation->run() == false) {
-			$sett = $this->db->get('settings')->row_array();
-			$ting = array(
-				'Title' => ' Change Password',
-				'widget' => $this->recaptcha->getWidget()
+			$token = bin2hex(random_bytes(32)); // 32 karakter
+			$this->session->set_userdata('verify_token', $token);
+			$data['token'] = array(
+				'token'     => $token,
+				'Title'     => 'Change Password'
 			);
-			$data = array_merge($sett, $ting);
 			$this->template->viewsMobile('appMobile/v-change2', $data);
 		} else {
-			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
-			$username = $this->session->userdata('UserName');
-			if ($username) {
-				// echo "ISI";
-				$in = $this->Users_model->userUpdated($username, ['field_password' => $password]);
-				$this->session->unset_userdata('UserName');
-				$this->session->unset_userdata('NumberPhone');
-				// $this->session->sess_destroy();
-				if ($in) {
-					$this->session->set_flashdata('msg_success', 'Kata sandi Anda telah berhasil diubah! Silakan login...!!!');
+			$token      = $this->input->post('token');
+			if ($token === $this->session->userdata('verify_token')) {
+				$inputPassword 	= $this->input->post('password1');
+				$password 		= password_hash($inputPassword, PASSWORD_DEFAULT);
+				$username 		= $this->session->userdata('UserName');
+				if ($username) {
+					$in = $this->Users_model->userUpdated($username, ['field_password' => $password]);
+					// var_dump($in);
+					// die();
+					if ($in) {
+						$this->session->set_flashdata('msg_success', 'Kata sandi Anda telah berhasil diubah...!!!');
+						$this->session->unset_userdata('UserName');
+						$this->session->unset_userdata('NumberPhone');
+						redirect('login');
+					}
+				} else {
+					$this->session->set_flashdata('message_error', 'Password gagal Update, Wrong Insert...!!!');
 					redirect('login');
 				}
 			} else {
-				$this->session->set_flashdata('message_error', 'Password gagal Update, Wrong Insert...!!!');
-				redirect('login');
+				$this->session->set_flashdata('message_error', 'Token Tidak dikirim');
+				redirect('users');
 			}
-			// $this->db->delete('token_users', ['email' => $email]);
 		}
 	}
 	private function _sendEmail($name, $email, $token, $subject)
@@ -931,7 +955,7 @@ class Authorization extends AUTH_Controller
 			$curl,
 			CURLOPT_HTTPHEADER,
 			array(
-				"Authorization: 7Xb5CgpCxzxBcwgsuRkE",
+				"Authorization: " . KEY_API_WA,
 			)
 		);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
