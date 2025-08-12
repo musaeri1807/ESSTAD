@@ -72,8 +72,7 @@
         public function userTransaction($noreferensi = null)
         {
             $noreferensi     = $this->input->get('transaksi');
-            // echo $noreferensi;
-            // die();
+
             if (!$noreferensi) {
                 // show_404(); // atau redirect ke halaman lain
                 redirect('Error404');

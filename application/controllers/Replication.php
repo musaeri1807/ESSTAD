@@ -6,6 +6,7 @@ class Replication extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        disable_controller('404');
         $this->load->library('session'); // testing session        
         $this->load->model('Users_model');
         $this->load->helper('download', 'file');

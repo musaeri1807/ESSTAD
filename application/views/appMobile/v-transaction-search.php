@@ -63,10 +63,10 @@
                 <!-- <i class="input-icon">
                     <ion-icon name="search-outline"></ion-icon>
                 </i> -->
-                
+
             </div>
             <div class="form-group mt 2">
-                
+
             </div>
         </form>
     </div>
@@ -77,11 +77,11 @@
 
 
         <div class="section mt-1 mb-2">
-            <a href="#" class="btn btn-block btn-success">cari</a>
-            <div class="section-title">Found 43 results for "<span class="text-primary">Deposit</span>"</div>
+            <a href="#" class="btn btn-block btn-success">Cari</a>
+            <!-- <div class="section-title">Found 43 results for "<span class="text-primary">Deposit</span>"</div> -->
             <div class="card">
-                
-                <ul class="listview image-listview media transparent flush">
+
+                <!-- <ul class="listview image-listview media transparent flush">
                     <li>
                         <a href="#" class="item">
                             <div class="imageWrapper">
@@ -147,7 +147,7 @@
                             </div>
                         </a>
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
 
