@@ -53,7 +53,7 @@
                         'Gramasi'   => $this->input->post('gram')
                     ]);
 
-                    if (!$this->Product_model->dayGold()) {
+                    if ($this->Product_model->dayGold()) {
                         $this->triggerPIN();
                     } else {
                         $this->session->unset_userdata(['inputData', 'verify_token', 'attempt']);
