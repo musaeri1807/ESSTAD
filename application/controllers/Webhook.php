@@ -20,9 +20,14 @@ class Webhook extends CI_Controller
 
 	public function index()
 	{
-		header('Content-Type: application/json; charset=utf-8');
-		$json = file_get_contents('php://input');
-		$data = json_decode($json, true);
+		$status = json_decode(file_get_contents('php://input'));
+
+		// header('Content-Type: application/json; charset=utf-8');
+		// $json = file_get_contents('php://input');
+		// $data = json_decode($json, true);
+		// $status = 'pending';
+		$this->db->insert('tbluserlog', ['field_aktifitas' => $status]);
+		die();
 		var_dump($data);
 		$device     = $data['device'];
 		$sender     = $data['sender'];
