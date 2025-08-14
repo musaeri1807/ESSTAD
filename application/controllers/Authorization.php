@@ -98,8 +98,8 @@ class Authorization extends AUTH_Controller
 						'status' 		=> "Logged_in",
 						'lastlogin'     => time()
 					];
-					// update date
-					$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
+					// update date					
+					$this->Users_model->userUpdated($user['email'], ['field_ipaddress' => $_SERVER['REMOTE_ADDR'], 'last_login' => time()]);
 					if ($this->db->affected_rows() > 0) {
 						$this->session->set_userdata($session);
 						// $datauser = $this->session->userdata('userdata');
@@ -698,7 +698,7 @@ class Authorization extends AUTH_Controller
 								'lastlogin'     => time()
 							];
 
-							$this->Users_model->userUpdated($user['email'], ['last_login' => time()]);
+							$this->Users_model->userUpdated($user['email'], ['field_ipaddress' => $_SERVER['REMOTE_ADDR'], 'last_login' => time()]);
 							if ($this->db->affected_rows() > 0) {
 								$this->session->set_userdata($session);
 								// $this->_sendEmail($user['name_users'], $user['email'], '', 'OTP Login'); //Email
