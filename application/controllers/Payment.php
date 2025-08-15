@@ -9,7 +9,7 @@ class Payment extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Payment_model');
-        $this->config->load('midtrans');
+        $this->config->load('midtrans'); //config
 
         \Midtrans\Config::$serverKey = $this->config->item('midtrans_server_key');
         \Midtrans\Config::$isProduction = $this->config->item('midtrans_is_production');
@@ -22,7 +22,7 @@ class Payment extends CI_Controller
     {
         $order_id = 'INV-' . time();
         $gross_amount = 150000; // contoh nominal
-        $bank = 'bca'; // bisa bca, bni, permata
+        $bank = 'bni'; // bisa bca, bni, permata
 
         $params = [
             'payment_type' => 'bank_transfer',
@@ -33,7 +33,7 @@ class Payment extends CI_Controller
             'customer_details' => [
                 'first_name' => 'Budi',
                 'email' => 'budi@example.com',
-                'phone' => '08123456789'
+                'phone' => '081210003701'
             ],
             'bank_transfer' => [
                 'bank' => $bank

@@ -7,32 +7,30 @@ class Notification extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
+        $this->load->model('Payment_model');
+        $this->config->load('midtrans'); //config
         // Load DB
         $this->load->database();
 
-        // Load Midtrans library dari vendor
-        require_once APPPATH . '../vendor/autoload.php';
-
-        // Set konfigurasi Midtrans
-        \Midtrans\Config::$serverKey = 'SB-Mid-server-kj8wMyHX4ie6B3IMy0Gqk0zZ';
-        \Midtrans\Config::$isProduction = false; // true kalau sudah live
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
+        \Midtrans\Config::$serverKey = $this->config->item('midtrans_server_key');
+        \Midtrans\Config::$isProduction = $this->config->item('midtrans_is_production');
+        \Midtrans\Config::$isSanitized = $this->config->item('midtrans_is_sanitized');
+        \Midtrans\Config::$is3ds = $this->config->item('midtrans_is_3ds');
     }
 
     public function index()
     {
         // Ambil raw input dari Midtrans
-        $notif = new \Midtrans\Notification();
+        $notif = json_decode(file_get_contents('php://input'));
 
         // Ambil data penting
-        $order_id     = $notif->order_id;
-        $transaction  = $notif->transaction_status;
-        $payment_type = $notif->payment_type;
-        $fraud_status = $notif->fraud_status;
+        // $order_id     = $notif->order_id;
+        // $transaction  = $notif->transaction_status;
+        // $payment_type = $notif->payment_type;
+        // $fraud_status = $notif->fraud_status;
 
         // Simpan log callback untuk debugging
-
         $this->db->insert('tbluserlog', [
             'field_waktu' => date('Y-m-d H:i:s'),
             'field_aktifitas' => json_encode($notif) // simpan jadi JSON string
